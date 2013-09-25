@@ -1,0 +1,16 @@
+{% set attr = {
+    id: null,
+    class: null,
+    style: null,
+    alt: image.title,
+    title: image.title,
+    width: null,
+    height: null
+}|merge(options) %}
+
+<img src="{{ image.imagePath| apply_filter(filter) }}"
+    {% for attrname, attrvalue in attr %}{{ attrname }}="{{ attrvalue }}" {% endfor %}
+/>
+
+
+

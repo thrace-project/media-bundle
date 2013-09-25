@@ -1,0 +1,24 @@
+{
+    "name":         "thrace/media-bundle",
+    "description":  "Handles image/file uploads",
+    "keywords":     ["thrace project, media, upload, symfony"],
+    "type":         "symfony-bundle",
+    "license":      "MIT",
+    "authors":      [
+        {
+            "name":  "Nikolay Georgiev",
+            "email": "symfonist@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require":      {
+        "symfony/framework-bundle": "~2.3",
+        "knplabs/gaufrette": "dev-master",
+	"knplabs/knp-gaufrette-bundle": "dev-master",
+	"liip/imagine-bundle": "dev-master"
+    },
+    "autoload":     {
+        "psr-0": { "Thrace\\ComponentBundle": "" }
+    },
+    "target-dir": "Thrace/ComponentBundle"
+}

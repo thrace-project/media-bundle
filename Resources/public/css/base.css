@@ -1,0 +1,58 @@
+@CHARSET "UTF-8";
+
+.thrace-media-label {
+    padding-right: 20px;
+    display: block;
+    padding-bottom: 10px;
+}
+
+.thrace-media input,textarea {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.thrace-media-text{
+    border: 1px solid #999;
+    padding: 10px;
+    width: 600px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    color: #666;
+    background: url(../images/bg_fade_sml.png) repeat-x top;
+}
+
+.thrace-image, .thrace-multi-image-upload-error, .thrace-progress-info {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.thrace-controls {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.thrace-drag-drop {
+    border: 4px dashed #DDD;
+    width: 100%;
+    height: 200px;
+    margin-bottom: 15px;
+}
+
+.thrace-drag-drop .thrace-drag-drop-inside {
+    margin: 70px auto 0;
+    width: 250px;
+}
+
+.thrace-drag-drop-inside p.thrace-drag-drop-info {
+    font-size: 20px;
+}
+
+.thrace-drag-drop .thrace-drag-drop-inside p {
+    text-align: center;
+}
+
+.thrace-drag-drop-inside p {
+    color: #AAA;
+    margin: 5px 0;
+}
+

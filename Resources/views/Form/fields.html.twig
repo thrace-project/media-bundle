@@ -1,0 +1,245 @@
+{% block thrace_media_file_upload_widget %}
+{% spaceless %}
+<div>
+    {{ form_widget(form) }} 
+    <span class="thrace-file-upload" data-options="{{ configs|json_encode}}" style="display:none"></span>
+    
+    <span class="thrace-file-upload-main" style="display:none">
+        <div id="thrace-file-error-{{ id }}" class="ui-state-error" 
+             style="width:300px; padding:10px; margin-bottom: 5px; display:none">
+            <span style="float:right">
+                <a href="#close" id="thrace-upload-error-cancel-{{ id }}">
+                    <img src="{{ asset('bundles/thracemedia/images/cancel.png') }}" />
+                </a>
+            </span>
+            <p>
+                <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+                <span class="thrace-fileupload-error">&nbsp</span>
+        	</p>
+        </div>
+                    
+        <div  id="thrace-progressbar-{{ id }}" style="width:350px; height:10px; display: none" ></div>
+       
+        <div class="thrace-progress-info" style="display:none">
+            <div class="ui-widget">
+                <div class="ui-state-highlight ui-corner-all" style="width:340px;padding:5px;"> 
+                    <span style="float:right" id="thrace-upload-remove-file-{{id}}">
+                        <a href="#remove">
+                            <img src="{{ asset('bundles/thracemedia/images/cancel.png') }}" />
+                        </a>
+                    </span>
+                    <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+                    <span>{% trans from translation_domain %}upload_progress{% endtrans %}: <strong>0%</strong></span>
+                    <br/>
+                    <span id="thrace-file-info-{{ id }}">__file_name__ (__file_size__)</span>
+                </div>
+            </div>
+        </div>
+                    
+        <div id="thrace-upload-file-{{ id }}" class="ui-state-highlight ui-corner-all" style="width:440px;padding:5px;"> 
+            
+            <p id="thrace-file-empty-{{ id }}" {% if form.name.vars.value %}style="display:none"{% endif %}>
+                <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+                {% trans from translation_domain %}no_file_uploaded{% endtrans %}
+            </p>
+            
+            <p id="thrace-file-name-{{ id }}" {% if form.originalName.vars.value is empty %}style="display:none"{% endif %}>
+                <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+                <strong>{% trans from translation_domain %}filename{% endtrans %}: </strong>
+                <span class="thrace-file-name">{{ form.originalName.vars.value }}</span>
+            </p>
+    
+        </div>
+        
+        {{ block('thrace_media_file_upload_controls') }}
+        {{ block('thrace_media_upload_meta') }}  
+    </span>
+</div>
+
+{% endspaceless %}
+{% endblock thrace_media_file_upload_widget %}
+
+{% block thrace_media_file_upload_controls %}
+{% spaceless %}
+<div class="thrace-controls">
+    <button id="thrace-file-btn-upload-{{ id }}" class="ui-icon ui-icon-newwin thrace-file-upload-button" 
+        title="{% trans from translation_domain %}button_upload_title{% endtrans %}"></button> &nbsp;
+    {% if configs.enabled_button %}
+        <a id="thrace-file-btn-enabled-{{ id }}" 
+        class="ui-icon {% if (configs.enabled_value)  %} ui-icon-bullet {% else %} ui-icon-radio-on {% endif %} thrace-file-upload-button" 
+            title="{% trans from translation_domain %}button_title_enabled{% endtrans %}"></a>  &nbsp;
+    {% endif %}
+    {% if configs.meta_button %}
+        <a id="thrace-meta-btn-edit-{{ id }}" class="ui-icon ui-icon-pencil thrace-file-upload-button" 
+            title="{% trans from translation_domain %}button_edit_meta_title{% endtrans %}"></a>  &nbsp;
+    {% endif %}
+    <a id="thrace-file-btn-remove-{{ id }}" class="ui-icon ui-icon-trash thrace-file-upload-button" 
+        title="{% trans from translation_domain %}button_remove_title{% endtrans %}"></a>  &nbsp;
+</div>
+{% endspaceless %}
+{% endblock thrace_media_file_upload_controls %}
+
+{% block thrace_media_upload_meta %}
+{% spaceless %}
+<div id="thrace-dlg-meta-edit-{{ id }}" class="thrace-media" 
+    title="{% trans from translation_domain %}dialog_edit_meta_title{% endtrans %}">
+   <div>
+       <label for="thrace_meta_title-{{ id }}" class="thrace-media-label">
+           {% trans from translation_domain %}dialog_edit_meta_label_title{% endtrans %}
+       </label>
+       <input type="text" id="thrace-meta-title-{{ id }}" class="thrace-media-text" />
+   </div>
+   
+   <div>
+       <label for="thrace-meta-caption-{{ id }}" class="thrace-media-label" >
+           {% trans from translation_domain %}dialog_edit_meta_label_caption{% endtrans %}
+       </label>
+       <input type="text" id="thrace-meta-caption-{{ id }}" class="thrace-media-text" />
+   </div>
+   
+   <div>
+       <label for="thrace-meta-description-{{ id }}" class="thrace-media-label">
+           {% trans from translation_domain %}dialog_edit_meta_label_description{% endtrans %}
+       </label>
+       <textarea id="thrace-meta-description-{{ id }}" class="thrace-media-text" rows="5" ></textarea>
+   </div>
+   
+   <div>
+       <label for="thrace-meta-author-{{ id }}" class="thrace-media-label">
+           {% trans from translation_domain %}dialog_edit_meta_label_author{% endtrans %}
+       </label>
+       <input type="text" id="thrace-meta-author-{{ id }}" class="thrace-media-text" />
+   </div>
+   
+   <div>
+       <label for="thrace-meta-copywrite-{{ id }}" class="thrace-media-label">
+           {% trans from translation_domain %}dialog_edit_meta_label_copywrite{% endtrans %}
+       </label>
+       <input type="text" id="thrace-meta-copywrite-{{ id }}" class="thrace-media-text" />
+   </div>
+   
+   <div style="float:right">
+       <a id="thrace-edit-dlg-done-btn-{{ id }}" class="thrace-upload-button">
+           {% trans from translation_domain %}dialog_edit_meta_button_done{% endtrans %}
+       </a>
+   </div>
+   
+</div>
+{% endspaceless %}
+{% endblock thrace_media_upload_meta %}
+
+{% block thrace_media_image_upload_widget %}
+{% spaceless %}
+<div>    
+    {{ form_widget(form) }} 
+    <div class="thrace-image-upload-main" style="display:none">
+        {{ block('thrace_image_upload_container') }} 
+        {{ block('thrace_image_upload_crop') }}
+        {{ block('thrace_media_upload_meta') }}
+    </div>
+    
+    <span class="thrace-image-upload" data-options="{{ configs|merge({'base_url': asset('')})|json_encode }}" style="display:none"></span>
+</div>
+{% endspaceless %}
+{% endblock thrace_media_image_upload_widget %}
+
+{% block thrace_image_upload_container %}
+{% spaceless %}
+<div id="thrace-image-upload-container-{{ id }}">
+    <div class="ui-state-error" style="width:300px; padding:5px; display:none">
+        <span style="float:right">
+            <a href="#close" id="thrace-upload-error-cancel-{{ id }}">
+                <img src="{{ asset('bundles/thracemedia/images/cancel.png') }}" />
+            </a>
+        </span>
+        <p>
+            <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+            <span class="thrace-imageupload-error">&nbsp</span>
+        </p>
+    </div>
+   
+    <div  id="thrace-progressbar-{{ id }}" style="width:350px; height:10px; display: none" ></div>
+    
+    <div class="thrace-progress-info" style="display:none">
+        <div class="ui-widget">
+            <div class="ui-state-highlight ui-corner-all" style="width:340px;padding:5px;"> 
+                <span style="float:right" id="thrace-upload-remove-image-{{id}}">
+                    <a href="#remove">
+                        <img src="{{ asset('bundles/thracemedia/images/cancel.png') }}" />
+                    </a>
+                </span>
+                <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+                <span>{% trans from translation_domain %}upload_progress{% endtrans %}: <strong>0%</strong></span>
+                <br/>
+                <span id="thrace-image-info-{{ id }}">__image_name__ (__image_size__)</span>
+            </div>
+        </div>
+    </div>
+        
+    <div class="thrace-image">
+        <img id="thrace-image-{{ id }}" src="{{ asset('bundles/thracemedia/images/noImage.png') }}" />
+    </div>
+    
+    {{ block('thrace_image_controls') }}
+</div>
+
+{% endspaceless %}
+{% endblock thrace_image_upload_container %}
+
+{% block thrace_image_controls %}
+{% spaceless %}
+<div class="thrace-controls">
+    <button id="thrace-image-btn-upload-{{ id }}" class="ui-icon ui-icon-newwin thrace-image-upload-button" 
+        title="{% trans from translation_domain %}button_upload_title{% endtrans %}"></button> &nbsp;
+    {% if configs.enabled_button %}
+        <a id="thrace-image-btn-enabled-{{ id }}" 
+            class="ui-icon {% if (configs.enabled_value)  %} ui-icon-bullet  {% else %} ui-icon-radio-on {% endif %} thrace-image-upload-button" 
+            title="{% trans from translation_domain %}button_title_enabled{% endtrans %}"></a>  &nbsp;
+    {% endif %}
+    {% if configs.view_button %}
+        <a id="thrace-image-btn-view-{{ id }}" class="ui-icon ui-icon-zoomin thrace-image-upload-button" 
+            title="{% trans from translation_domain %}button_view_title{% endtrans %}"></a>  &nbsp;
+    {% endif %}
+    {% if configs.crop_button %}
+        <a id="thrace-image-btn-crop-{{ id }}" class="ui-icon ui-icon-scissors thrace-image-upload-button" 
+            title="{% trans from translation_domain %}button_crop_title{% endtrans %}"></a>  &nbsp;
+    {% endif %}
+    {% if configs.meta_button %}
+        <a id="thrace-meta-btn-edit-{{ id }}" class="ui-icon ui-icon-pencil thrace-image-upload-button" 
+            title="{% trans from translation_domain %}button_edit_meta_title{% endtrans %}"></a>  &nbsp;
+    {% endif %}  
+    {% if configs.rotate_button %}
+        <a id="thrace-image-btn-rotate-{{ id }}" class="ui-icon ui-icon-arrowrefresh-1-s thrace-image-upload-button" 
+            title="{% trans from translation_domain %}button_rotate_title{% endtrans %}"></a> &nbsp;
+    {% endif %}
+    {% if configs.reset_button %}
+        <a id="thrace-image-btn-reset-{{ id }}" class="ui-icon ui-icon-cancel thrace-image-upload-button" 
+            title="{% trans from translation_domain %}button_reset_title{% endtrans %}"></a>  &nbsp;
+    {% endif %} 
+    <a id="thrace-image-btn-remove-{{ id }}" class="ui-icon ui-icon-trash thrace-image-upload-button" 
+        title="{% trans from translation_domain %}button_remove_title{% endtrans %}"></a>  &nbsp;
+</div>
+{% endspaceless %}
+{% endblock thrace_image_controls %}
+
+{% block thrace_image_upload_crop %}
+{% spaceless %}
+<div id="thrace-dlg-image-crop-{{ id }}" style="display:none" 
+    title="{% trans from translation_domain %}dialog_crop_title{% endtrans %}">
+   
+    <div id="thrace-image-crop-{{ id }}" class="thrace-image"></div>
+
+    <div style="float:right">
+        <input type="hidden" id="x-{{ id }}"/>
+        <input type="hidden" id="y-{{ id }}"/>
+        <input type="hidden" id="w-{{ id }}"/>
+        <input type="hidden" id="h-{{ id }}"/>
+        
+        <a id="thrace-crop-dlg-cancel-btn-{{ id }}" class="thrace-image-upload-button">
+            {% trans from translation_domain %}dialog_crop_button_cancel{% endtrans %}</a>
+        <a id="thrace-crop-dlg-save-btn-{{ id }}" class="thrace-image-upload-button">
+            {% trans from translation_domain %}dialog_crop_button_crop{% endtrans %}</a>  &nbsp;    
+    </div>
+</div>  
+{% endspaceless %}
+{% endblock thrace_image_upload_crop %}
