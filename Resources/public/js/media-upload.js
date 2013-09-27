@@ -29,6 +29,7 @@ jQuery(document).ready(function(){
                 file: options.media_render_url + '?name=' + name,
                 autostart: options.autostart,
                 type: options.type,
+                skin: options.skin,
                 width: options.width,
                 height: options.height
             });

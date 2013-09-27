@@ -43,7 +43,7 @@ class Configuration implements ConfigurationInterface
                     ->canBeUnset()
                     ->children()
                         ->scalarNode('key')->isRequired()->end()
-                        ->scalarNode('theme')->isRequired()->end()
+                        ->scalarNode('skin')->defaultValue(null)->end()
                         ->scalarNode('html5player')->isRequired()->end()
                         ->scalarNode('flashplayer')->isRequired()->end()
                         ->booleanNode('autostart')->defaultFalse()->end()
