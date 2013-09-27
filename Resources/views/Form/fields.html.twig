@@ -243,3 +243,60 @@
 </div>  
 {% endspaceless %}
 {% endblock thrace_image_upload_crop %}
+
+{% block thrace_media_upload_widget %}
+{% spaceless %}       
+<div> 
+    {{ form_widget(form) }} 
+    <span class="thrace-media-upload" data-options="{{ configs|merge({'base_path': asset(''), 'media_render_url': url('thrace_media_render_temporary')})|json_encode}}" style="display:none"></span>
+    
+    <span class="thrace-file-upload-main" style="display:none">
+        <div id="thrace-file-error-{{ id }}" class="ui-state-error" 
+             style="width:300px; padding:10px; margin-bottom: 5px; display:none">
+            <span style="float:right">
+                <a href="#close" id="thrace-upload-error-cancel-{{ id }}">
+                    <img src="{{ asset('bundles/thracemedia/images/cancel.png') }}" />
+                </a>
+            </span>
+            <p>
+                <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+                <span class="thrace-fileupload-error">&nbsp</span>
+        	</p>
+        </div>
+                    
+        <div  id="thrace-progressbar-{{ id }}" style="width:350px; height:10px; display: none" ></div>
+       
+        <div class="thrace-progress-info" style="display:none">
+            <div class="ui-widget">
+                <div class="ui-state-highlight ui-corner-all" style="width:340px;padding:5px;"> 
+                    <span style="float:right" id="thrace-upload-remove-file-{{id}}">
+                        <a href="#remove">
+                            <img src="{{ asset('bundles/thracemedia/images/cancel.png') }}" />
+                        </a>
+                    </span>
+                    <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+                    <span>{% trans from translation_domain %}upload_progress{% endtrans %}: <strong>0%</strong></span>
+                    <br/>
+                    <span id="thrace-file-info-{{ id }}">__file_name__ (__file_size__)</span>
+                </div>
+            </div>
+        </div>
+              
+        
+        <div id="thrace-upload-file-{{ id }}" {% if form.name.vars.value is not empty %}style="display:none"{% endif %} class="ui-state-highlight ui-corner-all" style="width:440px;padding:5px;">             
+            <p>
+                <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+                {% trans from translation_domain %}no_media_uploaded{% endtrans %}
+            </p>            
+        </div>
+        
+        
+        <div id="thrace-media-container-{{ id }}"></div>
+        
+        {{ block('thrace_media_file_upload_controls') }}
+        {{ block('thrace_media_upload_meta') }}  
+    </span>
+</div>
+
+{% endspaceless %}
+{% endblock thrace_media_upload_widget %}

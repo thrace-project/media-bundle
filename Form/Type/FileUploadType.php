@@ -125,11 +125,7 @@ class FileUploadType extends AbstractType
     {
         $defaultOptions = $this->options;
     
-        $defaultConfigs = array(
-            'maxSize' => $this->options['max_upload_size'],
-            'enabled_button' => true,
-            'meta_button' => true,
-        );
+        $defaultConfigs = $this->getDefaultConfigs();
     
         $router = $this->router;
     
@@ -149,8 +145,6 @@ class FileUploadType extends AbstractType
                     throw new \InvalidArgumentException(sprintf('Some of the configs "%s" are missing', json_encode($requiredConfigs)));
                 }
 
-                $configs['upload_url'] = $router->generate('thrace_media_file_upload');
-
                 return $configs;
             }
         ));
@@ -165,4 +159,18 @@ class FileUploadType extends AbstractType
         return 'thrace_media_file_upload';
     }
 
+    /**
+     * Gets default configs for the widget
+     * 
+     * @return array
+     */
+    public function getDefaultConfigs()
+    {
+        return array(
+            'upload_url' =>$this->router->generate('thrace_media_file_upload'),
+            'maxSize' => $this->options['max_upload_size'],
+            'enabled_button' => true,
+            'meta_button' => true,
+        );
+    }
 }

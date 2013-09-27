@@ -105,14 +105,11 @@ class FileUploadSubscriber implements EventSubscriber
                     // remove old file
                     $clonedEntity = clone $entity;
                     $clonedEntity->setName($changeSet['name'][0]);
-                    $this->scheduledForDeleteFiles[] = $clonedEntity; 
-                } 
-                
-                if (isset($changeSet['hash'])){
-                    $this->checksum($entity, $changeSet['hash'][1]);                    
+                    $this->scheduledForDeleteFiles[] = $clonedEntity;                     
                     $this->scheduledForCopyFiles[] = $entity;
-                }
-                
+                    $this->checksum($entity);
+                } 
+
                 $this->populateMeta($em, $uow, $entity);
             }
         }
@@ -183,11 +180,11 @@ class FileUploadSubscriber implements EventSubscriber
      * @param string $hash
      * @throws FileHashChangedException
      */
-    protected function checksum(FileInterface $entity, $hash)
+    protected function checksum(FileInterface $entity)
     {
         $currentHash = $this->fileManager->checksumTemporaryFileByName($entity->getName());
         
-        if ($hash !== $currentHash){
+        if ($entity->getHash() !== $currentHash){
             throw new FileHashChangedException($entity->getName());
         }
     }

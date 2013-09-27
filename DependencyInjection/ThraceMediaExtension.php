@@ -28,6 +28,7 @@ class ThraceMediaExtension extends Extension
         $container->setParameter('thrace_media.temporary_filesystem_key', $config['temporary_filesystem_key']);
         $container->setParameter('thrace_media.media_filesystem_key', $config['media_filesystem_key']);
         $container->setParameter('thrace_media.enable_version', $config['enable_version']);
+        $container->setParameter('thrace_media.jwplayer.options', $config['jwplayer']);  
         $container->setParameter('thrace_media.plupload.options', $config['plupload']);  
     }
     

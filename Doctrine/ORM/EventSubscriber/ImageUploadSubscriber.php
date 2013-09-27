@@ -105,11 +105,13 @@ class ImageUploadSubscriber implements EventSubscriber
                     // remove old image
                     $clonedEntity = clone $entity;
                     $clonedEntity->setName($changeSet['name'][0]);
-                    $this->scheduledForDeleteImages[] = $clonedEntity; 
+                    $this->scheduledForDeleteImages[] = $clonedEntity;                     
+                    $this->scheduledForCopyImages[] = $entity;
+                    $this->checksum($entity);
                 } 
 
                 if (isset($changeSet['hash'])){
-                    $this->checksum($entity, $changeSet['hash'][1]);
+                    $this->checksum($entity);
                     $this->scheduledForCopyImages[] = $entity;
                 }
                 
@@ -192,11 +194,11 @@ class ImageUploadSubscriber implements EventSubscriber
      * @param string $hash
      * @throws FileHashChangedException
      */
-    protected function checksum(ImageInterface $entity, $hash)
+    protected function checksum(ImageInterface $entity)
     {
         $currentHash = $this->imageManager->checksumTemporaryFileByName($entity->getName());
     
-        if ($hash !== $currentHash){
+        if ($entity->getHash() !== $currentHash){
             throw new FileHashChangedException($entity->getName());
         }
     }
