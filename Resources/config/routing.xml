@@ -26,6 +26,10 @@
          <default key="_controller">ThraceMediaBundle:File:renderTemporary</default>
     </route>
     
+     <route id="thrace_media_render" pattern="/_thrace-media/render" methods="GET">
+         <default key="_controller">ThraceMediaBundle:File:render</default>
+    </route>
+    
      <route id="thrace_media_image_render" pattern="/_thrace-media/image-render" methods="GET">
          <default key="_controller">ThraceMediaBundle:Image:render</default>
     </route>

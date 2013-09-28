@@ -20,18 +20,18 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('thrace_media');
 
-        $this->addPlUploadConfiguration($rootNode);
+        $this->addMediaConfiguration($rootNode);
 
         return $treeBuilder;
     }
 
     /**
-     * Plupload configurations
+     * Media configurations
      * 
      * @param ArrayNodeDefinition $rootNode
      * @return void
      */
-    private function addPlUploadConfiguration(ArrayNodeDefinition $rootNode)
+    private function addMediaConfiguration(ArrayNodeDefinition $rootNode)
     {
         $rootNode
             ->children()

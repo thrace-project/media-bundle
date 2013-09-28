@@ -16,4 +16,6 @@ namespace Thrace\MediaBundle\Model;
  * @since 1.0
  */
 interface MediaInterface extends FileInterface
-{}
+{
+    public function getType();
+}

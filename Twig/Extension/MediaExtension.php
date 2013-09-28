@@ -9,6 +9,8 @@
  */
 namespace Thrace\MediaBundle\Twig\Extension;
 
+use Thrace\MediaBundle\Model\MediaInterface;
+
 use Thrace\MediaBundle\Model\FileInterface;
 
 use Thrace\MediaBundle\Model\ImageInterface;
@@ -54,6 +56,12 @@ class MediaExtension extends \Twig_Extension
             ;
     }
     
+    /**
+     * Return download url
+     * 
+     * @param FileInterface $file
+     * @return string
+     */
     public function generateDownloadUrl(FileInterface $file)
     {
         return $this->container->get('router')->generate('thrace_media_file_download', array(
@@ -61,6 +69,37 @@ class MediaExtension extends \Twig_Extension
         ), true);
     }
     
+    /**
+     * Renders jwplayer
+     * 
+     * @param MediaInterface $media
+     * @param array $options
+     * 
+     * @return string
+     */
+    public function renderMedia(MediaInterface $media, array $options = array())
+    {
+        $defaultOptions = $this->container->getParameter('thrace_media.jwplayer.options');
+        $configs = array(
+            'key' => $defaultOptions['key'],
+            'html5player' => $defaultOptions['html5player'],
+            'flashplayer' => $defaultOptions['flashplayer'],
+            'type' => $media->getType(),
+            'id' => uniqid('thrace_media', true),
+            'file' => $this->container->get('router')->generate('thrace_media_render', array(
+                'name' => $media->getFilePath()    
+            ), true)
+        );
+        
+        $configs = array_replace_recursive($configs, $options);
+        
+        return $this->container->get('templating')
+            ->render('ThraceMediaBundle:Media:media.html.twig',
+                array('media' => $media, 'configs' => $configs)
+            )
+        ;
+    }
+
     /**
      * Converts bytes
      *
@@ -82,6 +121,7 @@ class MediaExtension extends \Twig_Extension
     {
         return array(
             'thrace_image' => new \Twig_Function_Method($this, 'renderImage', array('is_safe' => array('html'))),
+            'thrace_media' => new \Twig_Function_Method($this, 'renderMedia', array('is_safe' => array('html'))),
             'thrace_file_download_url' => new \Twig_Function_Method($this, 'generateDownloadUrl', array('is_safe' => array('html'))),
             'thrace_filesize' => new \Twig_Function_Method($this, 'fileSize')
         );
@@ -95,4 +135,5 @@ class MediaExtension extends \Twig_Extension
     {
         return 'thrace_media';
     }
+
 }

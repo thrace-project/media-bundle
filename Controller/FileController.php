@@ -103,6 +103,26 @@ class FileController extends ContainerAware
     
         return $response;
     }
+    
+    /**
+     * Renders permenent file
+     *
+     * @return Response
+     */
+    public function renderAction()
+    {
+        $name = $this->container->get('request')->get('name');
+        $fileManager = $this->container->get('thrace_media.filemanager');
+        $content = $fileManager->getPermenentFileByKey($name);
+        
+        $response = new Response($content);        
+        $response->headers->set('Accept-Ranges', 'bytes');
+        $response->headers->set('Content-Length', mb_strlen($content));
+        $response->headers->set('Content-Type', 'application/octet-stream');
+        $response->expire();
+    
+        return $response;
+    }
 
     /**
      * Gets request object

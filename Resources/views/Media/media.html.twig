@@ -1,0 +1,6 @@
+{% set extra = {
+    'html5player': asset('') ~ configs.html5player,
+    'flashplayer': asset('') ~ configs.flashplayer,
+} %}
+
+<div id="{{ configs.id }}" class="thrace-media-render" data-options="{{ configs|merge(extra)|json_encode }}"></div>
