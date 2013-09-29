@@ -27,7 +27,7 @@ class FileManager extends AbstractManager implements FileManagerInterface
         return $this->mediaFilesystem->read($key);
     }
     
-    public function copyMediaToTemporaryDirectory(FileInterface $object)
+    public function copyFileToTemporaryDirectory(FileInterface $object)
     {
         $tempHash = $this->checksumTemporaryFileByName($object->getName());
         

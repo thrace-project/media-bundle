@@ -300,3 +300,90 @@
 
 {% endspaceless %}
 {% endblock thrace_media_upload_widget %}
+
+{% block thrace_media_multi_file_upload_collection_widget %}
+{% spaceless %}
+<div> 	   
+    <div class="thrace-multi-file-upload-main" style="display:none">
+        <div id="thrace-multi-file-upload-error-{{ id }}" class="thrace-multi-file-upload-error" style="display:none">
+            <div class="ui-state-error" style="width:340px; padding:5px;">
+                <p>
+                    <span style="float:right">
+                        <a href="#close" id="thrace-multi-upload-error-cancel-{{ id }}">
+                            <img src="{{ asset('bundles/thracemedia/images/cancel.png') }}" />
+                        </a>
+                    </span>
+    
+                    <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+                    <span class="thrace-fileupload-error">&nbsp;</span>
+                </p>
+            </div>
+        </div>
+    	
+        <div id="multi-file-progress-{{ id }}"></div>
+    
+        <div id="drag-drop-area-{{ id }}" class="thrace-drag-drop" {% if form|length > 0 %}style="display:none;"{% endif %}>
+            <div class="thrace-drag-drop-inside">
+                <p class="thrace-drag-drop-info" id="thrace-drag-drop-info-{{ id }}" 
+                    trans-drag="{% trans from translation_domain %}drag_drop_file_text{% endtrans %}"
+                    trans-no-files="{% trans from translation_domain %}no_file_text{% endtrans %}"
+                ></p>
+            </div>
+        </div>
+            
+            
+        <ul id="thrace-multi-file-upload-container-{{ id }}" class="thrace-sortable">
+            {% for key, child in form %}
+                <li data-index="{{ key }}">
+                    {{ form_widget(child) }}
+                    <div class="ui-state-highlight" style="width:340px;height:70px;padding:5px;"> 
+                        <p>
+                            <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+                            <strong>{% trans from translation_domain %}filename{% endtrans %}: </strong>
+                            <span class="thrace-file-name">{{ form[key].originalName.vars.value }}</span>
+                        </p>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+            
+        <div id="thrace-multi-file-prototype-{{ id }}" style="display:none">
+            <div class="ui-state-highlight" style="width:340px;height:70px;padding:5px;"> 
+                <p>
+                    <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+                    <strong>{% trans from translation_domain %}filename{% endtrans %}: </strong>
+                    <span class="thrace-file-name">__name__</span>
+                </p>
+            </div>
+        </div>
+    	
+        <div id="thrace-progressbar-prototype-{{ id }}" style="display:none">
+            <div id="__id__"  class="thrace-progressbar-multi-file" style="width:350px; height:10px;" ></div>
+            <div class="thrace-progress-info">
+                <div class="ui-widget">
+                    <div class="ui-state-highlight ui-corner-all" style="width:340px;padding:5px;"> 
+                        <span style="float:right">
+                            <a href="#remove" id="thrace-multi-upload-remove-file-__id__">
+                                <img src="{{ asset('bundles/thracemedia/images/cancel.png') }}" />
+                            </a>
+                        </span>
+                        <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+                        <span>{% trans from translation_domain %}upload_progress{% endtrans %}: <strong>0%</strong></span>
+                        <br/>
+                        <span>__file_name__</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <span data-prototype="{{ form_widget(form.vars['prototype']) | e }}" data-options="{{ configs|json_encode}}"
+            class="thrace-multi-file-upload" style="display:none"></span>
+        <div style="clear:both;"></div> 
+        
+        {{ block('thrace_media_file_upload_controls') }}
+        {{ block('thrace_media_upload_meta') }} 
+    </div>
+</div>
+
+{% endspaceless %}
+{% endblock thrace_media_multi_file_upload_collection_widget %}

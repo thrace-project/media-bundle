@@ -11,8 +11,6 @@ namespace Thrace\MediaBundle\Form\EventSubscriber;
 
 use Thrace\MediaBundle\Manager\FileManagerInterface;
 
-use Thrace\MediaBundle\Model\MediaInterface;
-
 use Symfony\Component\Form\FormEvent;
 
 use Thrace\MediaBundle\Model\FileInterface;
@@ -40,22 +38,22 @@ class FileUploadSubscriber implements EventSubscriberInterface
     /**
      * Copy media to temporary directory
      *
-     * @param FilterDataEvent $event
+     * @param FormEvent $event
      * @return void
      */
     public function postSetData(FormEvent $event)
     {
         $entity = $event->getData();
     
-        if ($entity instanceof MediaInterface && null !== $entity->getId()){
-            $this->fileManager->copyMediaToTemporaryDirectory($entity);
+        if ($entity instanceof FileInterface && null !== $entity->getId()){
+            $this->fileManager->copyFileToTemporaryDirectory($entity);
         }
     }
     
     /**
      * Form event - removes file if scheduled.
      * 
-     * @param DataEvent $event
+     * @param FormEvent $event
      */
     public function submit(FormEvent $event)
     {
