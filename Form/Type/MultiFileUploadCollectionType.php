@@ -80,6 +80,7 @@ class MultiFileUploadCollectionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->subscriber->setTypeOptions($options['options']);
         $builder->addEventSubscriber($this->subscriber);
     }
     

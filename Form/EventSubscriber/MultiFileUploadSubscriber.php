@@ -9,6 +9,14 @@
  */
 namespace Thrace\MediaBundle\Form\EventSubscriber;
 
+use Symfony\Component\Form\FormFactoryInterface;
+
+use Doctrine\Common\Collections\ArrayCollection;
+
+use Doctrine\Common\Collections\Collection;
+
+use Symfony\Component\Form\Exception\UnexpectedTypeException;
+
 use Thrace\MediaBundle\Manager\FileManagerInterface;
 
 use Symfony\Component\Form\FormEvent;
@@ -37,16 +45,67 @@ class MultiFileUploadSubscriber implements EventSubscriberInterface
     protected $om;
     
     protected $fileManager;
+    
+    protected $formFactory;
+    
+    protected $typeOptions = array();
 
     /**
      * Construct
      * 
      * @param ObjectManager $om
      */
-    public function __construct(ObjectManager $om, FileManagerInterface $fileManager)
+    public function __construct(ObjectManager $om, FileManagerInterface $fileManager, FormFactoryInterface $formFactory)
     {
         $this->om = $om;
         $this->fileManager = $fileManager;
+        $this->formFactory = $formFactory;
+    }
+    
+    public function setTyPeOptions(array $typeOptions)
+    {
+        $this->typeOptions = $typeOptions;
+    }
+    
+    /**
+     * Reorder collection
+     * 
+     * @param FormEvent $event
+     * @throws UnexpectedTypeException
+     */
+    public function preSubmit(FormEvent $event)
+    {
+        $form = $event->getForm();
+        $data = $event->getData();
+    
+        if (null === $data) {
+            $data = array();
+        }
+    
+        if (!is_array($data) && !$data instanceof \Traversable) {
+            throw new UnexpectedTypeException($data, 'array or \Traversable');
+        }
+       
+        foreach ($form as $name => $child) {
+            $form->remove($name);
+        }
+    
+        uasort($data, function($a, $b){
+            if ($a['position'] == $b['position']) {
+                return 0;
+            }
+            return ($a['position'] < $b['position']) ? -1 : 1;
+        });
+        
+        foreach ($data as $name => $value) {
+            if (!$form->has($name)) {
+                $options = array_merge($this->typeOptions, array(
+                    'property_path' => '[' . $name . ']',
+                ));
+        
+                $form->add($this->formFactory->createNamed($name, 'thrace_media_multi_file_upload', null, $options));
+            }
+        }
     }
 
     /**
@@ -91,8 +150,9 @@ class MultiFileUploadSubscriber implements EventSubscriberInterface
     static function getSubscribedEvents()
     {
         return array(
+            FormEvents::PRE_SUBMIT => 'preSubmit',
             FormEvents::POST_SET_DATA => 'postSetData',
-            FormEvents::POST_SUBMIT => 'postSubmit',
+            FormEvents::POST_SUBMIT => 'postSubmit',                
         );
     }
 }

@@ -113,6 +113,7 @@
             class="%thrace_media.form.event_subscriber.multi_file_upload.class%">
             <argument type="service"  id="doctrine.orm.entity_manager" />
             <argument type="service"  id="thrace_media.filemanager" />
+            <argument type="service"  id="form.factory" />
         </service>
 
 		<service id="thrace_media.twig.extension.media" 
