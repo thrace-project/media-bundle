@@ -122,7 +122,7 @@ class MultiFileUploadCollectionType extends AbstractType
     
         $resolver->setNormalizers(array(
             'type' => function (Options $options, $value) use ($defaultOptions, $router){
-                return 'thrace_media_multi_file_upload';
+                return 'thrace_multi_file_upload';
             },
             'configs' => function (Options $options, $value) use ($defaultOptions, $defaultConfigs, $router){
                 $configs = array_replace_recursive($defaultOptions, $defaultConfigs, $value);
@@ -156,7 +156,7 @@ class MultiFileUploadCollectionType extends AbstractType
      */
     public function getName()
     {
-        return 'thrace_media_multi_file_upload_collection';
+        return 'thrace_multi_file_upload_collection';
     }
 
 }

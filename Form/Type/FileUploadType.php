@@ -156,7 +156,7 @@ class FileUploadType extends AbstractType
      */
     public function getName()
     {
-        return 'thrace_media_file_upload';
+        return 'thrace_file_upload';
     }
 
     /**

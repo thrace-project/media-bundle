@@ -11,8 +11,6 @@ namespace Thrace\MediaBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
-use Symfony\Component\Console\Input\InputArgument;
-
 use Symfony\Component\Console\Input\InputInterface;
 
 use Symfony\Component\Console\Input\InputOption;
@@ -36,7 +34,7 @@ class ClearCacheCommand extends ContainerAwareCommand
         $this
             ->setName('thrace:media:cache-clear')
             ->setDescription('Remove cached images and files in temporary directory')
-            ->addArgument('maxAge', InputArgument::OPTIONAL, 'Max age in seconds', 7200)
+            ->addOption('maxAge', null, InputOption::VALUE_OPTIONAL, 'Max age in seconds', 7200)
         ;
     }
 
@@ -46,8 +44,8 @@ class ClearCacheCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {   
-        $this->getContainer()->get('thrace_media.file_manager')->clearCache($input->getArgument('maxAge'));
-            
-        $output->writeln('Files successfully removed');
+        $num = $this->getContainer()->get('thrace_media.file_manager')->clearCache($input->getOption('maxAge'));
+        
+        $output->writeln('<info>' . sprintf('%s files successfully removed', $num) . '</info>');
     }
 }

@@ -180,6 +180,6 @@ class ImageUploadType extends AbstractType
      */
     public function getName()
     {
-        return 'thrace_media_image_upload';
+        return 'thrace_image_upload';
     }
 }

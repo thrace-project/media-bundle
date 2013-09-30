@@ -253,6 +253,7 @@ jQuery(document).ready(function(){
                 jQuery('#' + options.name_id).val(data.name);
                 jQuery('#' + options.original_name_id).val(file.name);
                 jQuery('#' + options.hash_id).val(data.hash);
+                jQuery('#' + options.scheduled_for_deletion_id).val(0);
                 
                 jQuery('#thrace-upload-file-' + options.id).hide();
                 Player(data.name);        

@@ -103,7 +103,7 @@ class MultiFileUploadSubscriber implements EventSubscriberInterface
                     'property_path' => '[' . $name . ']',
                 ));
         
-                $form->add($this->formFactory->createNamed($name, 'thrace_media_multi_file_upload', null, $options));
+                $form->add($this->formFactory->createNamed($name, 'thrace_multi_file_upload', null, $options));
             }
         }
     }

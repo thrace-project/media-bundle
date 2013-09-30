@@ -56,7 +56,7 @@ class MultiFileUploadType extends AbstractType
      */
     public function getName()
     {
-        return 'thrace_media_multi_file_upload';
+        return 'thrace_multi_file_upload';
     }
 
 }

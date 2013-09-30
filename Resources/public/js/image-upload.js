@@ -142,16 +142,15 @@ jQuery(document).ready(function(){
             jQuery('#' + options.copywrite_id).val(''); 
             jQuery('#thrace-meta-copywrite-' + options.id).val('');
         };
-
+        
         // Checking if value is empty
         if(jQuery('#' + options.name_id).val() == ''){
             disableButtons();
-        } else {
+        } else { 
             jQuery('#thrace-image-' + options.id)
             .attr({
                 'src': options.render_url + '?name=' + jQuery('#' + options.name_id).val(), 
-                width: options.minWidth, 
-                height: options.minHeight
+                'style': 'width:'+ options.minWidth +'px;height:'+ options.minHeight +'px'
             });
             populateMeta();
         }
@@ -243,11 +242,11 @@ jQuery(document).ready(function(){
                 jQuery('#' + options.name_id).val(data.name);
                 jQuery('#' + options.original_name_id).val(file.name);
                 jQuery('#' + options.hash_id).val(data.hash);
+                jQuery('#' + options.scheduled_for_deletion_id).val(0);
                 jQuery('#thrace-image-' + options.id).fadeOut(function(){
                     jQuery(this).attr({
                         'src': options.render_url + '?name=' + data.name, 
-                        width: options.minWidth, 
-                        height: options.minHeight
+                        'style': 'width:'+ options.minWidth +'px;height:'+ options.minHeight +'px'
                     });
                 }).fadeIn(function(){
                     jQuery('body').trigger('refreshPlUpload');
@@ -290,7 +289,7 @@ jQuery(document).ready(function(){
                 jQuery(this).attr({
                     'src': options.base_url + 'bundles/thracemedia/images/noImage.png'
                 })
-                .removeAttr('width').removeAttr('height');
+                .removeAttr('style');
             }).fadeIn(function(){
                 jQuery('body').trigger('refreshPlUpload');
             });

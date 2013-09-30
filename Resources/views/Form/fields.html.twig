@@ -1,4 +1,4 @@
-{% block thrace_media_file_upload_widget %}
+{% block thrace_file_upload_widget %}
 {% spaceless %}
 <div>
     {{ form_widget(form) }} 
@@ -51,15 +51,15 @@
     
         </div>
         
-        {{ block('thrace_media_file_upload_controls') }}
+        {{ block('thrace_file_upload_controls') }}
         {{ block('thrace_media_upload_meta') }}  
     </span>
 </div>
 
 {% endspaceless %}
-{% endblock thrace_media_file_upload_widget %}
+{% endblock thrace_file_upload_widget %}
 
-{% block thrace_media_file_upload_controls %}
+{% block thrace_file_upload_controls %}
 {% spaceless %}
 <div class="thrace-controls">
     <button id="thrace-file-btn-upload-{{ id }}" class="ui-icon ui-icon-newwin thrace-file-upload-button" 
@@ -77,7 +77,7 @@
         title="{% trans from translation_domain %}button_remove_title{% endtrans %}"></a>  &nbsp;
 </div>
 {% endspaceless %}
-{% endblock thrace_media_file_upload_controls %}
+{% endblock thrace_file_upload_controls %}
 
 {% block thrace_media_upload_meta %}
 {% spaceless %}
@@ -128,7 +128,7 @@
 {% endspaceless %}
 {% endblock thrace_media_upload_meta %}
 
-{% block thrace_media_image_upload_widget %}
+{% block thrace_image_upload_widget %}
 {% spaceless %}
 <div>    
     {{ form_widget(form) }} 
@@ -141,7 +141,7 @@
     <span class="thrace-image-upload" data-options="{{ configs|merge({'base_url': asset('')})|json_encode }}" style="display:none"></span>
 </div>
 {% endspaceless %}
-{% endblock thrace_media_image_upload_widget %}
+{% endblock thrace_image_upload_widget %}
 
 {% block thrace_image_upload_container %}
 {% spaceless %}
@@ -293,7 +293,7 @@
         
         <div id="thrace-media-container-{{ id }}"></div>
         
-        {{ block('thrace_media_file_upload_controls') }}
+        {{ block('thrace_file_upload_controls') }}
         {{ block('thrace_media_upload_meta') }}  
     </span>
 </div>
@@ -301,7 +301,7 @@
 {% endspaceless %}
 {% endblock thrace_media_upload_widget %}
 
-{% block thrace_media_multi_file_upload_collection_widget %}
+{% block thrace_multi_file_upload_collection_widget %}
 {% spaceless %}
 <div> 	   
     <div class="thrace-multi-file-upload-main" style="display:none">
@@ -380,13 +380,13 @@
             class="thrace-multi-file-upload" style="display:none"></span>
         <div style="clear:both;"></div> 
         
-        {{ block('thrace_media_file_upload_controls') }}
+        {{ block('thrace_file_upload_controls') }}
         {{ block('thrace_media_upload_meta') }} 
     </div>
 </div>
 
 {% endspaceless %}
-{% endblock thrace_media_multi_file_upload_collection_widget %}
+{% endblock thrace_multi_file_upload_collection_widget %}
 
 {% block thrace_multi_image_upload_collection_widget %}
 {% spaceless %}
@@ -422,8 +422,8 @@
             {% for key, child in form %}
                 <li data-index="{{ key }}">
                     {{ form_widget(child) }}
-                    <img src="{{ path('render_url', {'name': child.vars.value.name}) }}" 
-                        width="{{ configs.minWidth }}" height="{{ configs.minHeight }}" />
+                    <img src="{{ path('thrace_media_image_render_temporary', {'name': child.vars.value.name}) }}" 
+                       style="width:{{ configs.minWidth }}px; height:{{ configs.minHeight }}px" />
                 </li>
             {% endfor %}
         </ul>

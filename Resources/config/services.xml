@@ -43,7 +43,7 @@
             <argument type="service" id="router" />
             <argument type="service" id="thrace_media.form.event_subscriber.file_upload" />
             <argument>%thrace_media.plupload.options%</argument>
-             <tag name="form.type" alias="thrace_media_file_upload" />
+             <tag name="form.type" alias="thrace_file_upload" />
         </service>
         
         <service id="thrace_media.doctrine.orm.event_subscriber.file_upload" 
@@ -82,7 +82,7 @@
             <argument type="service" id="router" />
             <argument type="service" id="thrace_media.form.event_subscriber.image_upload" />
             <argument>%thrace_media.plupload.options%</argument>
-             <tag name="form.type" alias="thrace_media_image_upload" />
+             <tag name="form.type" alias="thrace_image_upload" />
         </service>
         
 		<service id="thrace_media.form.type.media_upload" 
@@ -103,13 +103,13 @@
             <argument type="service"  id="thrace_media.form.event_subscriber.multi_file_upload" />
             <argument>%thrace_media.plupload.options%</argument>
             
-            <tag name="form.type" alias="thrace_media_multi_file_upload_collection" />
+            <tag name="form.type" alias="thrace_multi_file_upload_collection" />
         </service>
         
         <service id="thrace_media.form.type.multi_file_upload" 
         	class="%thrace_media.form.type.multi_file_upload.class%">
         	
-        	 <tag name="form.type" alias="thrace_media_multi_file_upload" />
+        	 <tag name="form.type" alias="thrace_multi_file_upload" />
         </service>
         
         <service id="thrace_media.form.event_subscriber.multi_file_upload" 

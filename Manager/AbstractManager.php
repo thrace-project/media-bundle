@@ -55,13 +55,17 @@ class AbstractManager
     public function clearCache($maxAge)
     {
         $delTime = (time() - (int) $maxAge);
-    
+        $num = 0;
+        
         foreach ($this->temporaryFilesystem->keys() as $key){
             if (!$this->temporaryFilesystem->getAdapter()->isDirectory($key)){
                 if ($delTime > $this->temporaryFilesystem->mtime($key)){
                     $this->temporaryFilesystem->delete($key);
+                    $num++;
                 }
             }
         }
+        
+        return $num;
     }
 }
