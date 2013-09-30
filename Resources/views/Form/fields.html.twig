@@ -387,3 +387,75 @@
 
 {% endspaceless %}
 {% endblock thrace_media_multi_file_upload_collection_widget %}
+
+{% block thrace_multi_image_upload_collection_widget %}
+{% spaceless %}
+<div>
+    <div class="thrace-multi-image-upload-main" style="display:none">
+        <div id="thrace-multi-image-upload-error-{{ id }}" 
+            class="thrace-multi-image-upload-error" style="display:none">
+    
+            <div class="ui-state-error" style="width:340px; padding:5px;">         
+                <span style="float:right">
+                    <a href="#close" id="thrace-multi-upload-error-cancel-{{ id }}">
+                        <img src="{{ asset('bundles/thracemedia/images/cancel.png') }}" />
+                    </a>
+                </span>
+    
+                <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+                <span class="thrace-imageupload-error">&nbsp;</span>       
+            </div>
+        </div>
+    	
+        <div id="multi-image-progress-{{ id }}"></div>
+    
+        <div id="drag-drop-area-{{ id }}" class="thrace-drag-drop" {% if form|length > 0 %}style="display:none;"{% endif %}>
+            <div class="thrace-drag-drop-inside">
+                <p class="thrace-drag-drop-info" id="thrace-drag-drop-info-{{ id }}" 
+                    trans-drag="{% trans from translation_domain %}drag_drop_image_text{% endtrans %}"
+                    trans-no-images="{% trans from translation_domain %}no_images_text{% endtrans %}"
+                ></p>
+            </div>
+        </div>
+                   
+        <ul id="thrace-multi-image-upload-container-{{ id }}" class="thrace-sortable">
+            {% for key, child in form %}
+                <li data-index="{{ key }}">
+                    {{ form_widget(child) }}
+                    <img src="{{ path('render_url', {'name': child.vars.value.name}) }}" 
+                        width="{{ configs.minWidth }}" height="{{ configs.minHeight }}" />
+                </li>
+            {% endfor %}
+        </ul>
+            
+        <div id="thrace-progressbar-prototype-{{ id }}" style="display:none">
+            <div id="__id__"  class="thrace-progressbar-multi-image" style="width:350px; height:10px;" ></div>
+            <div class="thrace-progress-info">
+                <div class="ui-widget">
+                    <div class="ui-state-highlight ui-corner-all" style="width:340px;padding:5px;"> 
+                        <span style="float:right">
+                            <a href="#remove" id="thrace-multi-upload-remove-image-__id__">
+                                <img src="{{ asset('bundles/thracemedia/images/cancel.png') }}" />
+                            </a>
+                        </span>
+                        <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+                        <span>{% trans from translation_domain %}upload_progress{% endtrans %}: <strong>0%</strong></span>
+                        <br/>
+                        <span>__image_name__ (__image_size__)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+                
+        <span data-prototype="{{ form_widget(form.vars['prototype']) | e }}" data-options="{{ configs|merge({'base_url': asset('')})|json_encode }}"
+            class="thrace-multi-image-upload" style="display:none"></span>
+        
+        <div style="clear:both;"></div> 
+
+        {{ block('thrace_image_controls') }}
+        {{ block('thrace_image_upload_crop') }}
+        {{ block('thrace_media_upload_meta') }}
+    </div>
+</div>
+{% endspaceless %}
+{% endblock thrace_multi_image_upload_collection_widget %}

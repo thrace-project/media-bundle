@@ -9,6 +9,8 @@
  */
 namespace Thrace\MediaBundle\Form\Type;
 
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
 use Symfony\Component\Form\FormBuilderInterface;
 
 use Symfony\Component\Form\FormInterface;
@@ -40,6 +42,13 @@ class MultiFileUploadType extends AbstractType
         $builder->add('position', 'hidden', array('attr' => array('class' => 'thrace_media_multi_file_upload_position')));
         $builder->add('enabled', 'hidden', array('attr' => array('class' => 'thrace_media_multi_file_upload_enabled')));
         $builder->add('currentVersion', 'hidden', array('attr' => array('class' => 'thrace_media_multi_file_upload_currentVersion')));
+    }
+    
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'auto_initialize' => false
+        ));
     }
 
     /**

@@ -11,19 +11,19 @@ namespace Thrace\MediaBundle\Form\EventSubscriber;
 
 use Symfony\Component\Form\FormFactoryInterface;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
-use Doctrine\Common\Collections\Collection;
-
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
-
-use Thrace\MediaBundle\Manager\FileManagerInterface;
 
 use Symfony\Component\Form\FormEvent;
 
-use Thrace\MediaBundle\Model\MultiFileInterface;
+use Thrace\MediaBundle\Model\MultiImageInterface;
+
+use Thrace\MediaBundle\Manager\ImageManagerInterface;
+
+use Doctrine\Common\Collections\Collection;
 
 use Doctrine\Common\Persistence\ObjectManager;
+
+use Symfony\Component\Form\Event\DataEvent;
 
 use Doctrine\ORM\PersistentCollection;
 
@@ -32,19 +32,22 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * MultiFile form subscriber
+ * MultiImage form subscriber
  *
  * @author Nikolay Georgiev <symfonist@gmail.com>
  * @since 1.0
  */
-class MultiFileUploadSubscriber implements EventSubscriberInterface
+class MultiImageUploadSubscriber implements EventSubscriberInterface
 {
     /**
      * @var Doctrine\Common\Persistence\ObjectManager
      */
     protected $om;
     
-    protected $fileManager;
+    /**
+     *  @var Thrace\MediaBundle\Manager\ImageManagerInterface
+     */
+    protected $imageManager;
     
     protected $formFactory;
     
@@ -54,11 +57,13 @@ class MultiFileUploadSubscriber implements EventSubscriberInterface
      * Construct
      * 
      * @param ObjectManager $om
+     * @param ImageManagerInterface $imageManager
+     * @param FormFactoryInterface $formFactory
      */
-    public function __construct(ObjectManager $om, FileManagerInterface $fileManager, FormFactoryInterface $formFactory)
+    public function __construct(ObjectManager $om, ImageManagerInterface $imageManager, FormFactoryInterface $formFactory)
     {
         $this->om = $om;
-        $this->fileManager = $fileManager;
+        $this->imageManager = $imageManager;
         $this->formFactory = $formFactory;
     }
     
@@ -68,8 +73,27 @@ class MultiFileUploadSubscriber implements EventSubscriberInterface
     }
     
     /**
-     * Reorder collection
+     * Copy images from permenent to temporary directory
      * 
+     * @param FormEvent $event
+     */
+    public function postSetData(FormEvent $event)
+    {
+        $collection = $event->getData();
+        
+        if ($collection instanceof PersistentCollection){
+        
+            foreach ($collection as $image){
+                if ($image instanceof MultiImageInterface && null !== $image->getId()){
+                    $this->imageManager->copyImagesToTemporaryDirectory($image);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Reorder collection
+     *
      * @param FormEvent $event
      * @throws UnexpectedTypeException
      */
@@ -85,7 +109,7 @@ class MultiFileUploadSubscriber implements EventSubscriberInterface
         if (!is_array($data) && !$data instanceof \Traversable) {
             throw new UnexpectedTypeException($data, 'array or \Traversable');
         }
-       
+         
         foreach ($form as $name => $child) {
             $form->remove($name);
         }
@@ -96,38 +120,20 @@ class MultiFileUploadSubscriber implements EventSubscriberInterface
             }
             return ($a['position'] < $b['position']) ? -1 : 1;
         });
-        
-        foreach ($data as $name => $value) {
-            if (!$form->has($name)) {
-                $options = array_merge($this->typeOptions, array(
-                    'property_path' => '[' . $name . ']',
-                ));
-        
-                $form->add($this->formFactory->createNamed($name, 'thrace_media_multi_file_upload', null, $options));
+    
+            foreach ($data as $name => $value) {
+                if (!$form->has($name)) {
+                    $options = array_merge($this->typeOptions, array(
+                        'property_path' => '[' . $name . ']',
+                    ));
+    
+                    $form->add($this->formFactory->createNamed($name, 'thrace_multi_image_upload', null, $options));
+                }
             }
-        }
     }
 
     /**
-     * Copy file from permenent to temporary directory
-     *
-     * @param FormEvent $event
-     */
-    public function postSetData(FormEvent $event)
-    {
-        $collection = $event->getData();
-    
-        if ($collection instanceof PersistentCollection){
-            foreach ($collection as $file){
-                if ($file instanceof MultiFileInterface){
-                    $this->fileManager->copyFileToTemporaryDirectory($file);
-                }
-            }
-        }
-    }
-    
-    /**
-     * Remove deleted files
+     * Remove deleted images
      * 
      * @param FormEvent $event
      */
@@ -137,7 +143,7 @@ class MultiFileUploadSubscriber implements EventSubscriberInterface
 
         if ($collection instanceof PersistentCollection){
             foreach ($collection->getDeleteDiff() as $entity){
-                if ($entity instanceof MultiFileInterface){
+                if ($entity instanceof MultiImageInterface){
                     $this->om->remove($entity);
                 } 
             }
@@ -150,9 +156,9 @@ class MultiFileUploadSubscriber implements EventSubscriberInterface
     static function getSubscribedEvents()
     {
         return array(
-            FormEvents::PRE_SUBMIT => 'preSubmit',
             FormEvents::POST_SET_DATA => 'postSetData',
-            FormEvents::POST_SUBMIT => 'postSubmit',                
+            FormEvents::PRE_SUBMIT => 'preSubmit',
+            FormEvents::POST_SUBMIT => 'postSubmit',
         );
     }
 }
