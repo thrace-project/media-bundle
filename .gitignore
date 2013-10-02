@@ -1,5 +1,10 @@
 # PHPUnit special files
 phpunit.xml
+phpunit.phar
+
+# Composer
+/vendor/
+composer.lock
 
 # Doctrine backup files 
 *.php~

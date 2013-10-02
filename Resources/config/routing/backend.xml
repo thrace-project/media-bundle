@@ -9,10 +9,6 @@
          <default key="_format">json</default>
     </route>
     
-     <route id="thrace_media_file_download" pattern="/_thrace-media/file-download" methods="GET">
-         <default key="_controller">ThraceMediaBundle:File:download</default>
-    </route>
-    
      <route id="thrace_media_image_upload" pattern="/_thrace-media/image-upload.{_format}" methods="POST">
          <default key="_controller">ThraceMediaBundle:Image:upload</default>
          <default key="_format">json</default>
@@ -24,14 +20,6 @@
     
      <route id="thrace_media_render_temporary" pattern="/_thrace-media/render-temporary" methods="GET">
          <default key="_controller">ThraceMediaBundle:File:renderTemporary</default>
-    </route>
-    
-     <route id="thrace_media_render" pattern="/_thrace-media/render" methods="GET">
-         <default key="_controller">ThraceMediaBundle:File:render</default>
-    </route>
-    
-     <route id="thrace_media_image_render" pattern="/_thrace-media/image-render" methods="GET">
-         <default key="_controller">ThraceMediaBundle:Image:render</default>
     </route>
     
      <route id="thrace_media_image_crop" pattern="/_thrace-media/image-crop.{_format}" methods="POST">

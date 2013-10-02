@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+    
+     <route id="thrace_media_file_download" pattern="/_thrace-media/file-download" methods="GET">
+         <default key="_controller">ThraceMediaBundle:File:download</default>
+    </route>
+
+     <route id="thrace_media_render" pattern="/_thrace-media/render" methods="GET">
+         <default key="_controller">ThraceMediaBundle:File:render</default>
+    </route>
+    
+     <route id="thrace_media_image_render" pattern="/_thrace-media/image-render" methods="GET">
+         <default key="_controller">ThraceMediaBundle:Image:render</default>
+    </route>
+</routes>

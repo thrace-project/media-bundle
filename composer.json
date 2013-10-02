@@ -1,7 +1,7 @@
 {
     "name":         "thrace/media-bundle",
-    "description":  "Handles image/file uploads",
-    "keywords":     ["thrace project, media, upload, symfony"],
+    "description":  "The `ThraceMediaBundle` handles file, video, audio and image upload plus some image manipulations.",
+    "keywords":     ["thrace project, media, upload, symfony, plupload, crop, jwplayer"],
     "type":         "symfony-bundle",
     "license":      "MIT",
     "authors":      [
@@ -10,15 +10,28 @@
             "email": "symfonist@gmail.com"
         }
     ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.*-dev"
+        }
+    },
     "minimum-stability": "dev",
     "require":      {
+        "php": ">=5.3.3",
         "symfony/framework-bundle": "~2.3",
-        "knplabs/gaufrette": "dev-master",
-	"knplabs/knp-gaufrette-bundle": "dev-master",
-	"liip/imagine-bundle": "dev-master"
+        "symfony/form": "~2.3",
+	"symfony/validator": "~2.3"
+	"symfony/twig-bundle": "2.*"
+    },
+    "require-dev": {
+        "thrace/component-bundle": "*",
+        "phpunit/phpunit": "3.7.*@dev",
+        "symfony/doctrine-bridge": "~2.3",
+        "doctrine/orm": "2.*",
+        "doctrine/doctrine-bundle": "1.*"
     },
     "autoload":     {
-        "psr-0": { "Thrace\\ComponentBundle": "" }
+        "psr-0": { "Thrace\\MediaBundle": "" }
     },
-    "target-dir": "Thrace/ComponentBundle"
+    "target-dir": "Thrace/MediaBundle"
 }
