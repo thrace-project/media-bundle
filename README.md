@@ -4,7 +4,7 @@ ThraceMediaBundle
 The `ThraceMediaBundle` handles file, video, audio and image upload plus some image manipulations like 
 cropping, rotating, resetting ... etc. in your Symfony 2 application. It is 100% integrated with Doctrine ORM.
 It is based on [Plupload](http://www.plupload.com/) library!
-Also it has hard dependency of [https://github.com/KnpLabs/KnpGaufretteBundle] - used for filesystem abstraction/
+Also it has hard dependency of [KnpGaufretteBundle](https://github.com/KnpLabs/KnpGaufretteBundle) - used for filesystem abstraction
 and [LiipImagineBundle](https://github.com/liip/LiipImagineBundle) for image manipulation with [Imagine](https://github.com/avalanche123/Imagine) library.
 
 Documentation
@@ -12,15 +12,7 @@ Documentation
 
 The bulk of the documentation is stored in the `Resources/doc/index.md` file in this bundle:
 
-Read the [Documentation](Resources/doc/index.md)
-
-Installation
-------------
-
-All the installation instructions are located in [documentation](Resources/doc/instalation.md).
-
-Reporting an issue or a feature request
----------------------------------------
+Read the [documentation](Resources/doc/index.md)
 
 Issues and feature requests are tracked in the [Github issue tracker](https://github.com/thrace-project/media-bundle/issues).
 

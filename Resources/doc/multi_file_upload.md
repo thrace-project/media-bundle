@@ -1,7 +1,7 @@
 MultiFileUpload
 ===============
 
-MultiFileUpload is almost the same as [file_upload](file_upload.md) the only difference is that you can upload and manage more then one file and items are sortable.
+multi_file_upload is almost the same as [file_upload](file_upload.md) the only difference is that you can upload and manage more then one file and items are sortable.
 
 ### Usage :
 
@@ -224,7 +224,7 @@ $ php app/console assetic:dump
 ```
 
 ##### Download file. 
-[See](Resources/doc/file_upload.md#file_download)
+[See here](file_upload.md#file_download)
 
 That's it.
 

@@ -1,7 +1,7 @@
 FileUpload
 ==========
 
-FileUpload provides the following functionalities:
+file_upload provides the following functionalities:
 
 - upload a single file
 - add file metadata (title, caption, description, author and copywrite)

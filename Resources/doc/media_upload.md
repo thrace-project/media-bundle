@@ -1,7 +1,7 @@
 MediaUpload
 ===========
 
-MediaUpload provides the following functionalities:
+media_upload provides the following functionalities:
 
 - upload a single media (video or audio)
 - add media metadata (title, caption, description, author and copywrite)

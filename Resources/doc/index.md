@@ -1,10 +1,9 @@
-Instalation
-==========
+ThraceMediaBundle
+=================
 
-### Instalation.
+### Installation.
 
-##### Before you start you should install [LiipImagineBundle](https://github.com/liip/LiipImagineBundle/blob/master/Resources/doc/installation.md)
-and (KnpGaufretteBundle)[https://github.com/KnpLabs/KnpGaufretteBundle]
+##### Before you start you should install [LiipImagineBundle](https://github.com/liip/LiipImagineBundle/blob/master/Resources/doc/installation.md) and [KnpGaufretteBundle](https://github.com/KnpLabs/KnpGaufretteBundle)
 
 ### Step 1) Get the bundle
 
@@ -69,7 +68,7 @@ knp_gaufrette:
 
 **Note** - Media adapter is used to store already persisted files and temp adapter is used to store files which are still not persisted to DB or being manipulated by user.
 
-###### Step 5) Configure media bundle.
+##### Step 5) Configure media bundle.
 
 ```yml
 thrace_media:
@@ -99,14 +98,13 @@ thrace_media_frontend:
 
 ThraceMediaBundle uses ajax/post requests to upload, render, crop, rotate and reset images and files.
 
-- thrace_media_file_download (used to upload image: */_thrace-media/image-upload/*  
+- thrace_media_image_upload (used to upload image: */_thrace-media/image-upload/*  
 - thrace_media_image_crop (used to crop image): */_thrace-media/image-crop* 
 - thrace_form_media_image_rotate (used to rotate image): */_thrace-media/image-rotate* 
 - thrace_form_media_image_reset (used to reset image): */_thrace-media/image-reset* 
 - thrace_media_image_render_temporary (used to render temporary image): */_thrace-media/image-render-temporary* 
 - thrace_media_render_temporary (used to render temporary media video/audio): */_thrace-media/render-temporary* 
 - thrace_media_file_upload (used to upload file): */_thrace_media/file_upload* 
-- thrace_media_file_download (used to upload file): */_thrace_media/file_upload* 
 
 ``` yaml
 # app/config/security.yml

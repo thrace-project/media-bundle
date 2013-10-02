@@ -1,7 +1,7 @@
 MultiImageUpload
 ================
 
-MultiImageUpload is almost the same as [image_upload](image_upload.md) the only difference is that you can upload and manage more then one image and items are sortable.
+multi_image_upload is almost the same as [image_upload](image_upload.md) the only difference is that you can upload and manage more then one image and items are sortable.
 
 ### Usage :
 
@@ -230,7 +230,7 @@ $ php app/console assetic:dump
 ```
 
 
-**Note** - [how to render images](Resourses/doc/image_upload.md#image_render) 
+**Note** - [See how to render images](image_upload.md#image_render) 
 
 That's it.
 

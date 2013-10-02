@@ -1,7 +1,7 @@
 ImageUpload
 ===========
 
-ImageUpload provides the following functionalities:
+image_upload provides the following functionalities:
 - upload a single image
 - preview the image with colorbox plugin
 - crop the image with Jcrop
@@ -256,7 +256,7 @@ liip_imagine:
                 relative_resize: { widen: 500 }
 ```
 
-More information about [avalanche bundle](https://github.com/liip/LiipImagineBundle)
+More information about [LiipImagineBundle](https://github.com/liip/LiipImagineBundle)
 
 In the twig template use the following twig function:
 
