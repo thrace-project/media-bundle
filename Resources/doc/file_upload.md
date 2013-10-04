@@ -26,6 +26,7 @@ public function buildForm(FormBuilderInterface $builder, array $options)
             'configs' => array(
                 'extensions' => 'text/plain,application/pdf',
                 'maxSize' => '4M',
+                'div_class' => 'col-lg-9' //fix mopa-bootsrap-bundle
             ),
         ))  
 		// .....
