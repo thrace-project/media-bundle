@@ -31,6 +31,7 @@ public function buildForm(FormBuilderInterface $builder, array $options)
                 'minHeight' => 100,
                 'extensions' => 'jpeg,jpg',
                 'maxSize' => '4M',
+                'div_class' => 'col-lg-9' //fix mopa-bootsrap-bundle
             ),
         ))  
 		// .....

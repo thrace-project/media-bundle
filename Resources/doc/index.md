@@ -13,7 +13,7 @@ Add on composer.json (see http://getcomposer.org/)
 
     "require" :  {
         // ...
-        "thrace/media-bundle":"dev-master",
+        "thrace-project/media-bundle":"dev-master",
     }
 
 
@@ -132,6 +132,11 @@ thrace_media_backend:
 ```
 [For more information go to symfony documentation](http://symfony.com/doc/current/book/security.html#securing-specific-url-patterns)
 
+##### Step 8) Run the following command to delete files in temporary directory:
+
+``` bash
+$ php app/console thrace:media:cache-clear --maxAge=7200 
+```
 
 <a name="list"></a>
 **List of all elements**

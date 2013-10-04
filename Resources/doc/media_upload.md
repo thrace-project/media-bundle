@@ -26,7 +26,8 @@ public function buildForm(FormBuilderInterface $builder, array $options)
             'configs' => array(
                 'extensions' => 'video/x-flv',
                 'maxSize' => '10M',
-                'type' => 'flv'
+                'type' => 'flv',
+                'div_class' => 'col-lg-9' //fix mopa-bootsrap-bundle
             ),
         )) 
 		// .....

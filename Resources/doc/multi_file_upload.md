@@ -19,12 +19,13 @@ public function buildForm(FormBuilderInterface $builder, array $options)
              'options' => array(
                  'data_class' => 'AppBundle\Entity\MultiFile',
                  'label_render' => false, #fix mopa bootstrap bundle. 
-                 'widget_control_group' => false, #fix mopa bootstrap bundle.
+                 'widget_form_group' => false, #fix mopa-bootstrap bundle.
                 
              ),
              'configs' => array(
                  'extensions' => 'application/pdf,text/plain',
                  'maxSize' => '3M',
+                 'div_class' => 'col-lg-9' //fix mopa-bootsrap-bundle
              )
          ))
 		// .....

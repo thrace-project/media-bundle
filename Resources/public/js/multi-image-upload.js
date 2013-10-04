@@ -6,6 +6,11 @@
  */
 jQuery(document).ready(function(){
     
+	/**
+	 * Set no conflict with other libraries
+	 */
+	jQuery.noConflict();
+	
     // Creating buttons
     jQuery('.thrace-image-upload-button').button();
 
@@ -225,8 +230,13 @@ jQuery(document).ready(function(){
                         }
                     });
                 }
+
+                var prototypeHtml = prototype.replace(/__name__/g, elementIdx); 
                 
-                var elm = prototype.replace(/__name__/g, elementIdx);
+                var elm = jQuery(prototypeHtml);
+                
+                // fix mopa-bootstrap bundle
+                elm.find('label').remove();
 
                 collectionHolder.append(jQuery('<li data-index="'+ elementIdx +'"><img src="'+ 
                 		options.render_url + '?name=' + data.name +'" style="width: '+ options.minWidth +'px; height: '+ options.minHeight +'px" /></li>').append(elm));
@@ -374,11 +384,11 @@ jQuery(document).ready(function(){
 			
 
             var img = new Image();
-            $(img).load(function () {
-                $(this).css("display", "none"); 
-                $(this).hide(); 
+            jQuery(img).load(function () {
+                jQuery(this).css("display", "none"); 
+                jQuery(this).hide(); 
                 jQuery('#thrace-image-crop-' + options.id).empty().append(this);
-                $(this).fadeIn(function(){
+                jQuery(this).fadeIn(function(){
                     jQuery('#thrace-image-crop-' + options.id).find('img').Jcrop({
                         setSelect: [0,options.minHeight,options.minWidth,0],
                         aspectRatio: options.minWidth / options.minHeight,

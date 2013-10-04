@@ -1,6 +1,6 @@
 {% block thrace_file_upload_widget %}
 {% spaceless %}
-<div>
+<div {% if configs.div_class is defined %} class="{{ configs.div_class }}" {% endif %}>
     {{ form_widget(form) }} 
     <span class="thrace-file-upload" data-options="{{ configs|json_encode}}" style="display:none"></span>
     
@@ -130,7 +130,7 @@
 
 {% block thrace_image_upload_widget %}
 {% spaceless %}
-<div>    
+<div {% if configs.div_class is defined %} class="{{ configs.div_class }}" {% endif %}>    
     {{ form_widget(form) }} 
     <div class="thrace-image-upload-main" style="display:none">
         {{ block('thrace_image_upload_container') }} 
@@ -246,7 +246,7 @@
 
 {% block thrace_media_upload_widget %}
 {% spaceless %}       
-<div> 
+<div {% if configs.div_class is defined %} class="{{ configs.div_class }}" {% endif %}> 
     {{ form_widget(form) }} 
     <span class="thrace-media-upload" data-options="{{ configs|merge({'base_path': asset(''), 'media_render_url': url('thrace_media_render_temporary')})|json_encode}}" style="display:none"></span>
     
@@ -283,7 +283,7 @@
         </div>
               
         
-        <div id="thrace-upload-file-{{ id }}" {% if form.name.vars.value is not empty %}style="display:none"{% endif %} class="ui-state-highlight ui-corner-all" style="width:440px;padding:5px;">             
+        <div id="thrace-upload-file-{{ id }}" class="ui-state-highlight ui-corner-all" style="width:440px;padding:5px; {% if form.name.vars.value is not empty %}display:none{% endif %}" class="ui-state-highlight ui-corner-all" style="width:440px;padding:5px;">             
             <p>
                 <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
                 {% trans from translation_domain %}no_media_uploaded{% endtrans %}
@@ -303,7 +303,7 @@
 
 {% block thrace_multi_file_upload_collection_widget %}
 {% spaceless %}
-<div> 	   
+<div {% if configs.div_class is defined %} class="{{ configs.div_class }}" {% endif %}> 	   
     <div class="thrace-multi-file-upload-main" style="display:none">
         <div id="thrace-multi-file-upload-error-{{ id }}" class="thrace-multi-file-upload-error" style="display:none">
             <div class="ui-state-error" style="width:340px; padding:5px;">
@@ -333,10 +333,10 @@
             
             
         <ul id="thrace-multi-file-upload-container-{{ id }}" class="thrace-sortable">
-            {% for key, child in form%} 
+            {% for key, child in form %} 
                 <li data-index="{{ key }}">
                     {{ form_widget(child) }}
-                    <div class="ui-state-highlight" style="width:340px;height:70px;padding:5px;"> 
+                    <div class="ui-state-highlight" style="width:300px;height:70px;padding:5px;"> 
                         <p>
                             <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
                             <strong>{% trans from translation_domain %}filename{% endtrans %}: </strong>
@@ -348,7 +348,7 @@
         </ul>
             
         <div id="thrace-multi-file-prototype-{{ id }}" style="display:none">
-            <div class="ui-state-highlight" style="width:340px;height:70px;padding:5px;"> 
+            <div class="ui-state-highlight" style="width:300px;height:70px;padding:5px;"> 
                 <p>
                     <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
                     <strong>{% trans from translation_domain %}filename{% endtrans %}: </strong>
@@ -390,7 +390,7 @@
 
 {% block thrace_multi_image_upload_collection_widget %}
 {% spaceless %}
-<div>
+<div {% if configs.div_class is defined %} class="{{ configs.div_class }}" {% endif %}>
     <div class="thrace-multi-image-upload-main" style="display:none">
         <div id="thrace-multi-image-upload-error-{{ id }}" 
             class="thrace-multi-image-upload-error" style="display:none">

@@ -5,6 +5,11 @@
  * @version 1.0
  */
 jQuery(document).ready(function(){ 
+	
+	/**
+	 * Set no conflict with other libraries
+	 */
+	jQuery.noConflict();
     
     // Creates buttons
     jQuery('.thrace-image-upload-button').button();
@@ -354,11 +359,11 @@ jQuery(document).ready(function(){
 			
 
             var img = new Image();
-            $(img).load(function () {
-                $(this).css("display", "none"); 
-                $(this).hide(); 
+            jQuery(img).load(function () {
+                jQuery(this).css("display", "none"); 
+                jQuery(this).hide(); 
                 jQuery('#thrace-image-crop-' + options.id).empty().append(this);
-                $(this).fadeIn(function(){
+                jQuery(this).fadeIn(function(){
                     jQuery('#thrace-image-crop-' + options.id).find('img').Jcrop({
                         setSelect: [0,options.minHeight,options.minWidth,0],
                         aspectRatio: options.minWidth / options.minHeight,
@@ -393,8 +398,7 @@ jQuery(document).ready(function(){
                     jQuery('#thrace-image-' + options.id).fadeOut(function(){
                         jQuery(this).attr({
                             'src': options.render_url + '?name=' + response.name, 
-                            width: options.minWidth, 
-                            height: options.minHeight
+                            'style': 'width:'+ options.minWidth +'px;height:'+ options.minHeight +'px'
                         });
                     }).fadeIn();
                     button.button( "option", "disabled", false); 
@@ -465,8 +469,7 @@ jQuery(document).ready(function(){
                     jQuery('#thrace-image-' + options.id).fadeOut(function(){
                         jQuery(this).attr({
                             'src': options.render_url + '?name=' + response.name, 
-                            width: options.minWidth, 
-                            height: options.minHeight
+                            'style': 'width:'+ options.minWidth +'px;height:'+ options.minHeight +'px'
                         });
                     }).fadeIn(function(){
                         button.button( "option", "disabled", false);
@@ -497,8 +500,7 @@ jQuery(document).ready(function(){
                     jQuery('#thrace-image-' + options.id).fadeOut(function(){
                         jQuery(this).attr({
                         	'src': options.render_url + '?name=' + response.name, 
-                            width: options.minWidth, 
-                            height: options.minHeight
+                        	'style': 'width:'+ options.minWidth +'px;height:'+ options.minHeight +'px'
                         });
                     }).fadeIn(function(){
                         button.button( "option", "disabled", false);

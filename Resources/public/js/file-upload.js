@@ -6,6 +6,11 @@
  */
 jQuery(document).ready(function(){
     
+	/**
+	 * Set no conflict with other libraries
+	 */
+	jQuery.noConflict();
+	
     /**
      * Creates buttons
      */

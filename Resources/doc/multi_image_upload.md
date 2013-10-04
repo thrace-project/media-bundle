@@ -18,13 +18,14 @@ public function buildForm(FormBuilderInterface $builder, array $options)
             'options' => array(
                 'data_class' => 'AppBundle\Entity\MultiImage',
                 'label_render' => false,  #fix mopa bootstrap bundle. 
-                'widget_control_group' => false,  #fix mopa bootstrap bundle. 
+                'widget_form_group' => false,  #fix mopa bootstrap bundle. 
             ),
             'configs' => array(
                 'minWidth' => 300,
                 'minHeight' => 100,
                 'extensions' => 'jpeg,jpg',
                 'maxSize' => '2M',
+                'div_class' => 'col-lg-9' //fix mopa-bootsrap-bundle
             )
         ))
 		// .....

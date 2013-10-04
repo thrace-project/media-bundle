@@ -5,11 +5,16 @@
  * @version 1.0
  */
 jQuery(document).ready(function(){
-    
+	
+	/**
+	 * Set no conflict with other libraries
+	 */
+	jQuery.noConflict();
+	
     /**
      * Creating buttons
      */
-    jQuery('.thrace-upload-button').button();
+	jQuery('.thrace-file-upload-button').button();
 
 
     /**
@@ -20,7 +25,7 @@ jQuery(document).ready(function(){
         var options = jQuery(this).data('options');  
         var prototype = jQuery(this).data('prototype'); 
         
-        // fix mopa bundle
+        // fix mopa-bootstrap bundle
         if(prototype == ''){
         	prototype = jQuery(this).closest('div[data-prototype]').data('prototype');
         }
@@ -245,8 +250,13 @@ jQuery(document).ready(function(){
                     });
                 }
                 
-                var elm = prototype.replace(/__name__/g, elementIdx); 
+                var prototypeHtml = prototype.replace(/__name__/g, elementIdx); 
+          
+                var elm = jQuery(prototypeHtml);
                 
+                // fix mopa-bootstrap bundle
+                elm.find('label').remove();
+
                 var elmHolder = jQuery('#thrace-multi-file-prototype-' + options.id).html()
                     .replace('__name__', file.name);
                     
