@@ -17,5 +17,11 @@ namespace Thrace\MediaBundle\Model;
  */
 interface MediaInterface extends FileInterface
 {
+    const TYPE_FLV = 'flv';
+    
+    const TYPE_MP3 = 'mp3';
+    
     public function getType();
+    
+    public function getMediaPath();
 }

@@ -139,8 +139,7 @@ class FileUploadSubscriber implements EventSubscriber
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Doctrine\Common.EventSubscriber::getSubscribedEvents()
+     * {@inheritDoc}
      */
     public function getSubscribedEvents()
     {
