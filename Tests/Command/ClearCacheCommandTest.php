@@ -11,7 +11,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 use Symfony\Component\Console\Application;
 
-class ClearCacheCommandTest extends BaseTestCase
+class ClearCacheCommandTest extends  BaseTestCase
 {
     public function testExecute()
     {

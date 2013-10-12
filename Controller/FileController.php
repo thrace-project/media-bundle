@@ -75,7 +75,7 @@ class FileController extends ContainerAware
         $filepath = $this->container->get('request')->get('filepath');
         $filename = $this->container->get('request')->get('filename');
         
-        $content = $fileManager->getPermenentFileByKey($filepath); 
+        $content = $fileManager->getPermanentFileByKey($filepath); 
         $response = new Response($content);
         $response->headers->set('Content-Length', mb_strlen($content));
         $response->headers->set('Content-Disposition', 'attachment;filename=' . $filename);
@@ -105,7 +105,7 @@ class FileController extends ContainerAware
     }
     
     /**
-     * Renders permenent file
+     * Renders permanent file
      *
      * @return Response
      */
@@ -113,7 +113,7 @@ class FileController extends ContainerAware
     {
         $name = $this->container->get('request')->get('name');
         $fileManager = $this->container->get('thrace_media.filemanager');
-        $content = $fileManager->getPermenentFileByKey($name);
+        $content = $fileManager->getPermanentFileByKey($name);
         
         $response = new Response($content);        
         $response->headers->set('Accept-Ranges', 'bytes');

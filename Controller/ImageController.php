@@ -89,7 +89,7 @@ class ImageController extends ContainerAware
     }
     
     /**
-     * Renders permenent image
+     * Renders permanent image
      * 
      * @return Response
      */
@@ -100,7 +100,7 @@ class ImageController extends ContainerAware
         $filter = $this->container->get('request')->get('filter');
         $imageManager = $this->container->get('thrace_media.image_manager');
         $filterManager = $this->container->get('liip_imagine.filter.manager');
-        $image = $imageManager->getPermenentImageByKey($filepath);        
+        $image = $imageManager->loadPermanentImageByName($filepath);        
         $image = $filterManager->applyFilter($image, $filter);
         $content = $image->get($imageManager->getExtension($filepath));
         
@@ -207,7 +207,7 @@ class ImageController extends ContainerAware
      * 
      * @throws \InvalidArgumentException
      */
-    public function validateRequest()
+    protected function validateRequest()
     {
         if (!$this->getRequest()->isXmlHttpRequest()) {
             throw new \InvalidArgumentException('Request must be ajax');
@@ -221,7 +221,7 @@ class ImageController extends ContainerAware
      * @param UploadedFile $handle
      * @return boolean | string
      */
-    private function validateImage (UploadedFile $handle)
+    protected function validateImage (UploadedFile $handle)
     {
         $configs = $this->getConfigs();
         $maxSize = $configs['maxSize'];
@@ -247,7 +247,7 @@ class ImageController extends ContainerAware
      *
      * @return array
      */
-    private function getConfigs()
+    protected function getConfigs()
     {
     	$session = $this->container->get('session');
     	if (!$configs = $session->get($this->getRequest()->get('thrace_media_id', false))){

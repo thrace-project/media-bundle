@@ -129,7 +129,7 @@ class FileUploadSubscriber implements EventSubscriber
     public function postFlush(PostFlushEventArgs $eventArgs)
     {        
         foreach ($this->getScheduledForCopyFiles() as $entity){
-            $this->fileManager->copyFileToPermenentDirectory($entity);
+            $this->fileManager->copyFileToPermanentDirectory($entity);
             $this->fileManager->removeFileFromTemporaryDirectory($entity);
         }
      
@@ -151,7 +151,7 @@ class FileUploadSubscriber implements EventSubscriber
         $meta = $em->getClassMetadata(get_class($entity));
         $meta
             ->getReflectionProperty('size')
-            ->setValue($entity, $this->fileManager->getFile($entity)->getSize())
+            ->setValue($entity, $this->fileManager->getTemporaryFile($entity)->getSize())
         ;
         $uow->recomputeSingleEntityChangeSet($meta, $entity);
     }

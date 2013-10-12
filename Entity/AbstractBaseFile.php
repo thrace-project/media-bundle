@@ -9,10 +9,12 @@
  */
 namespace Thrace\MediaBundle\Entity;
 
+use Thrace\MediaBundle\Model\BaseFileInterface;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /** @ORM\MappedSuperclass */
-abstract class AbstractBaseFile 
+abstract class AbstractBaseFile implements BaseFileInterface
 {
     /**
      * @var string
@@ -114,14 +116,16 @@ abstract class AbstractBaseFile
      */
     protected $scheduledForDeletion = false;
     
+    /**
+     * {@inheritDoc}
+     */
     public function getId()
     {
         return $this->id;
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Thrace\MediaBundle\Model\FileInterface::setName()
+     * {@inheritDoc}
      */
     public function setName($name)
     {
@@ -129,8 +133,7 @@ abstract class AbstractBaseFile
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Thrace\MediaBundle\Model\FileInterface::getName()
+     * {@inheritDoc}
      */
     public function getName()
     {
@@ -138,8 +141,7 @@ abstract class AbstractBaseFile
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Thrace\MediaBundle\Model\FileInterface::setOriginalName()
+     * {@inheritDoc}
      */
     public function setOriginalName($name)
     {
@@ -147,8 +149,7 @@ abstract class AbstractBaseFile
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Thrace\MediaBundle\Model.FileInterface::getOriginalName()
+     * {@inheritDoc}
      */
     public function getOriginalName()
     {
@@ -156,8 +157,7 @@ abstract class AbstractBaseFile
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Thrace\MediaBundle\Model\FileInterface::setSize()
+     * {@inheritDoc}
      */
     public function setSize($size)
     {
@@ -165,47 +165,15 @@ abstract class AbstractBaseFile
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Thrace\MediaBundle\Model\FileInterface::getSize()
+     * {@inheritDoc}
      */
     public function getSize()
     {
         return $this->size;
     }
-    
-    public function setMetadata(array $metadata = null)
-    {
-        $this->metadata = $metadata;
-    }
-    
-    public function getMetadata()
-    {
-        return $this->metadata;
-    }
-    
-    public function setAuthor($author)
-    {
-        $this->author = (string) $author;
-    }
-    
-    public function getAuthor()
-    {
-        return $this->author;
-    }
-    
-    public function setCopywrite($copywrite)
-    {
-        $this->copywrite = (string) $copywrite;
-    }
-    
-    public function getCopywrite()
-    {
-        return $this->copywrite;
-    }
 
     /**
-     * (non-PHPdoc)
-     * @see Thrace\MediaBundle\Model\FileInterface::setTitle()
+     * {@inheritDoc}
      */
     public function setTitle($title)
     {
@@ -213,8 +181,7 @@ abstract class AbstractBaseFile
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Thrace\MediaBundle\Model\FileInterface::getTitle()
+     * {@inheritDoc}
      */
     public function getTitle()
     {
@@ -222,8 +189,7 @@ abstract class AbstractBaseFile
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Thrace\MediaBundle\Model\FileInterface::setCaption()
+     * {@inheritDoc}
      */
     public function setCaption($caption)
     {
@@ -231,8 +197,7 @@ abstract class AbstractBaseFile
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Thrace\MediaBundle\Model\FileInterface::getCaption()
+     * {@inheritDoc}
      */
     public function getCaption()
     {
@@ -240,8 +205,7 @@ abstract class AbstractBaseFile
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Thrace\MediaBundle\Model\FileInterface::setDescription()
+     * {@inheritDoc}
      */
     public function setDescription($description)
     {
@@ -249,17 +213,63 @@ abstract class AbstractBaseFile
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Thrace\MediaBundle\Model\FileInterface::getDescription()
+     * {@inheritDoc}
      */
     public function getDescription()
     {
         return $this->description;
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public function setMetadata(array $metadata = null)
+    {
+        $this->metadata = $metadata;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public function getMetadata()
+    {
+        return $this->metadata;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public function setAuthor($author)
+    {
+        $this->author = (string) $author;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public function setCopywrite($copywrite)
+    {
+        $this->copywrite = (string) $copywrite;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public function getCopywrite()
+    {
+        return $this->copywrite;
+    }
 
     /**
-     * (non-PHPdoc)
-     * @see Thrace\MediaBundle\Model.FileInterface::setHash()
+     * {@inheritDoc}
      */
     public function setHash($hash)
     {
@@ -267,22 +277,23 @@ abstract class AbstractBaseFile
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Thrace\MediaBundle\Model\FileInterface::getHash()
+     * {@inheritDoc}
      */
     public function getHash()
     {
         return $this->hash;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function setCurrentVersion($currentVersion)
     {
         $this->currentVersion = (int) $currentVersion;
     }
     
     /**
-     * (non-PHPdoc)
-     * @see \Thrace\MediaBundle\Model\FileInterface::getCurrentVersion()
+     * {@inheritDoc}
      */
     public function getCurrentVersion()
     {
@@ -294,8 +305,7 @@ abstract class AbstractBaseFile
     }
     
     /**
-     * (non-PHPdoc)
-     * @see \Thrace\MediaBundle\Model\FileInterface::getVersion()
+     * {@inheritDoc}
      */
     public function getVersion()
     {
@@ -303,8 +313,7 @@ abstract class AbstractBaseFile
     }
     
     /**
-     * (non-PHPdoc)
-     * @see \Thrace\MediaBundle\Model\FileInterface::setEnabled()
+     * {@inheritDoc}
      */
     public function setEnabled($bool)
     {
@@ -312,8 +321,7 @@ abstract class AbstractBaseFile
     }
     
     /**
-     * (non-PHPdoc)
-     * @see \Thrace\MediaBundle\Model\FileInterface::isEnabled()
+     * {@inheritDoc}
      */
     public function isEnabled()
     {
@@ -321,8 +329,7 @@ abstract class AbstractBaseFile
     }
     
     /**
-     * (non-PHPdoc)
-     * @see \Thrace\MediaBundle\Model\FileInterface::setScheduledForDeletion()
+     * {@inheritDoc}
      */
     public function setScheduledForDeletion($bool)
     {
@@ -330,8 +337,7 @@ abstract class AbstractBaseFile
     }
     
     /**
-     * (non-PHPdoc)
-     * @see \Thrace\MediaBundle\Model\FileInterface::isScheduledForDeletion()
+     * {@inheritDoc}
      */
     public function isScheduledForDeletion()
     {
