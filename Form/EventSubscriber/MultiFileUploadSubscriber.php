@@ -86,7 +86,7 @@ class MultiFileUploadSubscriber implements EventSubscriberInterface
             throw new UnexpectedTypeException($data, 'array or \Traversable');
         }
        
-        foreach ($form as $name => $child) {
+        foreach ($form->all() as $name => $child) {
             $form->remove($name);
         }
     
