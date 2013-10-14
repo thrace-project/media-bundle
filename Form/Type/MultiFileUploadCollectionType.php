@@ -75,8 +75,7 @@ class MultiFileUploadCollectionType extends AbstractType
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Form.AbstractType::buildForm()
+     * {@inheritDoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -85,8 +84,7 @@ class MultiFileUploadCollectionType extends AbstractType
     }
     
     /**
-     * (non-PHPdoc)
-     * @see \Symfony\Component\Form\AbstractType::finishView()
+     * {@inheritDoc}
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
@@ -96,15 +94,13 @@ class MultiFileUploadCollectionType extends AbstractType
     }
     
     /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Form.AbstractType::setDefaultOptions()
+     * {@inheritDoc}
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {  
         $defaultOptions = $this->options;
     
         $defaultConfigs = array(
-            'maxSize' => $this->options['max_upload_size'],
             'enabled_button' => true,
             'meta_button' => true,
         );
@@ -127,7 +123,7 @@ class MultiFileUploadCollectionType extends AbstractType
             'configs' => function (Options $options, $value) use ($defaultOptions, $defaultConfigs, $router){
                 $configs = array_replace_recursive($defaultOptions, $defaultConfigs, $value);
 
-                $requiredConfigs = array('maxSize', 'extensions');
+                $requiredConfigs = array('extensions');
 
                 if (count(array_diff($requiredConfigs, array_keys($configs))) > 0){
                     throw new \InvalidArgumentException(sprintf('Some of the configs "%s" are missing', json_encode($requiredConfigs)));
@@ -142,8 +138,7 @@ class MultiFileUploadCollectionType extends AbstractType
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Form.AbstractType::getParent()
+     * {@inheritDoc}
      */
     public function getParent()
     {
@@ -151,8 +146,7 @@ class MultiFileUploadCollectionType extends AbstractType
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Form.FormTypeInterface::getName()
+     * {@inheritDoc}
      */
     public function getName()
     {

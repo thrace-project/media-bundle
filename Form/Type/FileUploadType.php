@@ -74,8 +74,7 @@ class FileUploadType extends AbstractType
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Form.AbstractType::buildForm()
+     * {@inheritDoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -93,6 +92,9 @@ class FileUploadType extends AbstractType
         $builder->addEventSubscriber($this->subscriber);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $configs = array_merge($options['configs'], array(
@@ -120,7 +122,9 @@ class FileUploadType extends AbstractType
         $view->vars['configs'] = $configs;
     }
     
-    
+    /**
+     * {@inheritDoc}
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $defaultOptions = $this->options;
@@ -139,7 +143,7 @@ class FileUploadType extends AbstractType
             'configs' => function (Options $options, $value) use ($defaultOptions, $defaultConfigs, $router){
                 $configs = array_replace_recursive($defaultOptions, $defaultConfigs, $value);
 
-                $requiredConfigs = array('maxSize', 'extensions');
+                $requiredConfigs = array('extensions');
 
                 if (count(array_diff($requiredConfigs, array_keys($configs))) > 0){
                     throw new \InvalidArgumentException(sprintf('Some of the configs "%s" are missing', json_encode($requiredConfigs)));
@@ -151,8 +155,7 @@ class FileUploadType extends AbstractType
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Form.FormTypeInterface::getName()
+     * {@inheritDoc}
      */
     public function getName()
     {
@@ -168,7 +171,6 @@ class FileUploadType extends AbstractType
     {
         return array(
             'upload_url' =>$this->router->generate('thrace_media_file_upload'),
-            'maxSize' => $this->options['max_upload_size'],
             'enabled_button' => true,
             'meta_button' => true,
         );
