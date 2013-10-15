@@ -87,7 +87,8 @@ class MediaExtension extends \Twig_Extension
             'type' => $media->getType(),
             'id' => uniqid('thrace_media', true),
             'file' => $this->container->get('router')->generate('thrace_media_render', array(
-                'name' => $media->getMediaPath()    
+                'name' => $media->getMediaPath(),
+                'hash' => $media->getHash()
             ), true)
         );
         

@@ -55,16 +55,6 @@ interface ImageManagerInterface extends BaseManagerInterface
     public function getTemporaryOriginalImageBlobByName($name);
     
     /**
-     * Gets permanent image by name
-     *
-     * @param string $name
-     * @return string
-     * @throws \Gaufrette\Exception\FileNotFound
-     * @throws \RuntimeException
-     */
-    public function getPermanentImageBlobByName($name);
-    
-    /**
      * Gets temporary image blob by name
      * 
      * @param string $name

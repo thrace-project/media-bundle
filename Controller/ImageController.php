@@ -34,13 +34,16 @@ class ImageController extends ContainerAware
      * @return JsonResponse
      */
     public function uploadAction ()
-    {
-        
+    {        
         if (null === $handle = $this->getRequest()->files->get('file')){
-            throw new \RuntimeException('Invalid request');
+            return new JsonResponse(array(
+                'success' => false,
+                'err_msg' => $this->container->get('translator')
+                    ->trans('file_upload_http_error', array(), 'ThraceMediaBundle')
+            ));
         }
 
-        $imageManager = $this->container->get('thrace_media.image_manager');
+        $imageManager = $this->container->get('thrace_media.imagemanager');
         $options = $this->container->getParameter('thrace_media.plupload.options');
         $extension = $handle->guessExtension();
         $name = uniqid() . '.' . $extension;
@@ -78,10 +81,12 @@ class ImageController extends ContainerAware
      */
     public function renderTemporaryAction()
     {   
-        $name = $this->container->get('request')->get('name');
-        $imageManager = $this->container->get('thrace_media.image_manager');
+        $name = $this->getRequest()->get('name');
+        $imageManager = $this->container->get('thrace_media.imagemanager');
         $content = $imageManager->getTemporaryImageBlobByName($name);
         $response = new Response($content);
+        $response->headers->set('Accept-Ranges', 'bytes');
+        $response->headers->set('Content-Length', mb_strlen($content));
         $response->headers->set('Content-Type', 'image');
         $response->expire();
         
@@ -95,20 +100,30 @@ class ImageController extends ContainerAware
      */
     public function renderAction()
     {   
-        $filepath = $this->container->get('request')->get('filepath');
-        $hash = $this->container->get('request')->get('hash');
-        $filter = $this->container->get('request')->get('filter');
-        $imageManager = $this->container->get('thrace_media.image_manager');
-        $filterManager = $this->container->get('liip_imagine.filter.manager');
-        $image = $imageManager->loadPermanentImageByName($filepath);        
-        $image = $filterManager->applyFilter($image, $filter);
-        $content = $image->get($imageManager->getExtension($filepath));
+        $filepath = $this->getRequest()->get('filepath');
+        $hash = $this->getRequest()->get('hash');
+        $filter = $this->getRequest()->get('filter');
+        $tag = md5($hash . $filter);
         
-        $response = new Response($content);
-        $response->headers->set('Content-Type', 'image');
+        $response = new Response();
         $response->setPublic();
-        $response->setEtag($hash);
-        $response->isNotModified($this->container->get('request'));
+        $response->setEtag($tag);
+        
+        if($response->isNotModified($this->getRequest())){
+            return $response;
+        }
+        
+        $imageManager = $this->container->get('thrace_media.imagemanager');
+        $filterManager = $this->container->get('liip_imagine.filter.manager');
+        
+        $image = $imageManager->loadPermanentImageByName($filepath);        
+        $filteredImage = $filterManager->applyFilter($image, $filter);
+        
+        $content = $filteredImage->get($imageManager->getExtension($filepath));
+        $response->setContent($content);
+        $response->headers->set('Accept-Ranges', 'bytes');
+        $response->headers->set('Content-Length', mb_strlen($content));
+        $response->headers->set('Content-Type', 'image');
         
         return $response;
     }
@@ -122,7 +137,7 @@ class ImageController extends ContainerAware
     {
         $this->validateRequest();
         
-        $imageManager = $this->container->get('thrace_media.image_manager');
+        $imageManager = $this->container->get('thrace_media.imagemanager');
         $name = $this->getRequest()->get('name');
         $options = array();
         
@@ -157,7 +172,7 @@ class ImageController extends ContainerAware
     {
         $this->validateRequest();
 
-        $imageManager = $this->container->get('thrace_media.image_manager');
+        $imageManager = $this->container->get('thrace_media.imagemanager');
         $name = $this->getRequest()->get('name');
         $imageManager->rotate($name);
         $hash = $imageManager->checksumTemporaryFileByName($name);
@@ -179,7 +194,7 @@ class ImageController extends ContainerAware
     {
         $this->validateRequest();
 
-        $imageManager = $this->container->get('thrace_media.image_manager');
+        $imageManager = $this->container->get('thrace_media.imagemanager');
         $name = $this->getRequest()->get('name');
         $imageManager->reset($name);         
         $hash = $imageManager->checksumTemporaryFileByName($name);
@@ -210,7 +225,7 @@ class ImageController extends ContainerAware
     protected function validateRequest()
     {
         if (!$this->getRequest()->isXmlHttpRequest()) {
-            throw new \InvalidArgumentException('Request must be ajax');
+            throw new \LogicException('Request must be ajax');
         }
     }
 
@@ -224,7 +239,7 @@ class ImageController extends ContainerAware
     protected function validateImage (UploadedFile $handle)
     {
         $configs = $this->getConfigs();
-        $maxSize = $configs['maxSize'];
+        $maxSize = $configs['max_upload_size'];
         $extensions = $configs['extensions'];
         $imageConstraint = new Image();
         $imageConstraint->minWidth = $configs['minWidth'];

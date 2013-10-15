@@ -32,7 +32,8 @@
         "doctrine/doctrine-bundle": "1.*",
         "knplabs/gaufrette": "dev-master",
 		"knplabs/knp-gaufrette-bundle": "dev-master",
-		"liip/imagine-bundle": "dev-master"
+		"liip/imagine-bundle": "dev-master",
+		"mikey179/vfsStream": "dev-master"
     },
     "autoload":     {
         "psr-0": { "Thrace\\MediaBundle": "" }

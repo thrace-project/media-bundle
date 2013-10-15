@@ -36,7 +36,11 @@ class FileController extends ContainerAware
     public function uploadAction ()
     { 
         if (null === $handle = $this->getRequest()->files->get('file')){
-            throw new \RuntimeException('Invalid request');
+            return new JsonResponse(array(
+                'success' => false,
+                'err_msg' => $this->container->get('translator')
+                    ->trans('file_upload_http_error', array(), 'ThraceMediaBundle')
+            ));
         }
 
         $fileManager = $this->container->get('thrace_media.filemanager');
@@ -72,10 +76,10 @@ class FileController extends ContainerAware
     public function downloadAction()
     {
         $fileManager = $this->container->get('thrace_media.filemanager');
-        $filepath = $this->container->get('request')->get('filepath');
-        $filename = $this->container->get('request')->get('filename');
+        $filepath = $this->getRequest()->get('filepath');
+        $filename = $this->getRequest()->get('filename');
         
-        $content = $fileManager->getPermanentFileByKey($filepath); 
+        $content = $fileManager->getPermanentFileBlobByName($filepath); 
         $response = new Response($content);
         $response->headers->set('Content-Length', mb_strlen($content));
         $response->headers->set('Content-Disposition', 'attachment;filename=' . $filename);
@@ -91,9 +95,9 @@ class FileController extends ContainerAware
      */
     public function renderTemporaryAction()
     {
-        $name = $this->container->get('request')->get('name');
+        $name = $this->getRequest()->get('name');
         $fileManager = $this->container->get('thrace_media.filemanager');
-        $content = $fileManager->getTemporaryFileBlobByKey($name);
+        $content = $fileManager->getTemporaryFileBlobByName($name);
         
         $response = new Response($content);        
         $response->headers->set('Accept-Ranges', 'bytes');
@@ -111,16 +115,25 @@ class FileController extends ContainerAware
      */
     public function renderAction()
     {
-        $name = $this->container->get('request')->get('name');
-        $fileManager = $this->container->get('thrace_media.filemanager');
-        $content = $fileManager->getPermanentFileByKey($name);
+        $name = $this->getRequest()->get('name');
+        $hash = $this->getRequest()->get('hash');
+
+        $response = new Response();        
+        $response->setPublic();
+        $response->setEtag($hash);
+ 
+        if($response->isNotModified($this->getRequest())){
+            return $response;
+        }
         
-        $response = new Response($content);        
+        $fileManager = $this->container->get('thrace_media.filemanager');
+        $content = $fileManager->getPermanentFileBlobByName($name);
+        
+        $response->setContent($content);
         $response->headers->set('Accept-Ranges', 'bytes');
         $response->headers->set('Content-Length', mb_strlen($content));
         $response->headers->set('Content-Type', 'application/octet-stream');
-        $response->expire();
-    
+
         return $response;
     }
 
@@ -129,7 +142,7 @@ class FileController extends ContainerAware
      * 
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    public function getRequest()
+    protected function getRequest()
     {
         return $this->container->get('request');
     }
@@ -141,10 +154,10 @@ class FileController extends ContainerAware
      * @param UploadFile $handle
      * @return boolean | string
      */
-    private function validateFile (UploadedFile $handle)
+    protected function validateFile (UploadedFile $handle)
     {
         $configs = $this->getConfigs();
-        $maxSize = $configs['maxSize'];
+        $maxSize = $configs['max_upload_size'];
         $extensions = $configs['extensions'];
         $fileConstraint = new File();
         $fileConstraint->maxSize = $maxSize;
@@ -165,7 +178,7 @@ class FileController extends ContainerAware
      *
      * @return array
      */
-    private function getConfigs()
+    protected function getConfigs()
     {
     	$session = $this->container->get('session');
     	if (!$configs = $session->get($this->getRequest()->get('thrace_media_id', false))){

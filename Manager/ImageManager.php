@@ -109,16 +109,8 @@ class ImageManager extends AbstractManager implements ImageManagerInterface
      * {@inheritDoc}
      */
     public function loadPermanentImageByName($name)
-    {   throw new \LogicException('Check method: loadPermanentImageByName');
+    {   
         return $this->imagine->load($this->mediaFilesystem->read($name));        
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public function getPermanentImageBlobByName($name)
-    {   throw new \LogicException('Check method: PermanentImageBlobByName');
-        return $this->mediaFilesystem->read($name);
     }
         
     /**
