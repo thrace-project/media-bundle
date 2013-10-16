@@ -9,8 +9,6 @@
  */
 namespace Thrace\MediaBundle\Form\Type;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
 /**
  * This class creates jquery video/audio upload element
  *

@@ -9,8 +9,6 @@
 */
 namespace Thrace\MediaBundle\Manager;
 
-use Imagine\Exception\InvalidArgumentException;
-
 use Imagine\Exception\OutOfBoundsException;
 
 use Imagine\Image\ImagineInterface;
@@ -21,11 +19,6 @@ use Imagine\Image\Box;
 
 use Imagine\Image\Point;
 
-use Gaufrette\Exception\FileNotFound;
-
-use Gaufrette\Filesystem;
-
-use Gaufrette\Adapter;
 
 /**
  * Imagemanager that handles image

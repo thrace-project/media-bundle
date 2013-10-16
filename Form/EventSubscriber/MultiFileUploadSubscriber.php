@@ -11,10 +11,6 @@ namespace Thrace\MediaBundle\Form\EventSubscriber;
 
 use Symfony\Component\Form\FormFactoryInterface;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
-use Doctrine\Common\Collections\Collection;
-
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 
 use Thrace\MediaBundle\Manager\FileManagerInterface;

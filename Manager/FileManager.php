@@ -11,11 +11,7 @@ namespace Thrace\MediaBundle\Manager;
 
 use Gaufrette\Exception\FileNotFound;
 
-use Gaufrette\Filesystem;
-
 use Thrace\MediaBundle\Model\FileInterface;
-
-use Gaufrette\Adapter;
 
 /**
  * Filemanager that handles file

@@ -21,8 +21,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
-
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 use Symfony\Component\Form\FormInterface;

@@ -19,11 +19,7 @@ use Thrace\MediaBundle\Model\MultiImageInterface;
 
 use Thrace\MediaBundle\Manager\ImageManagerInterface;
 
-use Doctrine\Common\Collections\Collection;
-
 use Doctrine\Common\Persistence\ObjectManager;
-
-use Symfony\Component\Form\Event\DataEvent;
 
 use Doctrine\ORM\PersistentCollection;
 
