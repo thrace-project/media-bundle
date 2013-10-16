@@ -6,10 +6,8 @@
  */
 jQuery(document).ready(function(){
     
-	/**
-	 * Set no conflict with other libraries
-	 */
-	jQuery.noConflict();
+    // Set no conflict with other libraries
+    jQuery.noConflict();
 	
     // Creating buttons
     jQuery('.thrace-image-upload-button').button();
@@ -22,7 +20,7 @@ jQuery(document).ready(function(){
         
         // fix mopa bundle
         if(prototype == ''){
-        	prototype = jQuery(this).closest('div[data-prototype]').data('prototype');
+            prototype = jQuery(this).closest('div[data-prototype]').data('prototype');
         }
 
         jQuery('#thrace-image-btn-upload-' + options.id).click(function(){
@@ -69,6 +67,7 @@ jQuery(document).ready(function(){
             }
         };
 
+        // Show error
         var showError = function(errorMsg)
         {
             jQuery('#thrace-multi-image-upload-error-' + options.id)
@@ -208,9 +207,8 @@ jQuery(document).ready(function(){
 
         // Uploader Event: FileUploaded
         uploader.bind("FileUploaded", function(up, file, response) {
-            /**
-             * response from server
-	     */
+            
+            // response from server
             var data = jQuery.parseJSON(response.response); 
 
             if(data.success === false){ 

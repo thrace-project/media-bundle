@@ -22,8 +22,14 @@
             <directory>./</directory>
             <exclude>
                 <directory>./Resources</directory>
+                <directory>./Model</directory>
                 <directory>./Tests</directory>
+                <directory>./vendor</directory>
                 <file>./ThraceMediaBundle.php</file>
+                <file>./Exception/ExceptionInterface.php</file>
+                <file>./Manager/BaseManagerInterface.php</file>
+                <file>./Manager/ImageManagerInterface.php</file>
+                <file>./Manager/FileManagerInterface.php</file>
             </exclude>
         </whitelist>
     </filter>

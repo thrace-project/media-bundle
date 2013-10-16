@@ -10,7 +10,7 @@
         <parameter key="thrace_media.form.type.file_upload.class">Thrace\MediaBundle\Form\Type\FileUploadType</parameter>
         <parameter key="thrace_media.doctrine.orm.event_subscriber.file_upload.class">Thrace\MediaBundle\Doctrine\ORM\EventSubscriber\FileUploadSubscriber</parameter>
         <parameter key="thrace_media.doctrine.orm.event_subscriber.image_upload.class">Thrace\MediaBundle\Doctrine\ORM\EventSubscriber\ImageUploadSubscriber</parameter>
-   		<parameter key="thrace_media.imagemanager.class">Thrace\MediaBundle\Manager\ImageManager</parameter>
+        <parameter key="thrace_media.imagemanager.class">Thrace\MediaBundle\Manager\ImageManager</parameter>
     	<parameter key="thrace_media.form.event_subscriber.image_upload.class">Thrace\MediaBundle\Form\EventSubscriber\ImageUploadSubscriber</parameter>
         <parameter key="thrace_media.form.type.image_upload.class">Thrace\MediaBundle\Form\Type\ImageUploadType</parameter>        
         <parameter key="thrace_media.form.type.media_upload.class">Thrace\MediaBundle\Form\Type\MediaUploadType</parameter>        
@@ -25,69 +25,67 @@
 
     <services>
         <service id="thrace_media.filemanager" 
-        	class="%thrace_media.filemanager.class%">
-        	<argument type="service" id="knp_gaufrette.filesystem_map" />
-        	<argument>%thrace_media.temporary_filesystem_key%</argument>
-        	<argument>%thrace_media.media_filesystem_key%</argument>        	
+            class="%thrace_media.filemanager.class%">
+            <argument type="service" id="knp_gaufrette.filesystem_map" />
+            <argument>%thrace_media.temporary_filesystem_key%</argument>
+            <argument>%thrace_media.media_filesystem_key%</argument>        	
         </service>
         
         <service id="thrace_media.form.event_subscriber.file_upload" 
-        	class="%thrace_media.form.event_subscriber.file_upload.class%">
+            class="%thrace_media.form.event_subscriber.file_upload.class%">
         	
-        	<argument type="service" id="thrace_media.filemanager" />
+            <argument type="service" id="thrace_media.filemanager" />
         </service>
         
         <service id="thrace_media.form.type.file_upload" 
-        	class="%thrace_media.form.type.file_upload.class%">
+            class="%thrace_media.form.type.file_upload.class%">
             <argument type="service" id="session" />
             <argument type="service" id="router" />
             <argument type="service" id="thrace_media.form.event_subscriber.file_upload" />
             <argument>%thrace_media.plupload.options%</argument>
-             <tag name="form.type" alias="thrace_file_upload" />
+            <tag name="form.type" alias="thrace_file_upload" />
         </service>
         
         <service id="thrace_media.doctrine.orm.event_subscriber.file_upload" 
-        	class="%thrace_media.doctrine.orm.event_subscriber.file_upload.class%">
+            class="%thrace_media.doctrine.orm.event_subscriber.file_upload.class%">
             <argument type="service" id="thrace_media.filemanager" />
             <argument>%thrace_media.enable_version%</argument>
             <tag name="doctrine.event_subscriber" connection="default" />
         </service>
         
         <service id="thrace_media.doctrine.orm.event_subscriber.image_upload" 
-        	class="%thrace_media.doctrine.orm.event_subscriber.image_upload.class%">
+            class="%thrace_media.doctrine.orm.event_subscriber.image_upload.class%">
             <argument type="service" id="thrace_media.imagemanager" />
             <argument>%thrace_media.enable_version%</argument>
             <tag name="doctrine.event_subscriber" connection="default" />
         </service>
         
         <service id="thrace_media.imagemanager" 
-        	class="%thrace_media.imagemanager.class%">
-        	<argument type="service" id="knp_gaufrette.filesystem_map" />
-        	<argument>%thrace_media.temporary_filesystem_key%</argument>
-        	<argument>%thrace_media.media_filesystem_key%</argument>
-        	<call method="setImagine">
-        		<argument type="service" id="liip_imagine" />
-        	</call>
+            class="%thrace_media.imagemanager.class%">
+            <argument type="service" id="knp_gaufrette.filesystem_map" />
+            <argument>%thrace_media.temporary_filesystem_key%</argument>
+            <argument>%thrace_media.media_filesystem_key%</argument>
+            <call method="setImagine">
+                <argument type="service" id="liip_imagine" />
+            </call>
         </service>
         
         <service id="thrace_media.form.event_subscriber.image_upload" 
-        	class="%thrace_media.form.event_subscriber.image_upload.class%">
-        	<argument type="service" id="thrace_media.imagemanager" />
+            class="%thrace_media.form.event_subscriber.image_upload.class%">
+            <argument type="service" id="thrace_media.imagemanager" />
         </service>
         
-                
-        <service id="thrace_media.form.type.image_upload" 
-        	class="%thrace_media.form.type.image_upload.class%">
+        <service id="thrace_media.form.type.image_upload" class="%thrace_media.form.type.image_upload.class%">
             <argument type="service" id="session" />
             <argument type="service" id="router" />
             <argument type="service" id="thrace_media.form.event_subscriber.image_upload" />
             <argument>%thrace_media.plupload.options%</argument>
-             <tag name="form.type" alias="thrace_image_upload" />
+            <tag name="form.type" alias="thrace_image_upload" />
         </service>
         
-		<service id="thrace_media.form.type.media_upload" 
-        	class="%thrace_media.form.type.media_upload.class%"
-        	parent="thrace_media.form.type.file_upload" >
+        <service id="thrace_media.form.type.media_upload" 
+            class="%thrace_media.form.type.media_upload.class%"
+            parent="thrace_media.form.type.file_upload" >
             
             <call method="setJwplayerOptions">
             	<argument>%thrace_media.jwplayer.options%</argument>
@@ -107,9 +105,9 @@
         </service>
         
         <service id="thrace_media.form.type.multi_file_upload" 
-        	class="%thrace_media.form.type.multi_file_upload.class%">
+            class="%thrace_media.form.type.multi_file_upload.class%">
         	
-        	 <tag name="form.type" alias="thrace_multi_file_upload" />
+            <tag name="form.type" alias="thrace_multi_file_upload" />
         </service>
         
         <service id="thrace_media.form.event_subscriber.multi_file_upload" 
@@ -131,9 +129,9 @@
         </service>
         
         <service id="thrace_media.form.type.multi_image_upload" 
-        	class="%thrace_media.form.type.multi_image_upload.class%">
+            class="%thrace_media.form.type.multi_image_upload.class%">
         	
-        	 <tag name="form.type" alias="thrace_multi_image_upload" />
+            <tag name="form.type" alias="thrace_multi_image_upload" />
         </service>
         
         <service id="thrace_media.form.event_subscriber.multi_image_upload" 
@@ -143,7 +141,7 @@
             <argument type="service"  id="form.factory" />
         </service>
 
-		<service id="thrace_media.twig.extension.media" 
+        <service id="thrace_media.twig.extension.media" 
             class="%thrace_media.twig.extension.media.class%" >
             
             <argument type="service"  id="service_container" />

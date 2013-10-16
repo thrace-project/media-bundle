@@ -1,148 +1,138 @@
 <?xml version="1.0"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="file.ext">
-        <body>              
-	        <trans-unit id="5">
-                <source>exception.image.open</source>
-                <target>Image with name "{name}" can not be opened.</target>
+        <body>                               
+            <trans-unit id="file_upload_http_error">
+                <source>file_upload_http_error</source>
+                <target>File http error.</target>
             </trans-unit>  
                  
-	        <trans-unit id="6">
-                <source>exception.image.out_of_bounds</source>
-                <target>Image with name "{name}" has not valid crop coordinates.</target>
-            </trans-unit>  
-                 
-	        <trans-unit id="7">
-                <source>exception.image.crop</source>
+            <trans-unit id="error.image_crop">
+                <source>error.image_crop</source>
                 <target>Image with name "{name}" is invalid.</target>
             </trans-unit>  
                  
-	        <trans-unit id="8">
+            <trans-unit id="upload_progress">
                 <source>upload_progress</source>
                 <target>Upload progress</target>
             </trans-unit>  
                  
-	        <trans-unit id="9">
+            <trans-unit id="button_upload_title">
                 <source>button_upload_title</source>
                 <target>Upload</target>
             </trans-unit>  
                  
-	        <trans-unit id="10">
+            <trans-unit id="button_title_enabled">
                 <source>button_title_enabled</source>
                 <target>enable/disable</target>
             </trans-unit>  
                  
-	        <trans-unit id="11">
+            <trans-unit id="button_view_title">
                 <source>button_view_title</source>
                 <target>Preview</target>
             </trans-unit>  
                  
-	        <trans-unit id="12">
+            <trans-unit id="button_crop_title">
                 <source>button_crop_title</source>
                 <target>Crop</target>
             </trans-unit>  
                  
-	        <trans-unit id="13">
+            <trans-unit id="button_edit_meta_title">
                 <source>button_edit_meta_title</source>
                 <target>Meta</target>
             </trans-unit>  
                  
-	        <trans-unit id="14">
+            <trans-unit id="button_rotate_title">
                 <source>button_rotate_title</source>
                 <target>Rotate</target>
             </trans-unit>  
                  
-	        <trans-unit id="15">
+            <trans-unit id="button_reset_title">
                 <source>button_reset_title</source>
                 <target>Reset</target>
             </trans-unit>  
                  
-	        <trans-unit id="16">
+            <trans-unit id="button_remove_title">
                 <source>button_remove_title</source>
                 <target>Remove</target>
             </trans-unit>  
                  
-	        <trans-unit id="17">
+            <trans-unit id="dialog_crop_title">
                 <source>dialog_crop_title</source>
                 <target>Croping</target>
             </trans-unit>  
                  
-	        <trans-unit id="18">
+            <trans-unit id="dialog_crop_button_cancel">
                 <source>dialog_crop_button_cancel</source>
                 <target>Cancel</target>
             </trans-unit>  
                  
-	        <trans-unit id="19">
+            <trans-unit id="dialog_crop_button_crop">
                 <source>dialog_crop_button_crop</source>
                 <target>Crop</target>
             </trans-unit>  
                  
-	        <trans-unit id="20">
+            <trans-unit id="dialog_edit_meta_title">
                 <source>dialog_edit_meta_title</source>
                 <target>Meta information</target>
             </trans-unit>  
                  
-	        <trans-unit id="21">
+            <trans-unit id="dialog_edit_meta_label_title">
                 <source>dialog_edit_meta_label_title</source>
                 <target>Meta title</target>
             </trans-unit>  
                  
-	        <trans-unit id="22">
+            <trans-unit id="dialog_edit_meta_label_caption">
                 <source>dialog_edit_meta_label_caption</source>
                 <target>Meta caption</target>
             </trans-unit>  
                  
-	        <trans-unit id="23">
+            <trans-unit id="dialog_edit_meta_label_description">
                 <source>dialog_edit_meta_label_description</source>
                 <target>Meta description</target>
             </trans-unit>  
                  
-	        <trans-unit id="dialog_edit_meta_label_author">
+            <trans-unit id="dialog_edit_meta_label_author">
                 <source>dialog_edit_meta_label_author</source>
                 <target>Author</target>
             </trans-unit>  
                  
-	        <trans-unit id="dialog_edit_meta_label_copywrite">
+            <trans-unit id="dialog_edit_meta_label_copywrite">
                 <source>dialog_edit_meta_label_copywrite</source>
                 <target>Copywrite</target>
             </trans-unit>  
             
-	        <trans-unit id="24">
+            <trans-unit id="dialog_edit_meta_button_done">
                 <source>dialog_edit_meta_button_done</source>
                 <target>Done</target>
             </trans-unit>  
             
-	        <trans-unit id="25">
+            <trans-unit id="drag_drop_image_text">
                 <source>drag_drop_image_text</source>
                 <target>Drag and drop images here</target>
             </trans-unit>  
             
-	        <trans-unit id="26">
+            <trans-unit id="no_images_found">
                 <source>no_images_found</source>
                 <target>No images found</target>
             </trans-unit>  
             
-	        <trans-unit id="27">
+            <trans-unit id="no_file_uploaded">
                 <source>no_file_uploaded</source>
                 <target>No file uploaded</target>
             </trans-unit>  
             
-	        <trans-unit id="28">
+            <trans-unit id="no_filename">
                 <source>no_filename</source>
                 <target>No filename</target>
             </trans-unit>  
-            
-	        <trans-unit id="29">
-                <source>no_filename</source>
-                <target>No filename</target>
-            </trans-unit>  
-            
-	        <trans-unit id="30">
+
+            <trans-unit id="drag_drop_file_text">
                 <source>drag_drop_file_text</source>
                 <target>Drag and drops files here</target>
             </trans-unit>  
             
-	        <trans-unit id="31">
+            <trans-unit id="no_file_text">
                 <source>no_file_text</source>
                 <target>No files</target>
             </trans-unit>  

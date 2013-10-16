@@ -6,20 +6,13 @@
  */
 jQuery(document).ready(function(){
 	
-	/**
-	 * Set no conflict with other libraries
-	 */
-	jQuery.noConflict();
+    // Set no conflict with other libraries
+    jQuery.noConflict();
 	
-    /**
-     * Creating buttons
-     */
-	jQuery('.thrace-file-upload-button').button();
+    // Creating buttons
+    jQuery('.thrace-file-upload-button').button();
 
-
-    /**
-     * Searching for multi file upload elements
-     */
+    // Searching for multi file upload elements
     jQuery('.thrace-multi-file-upload').each(function(key, value){
         
         var options = jQuery(this).data('options');  
@@ -27,16 +20,14 @@ jQuery(document).ready(function(){
         
         // fix mopa-bootstrap bundle
         if(prototype == ''){
-        	prototype = jQuery(this).closest('div[data-prototype]').data('prototype');
+            prototype = jQuery(this).closest('div[data-prototype]').data('prototype');
         }
 
         jQuery('#thrace-file-btn-upload-' + options.id).click(function(){
             return false;
         });
 
-        /**
-		 * Disables buttons
-		 */
+        //  Disables buttons
         var disableButtons = function(){
             jQuery('#thrace-file-btn-enabled-' + options.id).button( "option", "disabled", true ).data(null);
             jQuery('#thrace-file-btn-remove-' + options.id).button( "option", "disabled", true ).data(null);
@@ -44,9 +35,7 @@ jQuery(document).ready(function(){
             jQuery('#thrace-dlg-meta-edit-' + options.id).data(null);
         };
 
-        /**
-		 * Enables buttons
-		 */
+        // Enables buttons
         var enableButtons = function(data){
             jQuery('#thrace-file-btn-enabled-' + options.id).button( "option", "disabled", false ).data(data);
             jQuery('#thrace-file-btn-remove-' + options.id).button( "option", "disabled", false ).data(data);
@@ -68,6 +57,7 @@ jQuery(document).ready(function(){
             }
         };
 
+        // Show error
         var showError = function(errorMsg){
             jQuery('#thrace-multi-file-upload-error-' + options.id)
                 .fadeIn(function(){
@@ -80,18 +70,14 @@ jQuery(document).ready(function(){
             disableButtons();
         };
         
-        /**
-         * Check if any errors displayed
-         */
+        // Check if any errors displayed
         var hasError = function(){
             return jQuery('#thrace-multi-file-upload-error-' + options.id).is(':visible');
         }
 
         disableButtons();
 
-        /**
-         * Initializing sortable
-         */
+        // Initializing sortable
         jQuery( "#thrace-multi-file-upload-container-" + options.id ).sortable({
             placeholder: "ui-state-highlight",
             forcePlaceholderSize:true,
@@ -105,9 +91,7 @@ jQuery(document).ready(function(){
         
         jQuery( "thrace-multi-file-upload-container-" + options.id).disableSelection();
 
-        /**
-         * Toggle enabled button
-         */
+        // Toggle enabled button
         var toggleActive = function(elm){ 
             var button = jQuery('#thrace-file-btn-enabled-' + options.id);
             var elm = elm.find(':hidden').filter('.thrace_media_multi_file_upload_enabled'); 
@@ -119,9 +103,7 @@ jQuery(document).ready(function(){
             }
         };
 
-        /**
-         * Registering double click event on all existing files
-         */
+        //  Registering double click event on all existing files
         jQuery(document).on('dblclick', "#thrace-multi-file-upload-container-"+ options.id +" li", function(event) {
             jQuery(this).addClass("selected").siblings().removeClass("selected");
             toggleActive(jQuery(this));
@@ -131,9 +113,7 @@ jQuery(document).ready(function(){
         });
 
 
-        /**
-		 * Configuring uploader
-		 */
+        // Configuring uploader
         var uploader = new plupload.Uploader({
             runtimes : options.runtimes,
             multi_selection:true,
@@ -154,9 +134,7 @@ jQuery(document).ready(function(){
             uploader.refresh();
         });
 
-        /**
-	 * Uploader Event: Init
-	 */
+        // Uploader Event: Init
         uploader.bind('Init', function(up, params) {
             var availableDragAndDrop = ['gears', 'html5'];
             if(jQuery.inArray(params.runtime, availableDragAndDrop) == -1){
@@ -169,10 +147,7 @@ jQuery(document).ready(function(){
         });
 
 
-        /**
-	 * Uploader Event: FilesAdded
-	 * 
-         */
+        // Uploader Event: FilesAdded
         uploader.bind('FilesAdded', function(up, files) {
 
             jQuery('#drag-drop-area-' + options.id).fadeOut();
@@ -210,9 +185,7 @@ jQuery(document).ready(function(){
 
         });
 
-        /**
-	 * Uploader Event: UploadProgress
-	 */
+        // Uploader Event: UploadProgress
         uploader.bind('UploadProgress', function(up, file) {
 
             var percent = file.percent;
@@ -223,13 +196,10 @@ jQuery(document).ready(function(){
             
         });
 
-        /**
-	 * Uploader Event: FileUploaded
-	 */
+        // Uploader Event: FileUploaded
         uploader.bind("FileUploaded", function(up, file, response) {
-            /**
-             * response from server
-	     */
+            
+            // response from server
             var data = jQuery.parseJSON(response.response); 
 
             if(data.success === false){ 
@@ -279,9 +249,7 @@ jQuery(document).ready(function(){
 
         });
 
-        /**
-         * PlUpload Event: UploadComplete
-         */
+        // PlUpload Event: UploadComplete
         uploader.bind("UploadComplete", function(up, files){
 
             jQuery('#multi-file-progress-' + options.id).children().fadeOut().end().html('');
@@ -292,18 +260,14 @@ jQuery(document).ready(function(){
             toggleContainer();
         });
 
-        /**
-         * Initializing uploader
-	 */
+        // Initializing uploader
         uploader.init();
         
         jQuery('body').bind('refreshPlUpload', function(){
             uploader.refresh();
         });
 
-        /**
-	 * Closes the error message and starts the upload of remaining items.
-	 */
+        // Closes the error message and starts the upload of remaining items.
         jQuery('#thrace-multi-upload-error-cancel-' + options.id).click(function(){
             jQuery('#thrace-multi-file-upload-error-' + options.id)
             .fadeOut(function(){
@@ -319,9 +283,7 @@ jQuery(document).ready(function(){
             return false;
         });
 
-        /**
-		 * Active file handler
-		 */
+        // Active file handler
         jQuery('#thrace-file-btn-enabled-' + options.id).click(function(){
             var elm = jQuery(this).data().elm;
             var activeElm = elm.find(':hidden').filter('.thrace_media_multi_file_upload_enabled');
@@ -337,11 +299,7 @@ jQuery(document).ready(function(){
             return false;
         });
 
-
-
-        /**
-	 * Configuring dialog meta information
-	 */
+        // Configuring dialog meta information
         jQuery("#thrace-dlg-meta-edit-" + options.id).dialog({
             'autoOpen' : false,
             'modal' : true,
@@ -356,9 +314,7 @@ jQuery(document).ready(function(){
             }
         });
 
-        /**
-		 * Opens dialog file edit meta
-		 */
+        // Opens dialog file edit meta
         jQuery('#thrace-meta-btn-edit-' + options.id).click(function(){
 
             var elm = jQuery(this).data().elm.find(':hidden');
@@ -376,9 +332,7 @@ jQuery(document).ready(function(){
             jQuery('#thrace-dlg-meta-edit-' + options.id).dialog('close');
         });
 
-        /**
-		 * Remove button handler
-		 */
+        // Remove button handler
         jQuery('#thrace-file-btn-remove-' + options.id).click(function(event){
             jQuery(this).data().elm.fadeOut(function(){
                 jQuery(this).remove();
