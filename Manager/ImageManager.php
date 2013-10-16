@@ -9,6 +9,8 @@
 */
 namespace Thrace\MediaBundle\Manager;
 
+use Gaufrette\Exception\FileNotFound;
+
 use Imagine\Exception\OutOfBoundsException;
 
 use Imagine\Image\ImagineInterface;
