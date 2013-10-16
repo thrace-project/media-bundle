@@ -30,7 +30,7 @@ public function buildForm(FormBuilderInterface $builder, array $options)
                 'minWidth' => 300,
                 'minHeight' => 100,
                 'extensions' => 'jpeg,jpg',
-                'maxSize' => '4M',
+                'max_upload_size' => '4M',
                 'div_class' => 'col-lg-9' //fix mopa-bootsrap-bundle
             ),
         ))  
@@ -262,7 +262,7 @@ More information about [LiipImagineBundle](https://github.com/liip/LiipImagineBu
 In the twig template use the following twig function:
 
 ``` jinja
-{{ thrace_image(entity.image, 'product', {'alt': 'image thumb'}) }} 
+{{ thrace_image(object.image, 'product', {'alt': 'image thumb'}) }} 
 ```
 
 That's it.

@@ -25,7 +25,7 @@ public function buildForm(FormBuilderInterface $builder, array $options)
             'data_class' => 'AppBundle\Entity\File',
             'configs' => array(
                 'extensions' => 'text/plain,application/pdf',
-                'maxSize' => '4M',
+                'max_upload_size' => '4M',
                 'div_class' => 'col-lg-9' //fix mopa-bootsrap-bundle
             ),
         ))  
@@ -232,7 +232,7 @@ $ php app/console assetic:dump
 In the twig template use the following twig function:
 
 ``` jinja
-thrace_file_download_url(entity.file)
+{{ thrace_file_download_url(object.file) }}
 ```
 This will generate download url.
 

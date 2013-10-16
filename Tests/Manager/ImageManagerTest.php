@@ -99,7 +99,6 @@ class ImageManagerTest extends BaseTestCase
             ->expects($this->exactly(1))
             ->method('read')
             ->with($this->stringContains('image.jpg'))
-            ->will($this->returnValue('binary'))
         ;
         
         $imageManager = $this->getImageManager($tempFileSystem);
@@ -108,7 +107,7 @@ class ImageManagerTest extends BaseTestCase
         $imageManager->loadTemporaryImageByName('image.jpg');
     }
     
-    public function _testLoadPermanentImageByName()
+    public function testLoadPermanentImageByName()
     {
         $imagine = $this->getMock('Imagine\Image\ImagineInterface');
         $imagine
@@ -116,19 +115,18 @@ class ImageManagerTest extends BaseTestCase
             ->method('load')   
         ;
         
-        $mediaFileSystem = $this->getMediaFilesystemMock();
+        $mediaFileSystem = $this->getPermanentFilesystemMock();
         
         $mediaFileSystem
             ->expects($this->exactly(1))
             ->method('read')
             ->with($this->stringContains('image.jpg'))
-            ->will($this->returnValue('binary'))
         ;
         
         $imageManager = $this->getImageManager(null, $mediaFileSystem);
         $imageManager->setImagine($imagine);
         
-        $imageManager->loadPermenentImageByName('image.jpg');
+        $imageManager->loadPermanentImageByName('image.jpg');
     }
     
     public function testMakeImageCopyToOriginalDirectory()

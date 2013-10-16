@@ -1,4 +1,4 @@
-<?php
+<?php 
 /*
  * This file is part of ThraceMediaBundle
  *
@@ -15,6 +15,7 @@ use Thrace\MediaBundle\Model\ImageInterface;
 
 /**
  * Interface that implements ImageManager
+ * 
  */
 interface ImageManagerInterface extends BaseManagerInterface
 {
