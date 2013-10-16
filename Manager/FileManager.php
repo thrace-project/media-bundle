@@ -1,4 +1,12 @@
 <?php
+/*
+ * This file is part of ThraceMediaBundle
+*
+* (c) Nikolay Georgiev <symfonist@gmail.com>
+*
+* This source file is subject to the MIT license that is bundled
+* with this source code in the file LICENSE.
+*/
 namespace Thrace\MediaBundle\Manager;
 
 use Gaufrette\Exception\FileNotFound;
@@ -9,24 +17,42 @@ use Thrace\MediaBundle\Model\FileInterface;
 
 use Gaufrette\Adapter;
 
-class FileManager extends AbstractManager implements FileManagerInterface
+/**
+ * Filemanager that handles file
+ *
+ * @author Nikolay Georgiev <symfonist@gmail.com>
+ * @since 1.0
+ */
+class FileManager extends AbstractManager implements FileManagerInterface 
 {   
 
-    public function getFile(FileInterface $object)
+    /**
+     * {@inheritDoc}
+     */
+    public function getTemporaryFile(FileInterface $object)
     {
         return $this->temporaryFilesystem->get($object->getName());
     }
     
-    public function getTemporaryFileBlobByKey($key)
+    /**
+     * {@inheritDoc}
+     */
+    public function getTemporaryFileBlobByName($name)
     {
-        return $this->temporaryFilesystem->read($key);
+        return $this->temporaryFilesystem->read($name);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPermanentFileBlobByName($name)
+    {
+        return $this->mediaFilesystem->read($name);
     }
     
-    public function getPermenentFileByKey($key)
-    {
-        return $this->mediaFilesystem->read($key);
-    }
-    
+    /**
+     * {@inheritDoc}
+     */
     public function copyFileToTemporaryDirectory(FileInterface $object)
     {
         $tempHash = $this->checksumTemporaryFileByName($object->getName());
@@ -39,29 +65,41 @@ class FileManager extends AbstractManager implements FileManagerInterface
         $this->temporaryFilesystem->write($object->getName(), $content);
     }
     
-    public function copyFileToPermenentDirectory(FileInterface $object)
+    /**
+     * {@inheritDoc}
+     */
+    public function copyFileToPermanentDirectory(FileInterface $object)
     {
         $tempFile = $this->temporaryFilesystem->read($object->getName());
         return $this->mediaFilesystem->write($object->getFilePath(), $tempFile, true);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     public function removeFileFromTemporaryDirectory(FileInterface $object)
     {
         try {
-            return $this->temporaryFilesystem->delete($object->getName());
+            $this->temporaryFilesystem->delete($object->getName());
         } catch (FileNotFound $e){} 
     }
     
-    public function removeFileFromPermenentDirectory(FileInterface $object)
+    /**
+     * {@inheritDoc}
+     */
+    public function removeFileFromPermanentDirectory(FileInterface $object)
     {
         try {
-            return $this->mediaFilesystem->delete($object->getFilePath());
+            $this->mediaFilesystem->delete($object->getFilePath());
         } catch (FileNotFound $e){} 
     }
     
+    /**
+     * {@inheritDoc}
+     */
     public function removeAllFiles(FileInterface $object)
     {
         $this->removeFileFromTemporaryDirectory($object);
-        $this->removeFileFromPermenentDirectory($object);
+        $this->removeFileFromPermanentDirectory($object);
     }
 }

@@ -15,4 +15,12 @@ use Doctrine\ORM\Mapping as ORM;
 
 /** @ORM\MappedSuperclass */
 abstract class AbstractMedia extends AbstractFile implements MediaInterface
-{}
+{
+    /**
+     * {@inheritDoc}
+     */
+    public function getMediaPath()
+    {
+        return $this->getFilePath();
+    }
+}

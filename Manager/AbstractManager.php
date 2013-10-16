@@ -1,11 +1,22 @@
 <?php
+/*
+ * This file is part of ThraceMediaBundle
+ *
+ * (c) Nikolay Georgiev <symfonist@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
 namespace Thrace\MediaBundle\Manager;
 
 use Knp\Bundle\GaufretteBundle\FilesystemMap;
 
 use Gaufrette\Exception\FileNotFound;
 
-class AbstractManager
+/**
+ * Base manager class
+ */
+class AbstractManager implements BaseManagerInterface
 {
     /**
      * @var \Gaufrette\Filesystem
@@ -13,7 +24,6 @@ class AbstractManager
     protected $temporaryFilesystem;
     
     /**
-     *
      * @var \Gaufrette\Filesystem
      */
     protected $mediaFilesystem;
@@ -31,11 +41,17 @@ class AbstractManager
         $this->mediaFilesystem = $filesystemMap->get($mediaFilesystemKey);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     public function getExtension($filename)
     {
         return pathinfo($filename, \PATHINFO_EXTENSION);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     public function checksumTemporaryFileByName($name)
     {
         try {
@@ -47,11 +63,17 @@ class AbstractManager
         return $hash;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     public function saveToTemporaryDirectory($name, $content)
     {
         $this->temporaryFilesystem->write($name, $content, true);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     public function clearCache($maxAge)
     {
         $delTime = (time() - (int) $maxAge);

@@ -26,8 +26,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ClearCacheCommand extends ContainerAwareCommand
 {
     /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Console\Command.Command::configure()
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -39,12 +38,11 @@ class ClearCacheCommand extends ContainerAwareCommand
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Console\Command.Command::execute()
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {   
-        $num = $this->getContainer()->get('thrace_media.file_manager')->clearCache($input->getOption('maxAge'));
+        $num = $this->getContainer()->get('thrace_media.filemanager')->clearCache($input->getOption('maxAge'));
         
         $output->writeln('<info>' . sprintf('%s files successfully removed', $num) . '</info>');
     }

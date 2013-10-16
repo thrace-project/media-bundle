@@ -87,7 +87,8 @@ class MediaExtension extends \Twig_Extension
             'type' => $media->getType(),
             'id' => uniqid('thrace_media', true),
             'file' => $this->container->get('router')->generate('thrace_media_render', array(
-                'name' => $media->getFilePath()    
+                'name' => $media->getMediaPath(),
+                'hash' => $media->getHash()
             ), true)
         );
         
@@ -101,21 +102,7 @@ class MediaExtension extends \Twig_Extension
     }
 
     /**
-     * Converts bytes
-     *
-     * @param integer $bytes
-     * @return string
-     */
-    public function fileSize($bytes)
-    {
-        $bytes = (int) $bytes;
-        $suffix = array(" Bytes", " KB", " MB", " GB", " TB", " PB", " EB", " ZB", " YB");
-        return $bytes ? round($bytes/pow(1024, ($i = floor(log($bytes, 1024)))), 2) . $suffix[$i] : '0 Bytes';
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see Twig_Extension::getFunctions()
+     * {@inheritDoc}
      */
     public function getFunctions()
     {
@@ -123,17 +110,14 @@ class MediaExtension extends \Twig_Extension
             'thrace_image' => new \Twig_Function_Method($this, 'renderImage', array('is_safe' => array('html'))),
             'thrace_media' => new \Twig_Function_Method($this, 'renderMedia', array('is_safe' => array('html'))),
             'thrace_file_download_url' => new \Twig_Function_Method($this, 'generateDownloadUrl', array('is_safe' => array('html'))),
-            'thrace_filesize' => new \Twig_Function_Method($this, 'fileSize')
         );
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Twig_ExtensionInterface::getName()
+     * {@inheritDoc}
      */
     public function getName()
     {
         return 'thrace_media';
     }
-
 }

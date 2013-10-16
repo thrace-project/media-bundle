@@ -15,7 +15,20 @@ namespace Thrace\MediaBundle\Model;
  * @author Nikolay Georgiev <symfonist@gmail.com>
  * @since 1.0
  */
-interface MediaInterface extends FileInterface
+interface MediaInterface extends BaseFileInterface
 {
+   
+    const TYPE_FLV = 'flv';
+    
+    const TYPE_MP3 = 'mp3';
+    
+    /**
+     * Gets media type (needed by jwplayer)
+     */
     public function getType();
+    
+    /**
+     * Gets relative media path
+     */
+    public function getMediaPath();
 }

@@ -25,7 +25,7 @@ public function buildForm(FormBuilderInterface $builder, array $options)
             'data_class' => 'AppBundle\Entity\Video',
             'configs' => array(
                 'extensions' => 'video/x-flv',
-                'maxSize' => '10M',
+                'max_upload_size' => '4M',
                 'type' => 'flv',
                 'div_class' => 'col-lg-9' //fix mopa-bootsrap-bundle
             ),
@@ -235,12 +235,29 @@ $ php app/console assetic:dump
 ```
 
 <a name="media_render"></a>
-##### Download file. 
+##### Render media. 
+
+Add javascript asset:
+
+``` jinja    
+{% block javascripts %}
+
+	{% javascripts
+		'jquery/js/jquery.js'
+        'plugins/jwplayer/jwplayer.js'
+        'bundles/thracemedia/js/media-render.js'                                                                                                                               
+	%}
+		<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+   
+{% endblock %}
+
+```
 
 In the twig template use the following twig function:
 
 ``` jinja
-thrace_media(entity.video, {})
+{{ thrace_media(object.video, {}) }}
 ```
 This will display jwplayer
 

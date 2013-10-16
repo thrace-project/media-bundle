@@ -16,6 +16,9 @@ use Doctrine\ORM\Mapping as ORM;
 /** @ORM\MappedSuperclass */
 abstract class AbstractFile extends AbstractBaseFile implements FileInterface
 {
+    /**
+     * {@inheritDoc}
+     */
     public function getFilePath()
     {
         return $this->getUploadDir() . DIRECTORY_SEPARATOR . $this->getName();

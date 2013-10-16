@@ -10,7 +10,7 @@ jQuery(document).ready(function(){
      * Searching for jwplayer elements
      */
     jQuery('.thrace-media-render').each(function(key, value){  
-        var options = jQuery(this).data('options');  console.log(options);
+        var options = jQuery(this).data('options');  
         
         var Player = function(){
         	var id = options.id;
