@@ -59,7 +59,7 @@ class FileUploadSubscriber implements EventSubscriberInterface
     {
         $entity = $event->getData();
         
-        if ($entity instanceof FileInterface && null === $entity->getId() && null === $entity->getName()){
+        if ($entity instanceof FileInterface && null === $entity->getId() && null === $entity->getHash()){
             $event->setData(null);
         }
     }
