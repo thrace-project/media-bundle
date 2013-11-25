@@ -3,21 +3,26 @@
  * 
  * @author Nikolay Georgiev
  * @version 1.0
- */
-jQuery(document).ready(function(){ 
-	
+ */ 
+window.ThraceMedia = window.ThraceMedia || {};
+
+ThraceMedia.imageUpload = function(collection){
+    var collection = (collection == undefined) ? jQuery('.thrace-image-upload') : collection;
+    
     // Set no conflict with other libraries
     jQuery.noConflict();
     
-    // Creates buttons
-    jQuery('.thrace-image-upload-button').button();
-
+     // Creates buttons
+     jQuery('.thrace-image-upload-button').button();
+        
     // Searching for image upload elements
-    jQuery('.thrace-image-upload').each(function(key, value){  
+    jQuery(collection).each(function(key, value){  
+        
+       
         var options = jQuery(this).data('options');  
 
-        jQuery('#thrace-image-btn-upload-' + options.id).click(function(){
-            return false;
+        jQuery('#thrace-image-btn-upload-' + options.id).on('click', function(event){
+            event.preventDefault();
         });
       
 
@@ -95,21 +100,23 @@ jQuery(document).ready(function(){
             }
         };
         
-        jQuery('#thrace-image-btn-enabled-' + options.id).click(function(event){
+        jQuery('#thrace-image-btn-enabled-' + options.id).on('click', function(){
             toggleActive();
         });
                 
         // Colorbox handler
-        jQuery('#thrace-image-btn-view-' + options.id).click(function(){ 
+        jQuery('#thrace-image-btn-view-' + options.id).on('click', function(event){
+            event.preventDefault();
             jQuery.colorbox({
                 href: options.render_url + '?name=' + jQuery('#' + options.name_id).val(), 
                 title: jQuery('#' + options.title_id).val()
             });
-            return false;
         });
+        
                 
         // Closes the error message.
-        jQuery('#thrace-upload-error-cancel-' + options.id).click(function(){
+        jQuery('#thrace-upload-error-cancel-' + options.id).on('click', function(event){ 
+            event.preventDefault();
             jQuery('#thrace-image-upload-container-' + options.id)
                 .find('.ui-state-error')
                 .fadeOut(function(){
@@ -118,10 +125,9 @@ jQuery(document).ready(function(){
             jQuery('#thrace-image-btn-upload-' + options.id).button( "option", "disabled", false );
             if(jQuery('#' + options.name_id).val() != ''){
                 enableButtons();
-            }
-                    
-            return false;
+            }               
         });
+        
 
         // Populate meta data
         var populateMeta = function(){ 
@@ -271,19 +277,20 @@ jQuery(document).ready(function(){
         uploader.init();
 
         // Removes image from upload queue
-        jQuery('#thrace-upload-remove-image-' + options.id).find('a').click(function(){
+        jQuery('#thrace-upload-remove-image-' + options.id).on('click', function(event){
+            event.preventDefault();
             uploader.removeFile(uploader.getFile(jQuery(this).attr('id')));
             jQuery('#thrace-progressbar-' + options.id).fadeOut().next().fadeOut(function(){
                 enableButtons();
                 jQuery('#thrace-image-btn-upload-' + options.id).button( "option", "disabled", false);
                 jQuery('body').trigger('refreshPlUpload');
             });
-            
-            return false;
         });
+        
 
         // Remove button click event
-        jQuery('#thrace-image-btn-remove-' + options.id).click(function(){ 
+        jQuery('#thrace-image-btn-remove-' + options.id).on('click', function(event){
+            event.preventDefault();
             jQuery('#' + options.hash_id).val('');
             jQuery('#' + options.scheduled_for_deletion_id).val(true);
             resetMeta();
@@ -298,10 +305,8 @@ jQuery(document).ready(function(){
             });
             
             deactivate();
-            return false;
         });
-
-
+        
         // Checking if user made selection on image
         var checkCoords = function ()
         {
@@ -352,7 +357,10 @@ jQuery(document).ready(function(){
         });
 
         // Crop button click event
-        jQuery('#thrace-image-btn-crop-' + options.id).click(function(){
+        jQuery('#thrace-image-btn-crop-' + options.id).on('click', function(event){
+            
+            event.preventDefault();
+            
             jQuery(this).button({disabled: true});
 			
 
@@ -375,44 +383,47 @@ jQuery(document).ready(function(){
                 });
             }).attr({src : options.render_url +  '?name=' + jQuery('#' + options.name_id).val()});
             
-            return false;
-        });
+            // Triggers actual cropping.
+            jQuery('#thrace-crop-dlg-save-btn-' + options.id).on('click', function(event){
+                event.preventDefault();
+                var button = jQuery(this);
+                button.button( "option", "disabled", true);
 
-        // Triggers actual cropping.
-        jQuery('#thrace-crop-dlg-save-btn-' + options.id).click(function(){
-            var button = jQuery(this);
-            button.button( "option", "disabled", true);
-			
-            jQuery.post(options.crop_url, {
-                name: jQuery('#' + options.name_id).val(),
-                x: jQuery('#x-' + options.id).val(),
-                y: jQuery('#y-' + options.id).val(),
-                w: jQuery('#w-' + options.id).val(),
-                h: jQuery('#h-' + options.id).val()
-            }, function(response){
-                if(response.success === false){
-                    showError(response.err_msg);
-                } else if(response.success === true) {
-                    jQuery('#thrace-image-' + options.id).fadeOut(function(){
-                        jQuery(this).attr({
-                            'src': options.render_url + '?name=' + response.name, 
-                            'style': 'width:'+ options.minWidth +'px;height:'+ options.minHeight +'px'
-                        });
-                    }).fadeIn();
-                    button.button( "option", "disabled", false); 
-                    jQuery('#' + options.hash_id).val(response.hash);
-                    
-                }
+                jQuery.post(options.crop_url, {
+                    name: jQuery('#' + options.name_id).val(),
+                    x: jQuery('#x-' + options.id).val(),
+                    y: jQuery('#y-' + options.id).val(),
+                    w: jQuery('#w-' + options.id).val(),
+                    h: jQuery('#h-' + options.id).val()
+                }, function(response){
+                    if(response.success === false){
+                        showError(response.err_msg);
+                    } else if(response.success === true) {
+                        jQuery('#thrace-image-' + options.id).fadeOut(function(){
+                            jQuery(this).attr({
+                                'src': options.render_url + '?name=' + response.name, 
+                                'style': 'width:'+ options.minWidth +'px;height:'+ options.minHeight +'px'
+                            });
+                        }).fadeIn();
+                        button.button( "option", "disabled", false); 
+                        jQuery('#' + options.hash_id).val(response.hash);
 
-                jQuery("#thrace-dlg-image-crop-" + options.id).dialog('close');
+                    }
 
+                    jQuery("#thrace-dlg-image-crop-" + options.id).dialog('close');
+
+                });
+
+                jQuery(this).off('click');
             });
+            
+        });
+        
+        // Closes crop dialog
+        jQuery('#thrace-crop-dlg-cancel-btn-' + options.id).on('click', function(){
+             jQuery("#thrace-dlg-image-crop-" + options.id).dialog('close');
         });
 
-        // Closes crop dialog
-        jQuery('#thrace-crop-dlg-cancel-btn-' + options.id).click(function(){
-            jQuery("#thrace-dlg-image-crop-" + options.id).dialog('close');
-        });
 
         /**
     	 * Configuring dialog file meta information
@@ -433,7 +444,7 @@ jQuery(document).ready(function(){
         /**
          * Opens dialog file edit meta
          */
-        jQuery('#thrace-meta-btn-edit-' + options.id).click(function(){
+        jQuery('#thrace-meta-btn-edit-' + options.id).on('click', function(){
             jQuery('#thrace-dlg-meta-edit-' + options.id).dialog('open');
         });
 
@@ -444,14 +455,15 @@ jQuery(document).ready(function(){
             icons: {
                 primary: "ui-icon ui-icon-check"
             }
-        }).click(function(){
+        }).on('click', function(){
             jQuery('#thrace-dlg-meta-edit-' + options.id).dialog('close');
         });
   
 
 
        // Rotates image
-        jQuery('#thrace-image-btn-rotate-' + options.id).click(function(){
+        jQuery('#thrace-image-btn-rotate-' + options.id).on('click', function(event){
+            event.preventDefault();
             var button = jQuery(this);
             button.button( "option", "disabled", true );
 
@@ -472,18 +484,15 @@ jQuery(document).ready(function(){
                     }).fadeIn(function(){
                         button.button( "option", "disabled", false);
                     });
-                    
-                    
                 }
 
             });
-
-            return false;
         });
 
-        // Resets image
-        jQuery('#thrace-image-btn-reset-' + options.id).click(function(){
 
+        // Resets image
+        jQuery('#thrace-image-btn-reset-' + options.id).on('click', function(event){
+            event.preventDefault();
             var button = jQuery(this);
             button.button( "option", "disabled", true );
 
@@ -506,12 +515,18 @@ jQuery(document).ready(function(){
                 }
 
             });
-
-            return false;
-        });
-
-        
+        });    
     });
     
     jQuery('.thrace-image-upload-main').fadeIn(1000);
+    
+};
+
+jQuery(document).ready(function(){
+    ThraceMedia.imageUpload();
 });
+
+jQuery(document).on('thrace.media.image_upload.init', function(event, collection){
+    ThraceMedia.imageUpload(collection);
+});
+

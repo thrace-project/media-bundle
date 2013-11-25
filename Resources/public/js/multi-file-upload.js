@@ -4,16 +4,19 @@
  * @author Nikolay Georgiev
  * @version 1.0
  */
-jQuery(document).ready(function(){
-	
+
+window.ThraceMedia = window.ThraceMedia || {};
+
+ThraceMedia.multiFileUpload = function(collection){
+    var collection = (collection == undefined) ? jQuery('.thrace-multi-file-upload') : collection;
+    
     // Set no conflict with other libraries
     jQuery.noConflict();
-	
-    // Creating buttons
+    
     jQuery('.thrace-file-upload-button').button();
-
+     
     // Searching for multi file upload elements
-    jQuery('.thrace-multi-file-upload').each(function(key, value){
+    jQuery(collection).each(function(key, value){
         
         var options = jQuery(this).data('options');  
         var prototype = jQuery(this).data('prototype'); 
@@ -23,8 +26,8 @@ jQuery(document).ready(function(){
             prototype = jQuery(this).closest('div[data-prototype]').data('prototype');
         }
 
-        jQuery('#thrace-file-btn-upload-' + options.id).click(function(){
-            return false;
+        jQuery('#thrace-file-btn-upload-' + options.id).on('click', function(event){
+            event.preventDefault();
         });
 
         //  Disables buttons
@@ -221,26 +224,24 @@ jQuery(document).ready(function(){
                 }
                 
                 var prototypeHtml = prototype.replace(/__name__/g, elementIdx); 
-          
+     
                 var elm = jQuery(prototypeHtml);
-                
-                // fix mopa-bootstrap bundle
-                elm.find('label').remove();
 
                 var elmHolder = jQuery('#thrace-multi-file-prototype-' + options.id).html()
                     .replace('__name__', file.name);
                     
                 collectionHolder.append(jQuery('<li data-index="'+ elementIdx +'">'+ elmHolder +'</li>').append(elm));
                 
-                var formElm = collectionHolder.find('[data-index="'+ elementIdx +'"]').find('.collection-item > :hidden');
-
+                var formElm = collectionHolder.find('[data-index="'+ elementIdx +'"]').find(':hidden');
+ 
                 formElm.filter('.thrace_media_multi_file_upload_name').val(data.name);			
                 formElm.filter('.thrace_media_multi_file_upload_originalName').val(file.name);					
                 formElm.filter('.thrace_media_multi_file_upload_hash').val(data.hash);
                 formElm.filter('.thrace_media_multi_file_upload_position').val(parseInt(collectionHolder.children().length) - 1);
                 formElm.filter('.thrace_media_multi_file_upload_enabled').val(0);
 
-
+                // fix mopa
+                collectionHolder.find('.form-group').remove();
             }
 
             jQuery('#' + file.id).fadeOut().next().fadeOut(function(){
@@ -268,7 +269,7 @@ jQuery(document).ready(function(){
         });
 
         // Closes the error message and starts the upload of remaining items.
-        jQuery('#thrace-multi-upload-error-cancel-' + options.id).click(function(){
+        jQuery('#thrace-multi-upload-error-cancel-' + options.id).on('click', function(){
             jQuery('#thrace-multi-file-upload-error-' + options.id)
             .fadeOut(function(){
                 jQuery('body').trigger('refreshPlUpload');
@@ -284,7 +285,7 @@ jQuery(document).ready(function(){
         });
 
         // Active file handler
-        jQuery('#thrace-file-btn-enabled-' + options.id).click(function(){
+        jQuery('#thrace-file-btn-enabled-' + options.id).on('click', function(){
             var elm = jQuery(this).data().elm;
             var activeElm = elm.find(':hidden').filter('.thrace_media_multi_file_upload_enabled');
 
@@ -315,7 +316,7 @@ jQuery(document).ready(function(){
         });
 
         // Opens dialog file edit meta
-        jQuery('#thrace-meta-btn-edit-' + options.id).click(function(){
+        jQuery('#thrace-meta-btn-edit-' + options.id).on('click', function(){
 
             var elm = jQuery(this).data().elm.find(':hidden');
 
@@ -328,12 +329,12 @@ jQuery(document).ready(function(){
 
         });
 
-        jQuery('#thrace-edit-dlg-done-btn-' + options.id).click(function(){
+        jQuery('#thrace-edit-dlg-done-btn-' + options.id).on('click', function(){
             jQuery('#thrace-dlg-meta-edit-' + options.id).dialog('close');
         });
 
         // Remove button handler
-        jQuery('#thrace-file-btn-remove-' + options.id).click(function(event){
+        jQuery('#thrace-file-btn-remove-' + options.id).on('click', function(event){
             jQuery(this).data().elm.fadeOut(function(){
                 jQuery(this).remove();
                 toggleContainer();
@@ -348,6 +349,20 @@ jQuery(document).ready(function(){
         });
 
     });
+    
+    jQuery('.thrace-multi-file-upload-main').fadeIn(1000); 
+};
 
-    jQuery('.thrace-multi-file-upload-main').fadeIn(1000);    
+ThraceMedia.mopafix = function(){
+    jQuery(document).find('[data-collection-add-btn]').remove(); 
+};
+
+jQuery(document).ready(function(){
+    ThraceMedia.multiFileUpload();
+    ThraceMedia.mopafix();
+});
+
+jQuery(document).on('thrace.media.multi_file_upload.init', function(event, collection){
+    ThraceMedia.multiFileUpload(collection);
+    ThraceMedia.mopafix();
 });
