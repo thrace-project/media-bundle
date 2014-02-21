@@ -35,7 +35,9 @@ class FileController extends ContainerAware
      */
     public function uploadAction ()
     { 
-        if (null === $handle = $this->getRequest()->files->get('file')){
+        $handle = $this->getRequest()->files->get('file');
+        
+        if ($handle && $handle->getError()){
             return new JsonResponse(array(
                 'success' => false,
                 'err_msg' => $this->container->get('translator')
