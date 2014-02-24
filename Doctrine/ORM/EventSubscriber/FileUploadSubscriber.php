@@ -110,7 +110,9 @@ class FileUploadSubscriber implements EventSubscriber
                     $this->checksum($entity);
                 } 
 
-                $this->populateMeta($em, $uow, $entity);
+                if(isset($changeSet['name']) || isset($changeSet['hash'])){
+                    $this->populateMeta($em, $uow, $entity);
+                }                
             }
         }
 

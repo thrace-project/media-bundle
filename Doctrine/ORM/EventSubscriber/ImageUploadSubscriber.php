@@ -111,9 +111,11 @@ class ImageUploadSubscriber implements EventSubscriber
                 if (isset($changeSet['hash'])){
                     $this->scheduledForCopyImages[] = $entity;
                 }
-
-                $this->checksum($entity);
-                $this->populateMeta($em, $uow, $entity);
+                
+                if(isset($changeSet['name']) || isset($changeSet['hash'])){
+                    $this->checksum($entity);
+                    $this->populateMeta($em, $uow, $entity);
+                } 
             }
         }
 
@@ -154,8 +156,8 @@ class ImageUploadSubscriber implements EventSubscriber
     {
         $meta = $em->getClassMetadata(get_class($entity));
         $meta
-        ->getReflectionProperty('size')
-        ->setValue($entity, $this->imageManager->getTemporaryImage($entity)->getSize())
+            ->getReflectionProperty('size')
+            ->setValue($entity, $this->imageManager->getTemporaryImage($entity)->getSize())
         ;
         $uow->recomputeSingleEntityChangeSet($meta, $entity);
     }
