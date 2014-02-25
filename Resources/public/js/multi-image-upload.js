@@ -11,7 +11,8 @@ jQuery(document).ready(function(){
 	
     // Creating buttons
     jQuery('.thrace-image-upload-button').button();
-
+    jQuery(document).find('[data-collection-add-btn]').remove(); 
+    
     // Searching for multi image upload elements
     jQuery('.thrace-multi-image-upload').each(function(key, value){
         
@@ -233,8 +234,6 @@ jQuery(document).ready(function(){
                 
                 var elm = jQuery(prototypeHtml);
                 
-                // fix mopa-bootstrap bundle
-                elm.find('label').remove();
 
                 collectionHolder.append(jQuery('<li data-index="'+ elementIdx +'"><img src="'+ 
                 		options.render_url + '?name=' + data.name +'" style="width: '+ options.minWidth +'px; height: '+ options.minHeight +'px" /></li>').append(elm));
@@ -247,7 +246,7 @@ jQuery(document).ready(function(){
                 formElm.filter('.thrace_multi_image_upload_position').val(parseInt(collectionHolder.children().length) - 1);
                 formElm.filter('.thrace_multi_image_upload_enabled').val(0);
 
-
+                collectionHolder.find('.form-group').remove();
             }
 
             jQuery('#' + file.id).fadeOut().next().fadeOut(function(){

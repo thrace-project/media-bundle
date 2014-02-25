@@ -72,7 +72,7 @@ class MultiFileUploadSubscriber implements EventSubscriberInterface
     public function preSubmit(FormEvent $event)
     {   
         $form = $event->getForm();
-        $data = $event->getData();
+        $data = $event->getData();        
         
         if (null === $data) {
             $data = array();
@@ -130,8 +130,8 @@ class MultiFileUploadSubscriber implements EventSubscriberInterface
     public function postSubmit(FormEvent $event)
     {
         $collection = $event->getData();
-
-        if ($collection instanceof PersistentCollection){
+        
+        if ($collection instanceof PersistentCollection){            
             foreach ($collection->getDeleteDiff() as $entity){
                 if ($entity instanceof MultiFileInterface){
                     $this->om->remove($entity);
