@@ -55,6 +55,12 @@ class MultiFileUploadCollectionType extends AbstractType
      * @var array
      */
     protected $options;
+    
+    protected $om;
+    
+    protected $fileManager;
+    
+    protected $formFactory;
 
     /**
      * Construct
@@ -64,12 +70,14 @@ class MultiFileUploadCollectionType extends AbstractType
      * @param EventSubscriberInterface $subscriber
      * @param array $options
      */
-    public function __construct(Session $session, Router $router, EventSubscriberInterface $subscriber, array $options)
+    public function __construct(Session $session, Router $router,  array $options, \Doctrine\Common\Persistence\ObjectManager $om, \Thrace\MediaBundle\Manager\FileManagerInterface $fileManager, \Symfony\Component\Form\FormFactoryInterface $formFactory)
     {
         $this->session = $session;
-        $this->router = $router;
-        $this->subscriber = $subscriber;
+        $this->router = $router;        
         $this->options = $options;
+        $this->om = $om;
+        $this->fileManager = $fileManager;
+        $this->formFactory = $formFactory;
     }
 
     /**
@@ -77,8 +85,9 @@ class MultiFileUploadCollectionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->subscriber->setTypeOptions($options['options']);
-        $builder->addEventSubscriber($this->subscriber);
+        $subscriber = new \Thrace\MediaBundle\Form\EventSubscriber\MultiFileUploadSubscriber($this->om, $this->fileManager, $this->formFactory);
+        $subscriber->setTypeOptions($options['options']);
+        $builder->addEventSubscriber($subscriber);
     }
     
     /**

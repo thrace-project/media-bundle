@@ -35,7 +35,9 @@ class ImageController extends ContainerAware
      */
     public function uploadAction ()
     {        
-        if (null === $handle = $this->getRequest()->files->get('file')){
+        $handle = $this->getRequest()->files->get('file');
+        
+        if ($handle && $handle->getError()){
             return new JsonResponse(array(
                 'success' => false,
                 'err_msg' => $this->container->get('translator')
@@ -120,6 +122,38 @@ class ImageController extends ContainerAware
         $filteredImage = $filterManager->applyFilter($image, $filter);
         
         $content = $filteredImage->get($imageManager->getExtension($filepath));
+        $response->setContent($content);
+        $response->headers->set('Accept-Ranges', 'bytes');
+        $response->headers->set('Content-Length', mb_strlen($content));
+        $response->headers->set('Content-Type', 'image');
+        
+        return $response;
+    }
+    
+    /**
+     * Renders permanent original image
+     * 
+     * @return Response
+     */
+    public function renderOriginalAction()
+    {   
+        $filepath = $this->getRequest()->get('filepath');
+        $hash = $this->getRequest()->get('hash');
+
+        $tag = md5($hash . $filepath);
+        
+        $response = new Response();
+        $response->setPublic();
+        $response->setEtag($tag);
+        
+        if($response->isNotModified($this->getRequest())){
+            return $response;
+        }
+        
+        $imageManager = $this->container->get('thrace_media.imagemanager');
+        
+        $content = $imageManager->loadPermanentImageByName($filepath);        
+         
         $response->setContent($content);
         $response->headers->set('Accept-Ranges', 'bytes');
         $response->headers->set('Content-Length', mb_strlen($content));

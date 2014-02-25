@@ -15,4 +15,8 @@
      <route id="thrace_media_image_render" pattern="/_thrace-media/image-render" methods="GET">
          <default key="_controller">ThraceMediaBundle:Image:render</default>
     </route>
+    
+     <route id="thrace_media_original_image_render" pattern="/_thrace-media/original-image-render" methods="GET">
+         <default key="_controller">ThraceMediaBundle:Image:renderOriginal</default>
+    </route>
 </routes>

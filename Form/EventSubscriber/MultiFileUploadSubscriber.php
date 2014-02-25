@@ -70,10 +70,10 @@ class MultiFileUploadSubscriber implements EventSubscriberInterface
      * @throws UnexpectedTypeException
      */
     public function preSubmit(FormEvent $event)
-    {
+    {   
         $form = $event->getForm();
         $data = $event->getData();
-    
+        
         if (null === $data) {
             $data = array();
         }
@@ -82,7 +82,7 @@ class MultiFileUploadSubscriber implements EventSubscriberInterface
             throw new UnexpectedTypeException($data, 'array or \Traversable');
         }
        
-        foreach ($form->all() as $name => $child) {
+        foreach ($form->all() as $name => $child) { 
             $form->remove($name);
         }
     
@@ -92,7 +92,7 @@ class MultiFileUploadSubscriber implements EventSubscriberInterface
             }
             return ($a['position'] < $b['position']) ? -1 : 1;
         });
-        
+
         foreach ($data as $name => $value) {
             if (!$form->has($name)) {
                 $options = array_merge($this->typeOptions, array(

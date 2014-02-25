@@ -98,9 +98,11 @@
             
             <argument type="service"  id="session" />
             <argument type="service"  id="router" />
-            <argument type="service"  id="thrace_media.form.event_subscriber.multi_file_upload" />
             <argument>%thrace_media.plupload.options%</argument>
-            
+            <argument type="service"  id="doctrine.orm.entity_manager" />
+            <argument type="service"  id="thrace_media.filemanager" />
+            <argument type="service"  id="form.factory" />
+
             <tag name="form.type" alias="thrace_multi_file_upload_collection" />
         </service>
         
@@ -110,20 +112,16 @@
             <tag name="form.type" alias="thrace_multi_file_upload" />
         </service>
         
-        <service id="thrace_media.form.event_subscriber.multi_file_upload" 
-            class="%thrace_media.form.event_subscriber.multi_file_upload.class%">
-            <argument type="service"  id="doctrine.orm.entity_manager" />
-            <argument type="service"  id="thrace_media.filemanager" />
-            <argument type="service"  id="form.factory" />
-        </service>
         
         <service id="thrace_media.form.type.multi_image_upload_collection" 
             class="%thrace_media.form.type.multi_image_upload_collection.class%">
             
             <argument type="service"  id="session" />
             <argument type="service"  id="router" />
-            <argument type="service"  id="thrace_media.form.event_subscriber.multi_image_upload" />
             <argument>%thrace_media.plupload.options%</argument>
+            <argument type="service"  id="doctrine.orm.entity_manager" />
+            <argument type="service"  id="thrace_media.imagemanager" />
+            <argument type="service"  id="form.factory" />
             
             <tag name="form.type" alias="thrace_multi_image_upload_collection" />
         </service>
@@ -133,13 +131,7 @@
         	
             <tag name="form.type" alias="thrace_multi_image_upload" />
         </service>
-        
-        <service id="thrace_media.form.event_subscriber.multi_image_upload" 
-            class="%thrace_media.form.event_subscriber.multi_image_upload.class%">
-            <argument type="service"  id="doctrine.orm.entity_manager" />
-            <argument type="service"  id="thrace_media.imagemanager" />
-            <argument type="service"  id="form.factory" />
-        </service>
+
 
         <service id="thrace_media.twig.extension.media" 
             class="%thrace_media.twig.extension.media.class%" >

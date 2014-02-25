@@ -55,6 +55,18 @@ class MultiImageUploadCollectionType extends AbstractType
      * @var array
      */
     protected $options;
+    
+    /**
+     * @var Doctrine\Common\Persistence\ObjectManager
+     */
+    protected $om;
+    
+    /**
+     *  @var Thrace\MediaBundle\Manager\ImageManagerInterface
+     */
+    protected $imageManager;
+    
+    protected $formFactory;
 
     /**
      * Construct
@@ -64,12 +76,15 @@ class MultiImageUploadCollectionType extends AbstractType
      * @param EventSubscriberInterface $subscriber
      * @param array $options
      */
-    public function __construct(Session $session, Router $router, EventSubscriberInterface $subscriber, array $options)
+    public function __construct(Session $session, Router $router, array $options, 
+            \Doctrine\Common\Persistence\ObjectManager $om, \Thrace\MediaBundle\Manager\ImageManagerInterface $imageManager, \Symfony\Component\Form\FormFactoryInterface $formFactory)
     {
         $this->session = $session;
         $this->router = $router;
-        $this->subscriber = $subscriber;
         $this->options = $options;
+        $this->om = $om;
+        $this->imageManager = $imageManager;
+        $this->formFactory = $formFactory;
     }
 
     /**
@@ -77,7 +92,8 @@ class MultiImageUploadCollectionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {   
-        $this->subscriber->setTypeOptions($options['options']);
+        $subscriber = new \Thrace\MediaBundle\Form\EventSubscriber\MultiImageUploadSubscriber($this->om, $this->imageManager, $this->formFactory);
+        $subscriber->setTypeOptions($options['options']);
         $builder->addEventSubscriber($this->subscriber);
     }
     
