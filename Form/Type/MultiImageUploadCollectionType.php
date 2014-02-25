@@ -94,7 +94,7 @@ class MultiImageUploadCollectionType extends AbstractType
     {   
         $subscriber = new \Thrace\MediaBundle\Form\EventSubscriber\MultiImageUploadSubscriber($this->om, $this->imageManager, $this->formFactory);
         $subscriber->setTypeOptions($options['options']);
-        $builder->addEventSubscriber($this->subscriber);
+        $builder->addEventSubscriber($subscriber);
     }
     
     /**
