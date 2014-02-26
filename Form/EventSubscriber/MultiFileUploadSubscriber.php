@@ -72,7 +72,7 @@ class MultiFileUploadSubscriber implements EventSubscriberInterface
     public function preSubmit(FormEvent $event)
     {   
         $form = $event->getForm();
-        $data = $event->getData();        
+        $data = $event->getData();       // if($data) {            var_dump($data); die; }
         
         if (null === $data) {
             $data = array();

@@ -122,6 +122,7 @@ class MultiFileUploadCollectionType extends AbstractType
             'allow_delete' => true,
             'prototype'    => true,
             'error_bubbling' => false,
+            'by_reference' => false,
             'translation_domain' => 'ThraceMediaBundle',
             'configs' => $defaultConfigs,
         ));
