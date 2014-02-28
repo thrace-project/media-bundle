@@ -41,6 +41,11 @@ class AbstractManager implements BaseManagerInterface
         $this->mediaFilesystem = $filesystemMap->get($mediaFilesystemKey);
     }
     
+    public function getMediaFilesystem()
+    {
+        return $this->mediaFilesystem;
+    }
+    
     /**
      * {@inheritDoc}
      */
