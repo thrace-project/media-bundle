@@ -78,9 +78,7 @@ class MultiFileUploadCollectionType extends AbstractType
         $this->options = $options;
         $this->om = $om;
         $this->fileManager = $fileManager;
-        $this->formFactory = $formFactory;
-        
-        $this->subscriber = new \Thrace\MediaBundle\Form\EventSubscriber\MultiFileUploadSubscriber($om, $fileManager, $formFactory);
+        $this->formFactory = $formFactory; 
     }
 
     /**
@@ -88,7 +86,7 @@ class MultiFileUploadCollectionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        
+        $this->subscriber = new \Thrace\MediaBundle\Form\EventSubscriber\MultiFileUploadSubscriber($this->om, $this->fileManager, $this->formFactory);
         $this->subscriber->setTypeOptions($options['options']);
         $builder->addEventSubscriber($this->subscriber);
     }
