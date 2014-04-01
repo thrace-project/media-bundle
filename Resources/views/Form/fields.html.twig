@@ -138,7 +138,7 @@
         {{ block('thrace_media_upload_meta') }}
     </div>
     
-    <span class="thrace-image-upload" data-options="{{ configs|merge({'base_url': asset('')})|json_encode }}" style="display:none"></span>
+    <span class="thrace-image-upload" data-options="{{ configs|merge({'base_url': asset('/')})|json_encode }}" style="display:none"></span>
 </div>
 {% endspaceless %}
 {% endblock thrace_image_upload_widget %}
