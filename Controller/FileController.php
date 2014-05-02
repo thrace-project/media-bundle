@@ -46,8 +46,15 @@ class FileController extends ContainerAware
         }
 
         $fileManager = $this->container->get('thrace_media.filemanager');
+        $extension = $handle->guessExtension();
+        $name = uniqid() . '.' . $extension;
         
-        $name = uniqid() . '.' . $handle->guessExtension();
+        if(!$extension){
+            return new JsonResponse(array(
+                'success' => false,
+                'err_msg' => 'Unknown Mime-Type'
+            ));
+        }
 
         $validate = $this->validateFile($handle);
 

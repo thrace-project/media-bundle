@@ -49,6 +49,13 @@ class ImageController extends ContainerAware
         $options = $this->container->getParameter('thrace_media.plupload.options');
         $extension = $handle->guessExtension();
         $name = uniqid() . '.' . $extension;
+        
+        if(!$extension){
+            return new JsonResponse(array(
+                'success' => false,
+                'err_msg' => 'Unknown Mime-Type'
+            ));
+        }
 
         $validate = $this->validateImage($handle);
 
