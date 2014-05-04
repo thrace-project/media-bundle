@@ -117,15 +117,15 @@ class MultiImageUploadSubscriber implements EventSubscriberInterface
             return ($a['position'] < $b['position']) ? -1 : 1;
         });
     
-            foreach ($data as $name => $value) {
-                if (!$form->has($name)) {
-                    $options = array_merge($this->typeOptions, array(
-                        'property_path' => '[' . $name . ']',
-                    ));
-    
-                    $form->add($this->formFactory->createNamed($name, 'thrace_multi_image_upload', null, $options));
-                }
+        foreach ($data as $name => $value) {
+            if (!$form->has($name)) {
+                $options = array_merge($this->typeOptions, array(
+                    'property_path' => '[' . $name . ']',
+                ));
+
+                $form->add($this->formFactory->createNamed($name, 'thrace_multi_image_upload', null, $options));
             }
+        }
     }
 
     /**

@@ -136,6 +136,11 @@
                 <source>no_file_text</source>
                 <target>No files</target>
             </trans-unit>  
+            
+            <trans-unit id="double_click_text">
+                <source>double_click_text</source>
+                <target>Double click to activate buttons</target>
+            </trans-unit>  
               
         </body>
     </file>

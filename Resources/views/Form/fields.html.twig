@@ -62,6 +62,11 @@
 {% block thrace_file_upload_controls %}
 {% spaceless %}
 <div class="thrace-controls">
+    <div>
+        <i>{% trans from translation_domain %}double_click_text{% endtrans %}</i>
+        <br/>
+    </div>
+    
     <button id="thrace-file-btn-upload-{{ id }}" class="ui-icon ui-icon-newwin thrace-file-upload-button" 
         title="{% trans from translation_domain %}button_upload_title{% endtrans %}"></button> &nbsp;
     {% if configs.enabled_button %}
@@ -188,6 +193,11 @@
 
 {% block thrace_image_controls %}
 {% spaceless %}
+<div>
+    <i>{% trans from translation_domain %}double_click_text{% endtrans %}</i>
+    <br/>
+</div>
+
 <div class="thrace-controls">
     <button id="thrace-image-btn-upload-{{ id }}" class="ui-icon ui-icon-newwin thrace-image-upload-button" 
         title="{% trans from translation_domain %}button_upload_title{% endtrans %}"></button> &nbsp;
