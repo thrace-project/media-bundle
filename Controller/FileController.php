@@ -91,6 +91,7 @@ class FileController extends ContainerAware
         $content = $fileManager->getPermanentFileBlobByName($filepath); 
         $response = new Response($content);
         $response->headers->set('Content-Length', mb_strlen($content));
+        $response->headers->set('Content-Type', 'application/octet-stream');
         $response->headers->set('Content-Disposition', 'attachment;filename=' . $filename);
         $response->expire();
         
