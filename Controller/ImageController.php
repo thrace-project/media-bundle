@@ -47,13 +47,13 @@ class ImageController extends ContainerAware
 
         $imageManager = $this->container->get('thrace_media.imagemanager');
         $options = $this->container->getParameter('thrace_media.plupload.options');
-        $extension = $handle->guessExtension();
+        $extension = $handle->getClientOriginalExtension();
         $name = uniqid() . '.' . $extension;
         
         if(!$extension){
             return new JsonResponse(array(
                 'success' => false,
-                'err_msg' => 'Unknown Mime-Type'
+                'err_msg' => sprintf('Unknown Mime Type: "%s"', $handle->getMimeType())
             ));
         }
 
@@ -96,7 +96,7 @@ class ImageController extends ContainerAware
         $response = new Response($content);
         $response->headers->set('Accept-Ranges', 'bytes');
         $response->headers->set('Content-Length', mb_strlen($content));
-        $response->headers->set('Content-Type', 'image');
+        $response->headers->set('Content-Type', $this->getMimeType($content));
         $response->expire();
         
         return $response;
@@ -132,7 +132,7 @@ class ImageController extends ContainerAware
         $response->setContent($content);
         $response->headers->set('Accept-Ranges', 'bytes');
         $response->headers->set('Content-Length', mb_strlen($content));
-        $response->headers->set('Content-Type', 'image');
+        $response->headers->set('Content-Type', $this->getMimeType($content));
         
         return $response;
     }
@@ -164,7 +164,7 @@ class ImageController extends ContainerAware
         $response->setContent($content);
         $response->headers->set('Accept-Ranges', 'bytes');
         $response->headers->set('Content-Length', mb_strlen($content));
-        $response->headers->set('Content-Type', 'image');
+        $response->headers->set('Content-Type', $this->getMimeType($content));
         
         return $response;
     }
@@ -307,9 +307,22 @@ class ImageController extends ContainerAware
     {
     	$session = $this->container->get('session');
     	if (!$configs = $session->get($this->getRequest()->get('thrace_media_id', false))){
-    		throw new \InvalidArgumentException('Request parameter "thrace_media_id" is missing!');
+            throw new \InvalidArgumentException('Request parameter "thrace_media_id" is missing!');
     	}
     	
     	return $configs;
+    }
+    
+        
+    protected function getMimeType($content)
+    {
+        $finfo = new \finfo(\FILEINFO_MIME_TYPE);
+        $mimetype = $finfo->buffer($content);
+        
+        if(!$mimetype){
+            $mimetype = 'image';
+        }
+        
+        return $mimetype;
     }
 }

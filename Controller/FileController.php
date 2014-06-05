@@ -44,15 +44,15 @@ class FileController extends ContainerAware
                     ->trans('file_upload_http_error', array(), 'ThraceMediaBundle')
             ));
         }
-
+        
         $fileManager = $this->container->get('thrace_media.filemanager');
-        $extension = $handle->guessExtension();
+        $extension = $handle->getClientOriginalExtension();
         $name = uniqid() . '.' . $extension;
         
         if(!$extension){
             return new JsonResponse(array(
                 'success' => false,
-                'err_msg' => 'Unknown Mime-Type'
+                'err_msg' => sprintf('Unknown Mime Type: "%s"', $handle->getMimeType())
             ));
         }
 
@@ -89,9 +89,10 @@ class FileController extends ContainerAware
         $filename = $this->getRequest()->get('filename');
         
         $content = $fileManager->getPermanentFileBlobByName($filepath); 
+        
         $response = new Response($content);
         $response->headers->set('Content-Length', mb_strlen($content));
-        $response->headers->set('Content-Type', 'application/octet-stream');
+        $response->headers->set('Content-Type', $this->getMimeType($content));
         $response->headers->set('Content-Disposition', 'attachment;filename=' . $filename);
         $response->expire();
         
@@ -112,7 +113,7 @@ class FileController extends ContainerAware
         $response = new Response($content);        
         $response->headers->set('Accept-Ranges', 'bytes');
         $response->headers->set('Content-Length', mb_strlen($content));
-        $response->headers->set('Content-Type', 'application/octet-stream');
+        $response->headers->set('Content-Type', $this->getMimeType($content));
         $response->expire();
     
         return $response;
@@ -142,7 +143,7 @@ class FileController extends ContainerAware
         $response->setContent($content);
         $response->headers->set('Accept-Ranges', 'bytes');
         $response->headers->set('Content-Length', mb_strlen($content));
-        $response->headers->set('Content-Type', 'application/octet-stream');
+        $response->headers->set('Content-Type', $this->getMimeType($content));
 
         return $response;
     }
@@ -196,5 +197,17 @@ class FileController extends ContainerAware
     	}
     	
     	return $configs;
+    }
+    
+    protected function getMimeType($content)
+    {
+        $finfo = new \finfo(\FILEINFO_MIME_TYPE);
+        $mimetype = $finfo->buffer($content);
+        
+        if(!$mimetype){
+            $mimetype = 'application/octet-stream';
+        }
+        
+        return $mimetype;
     }
 }
