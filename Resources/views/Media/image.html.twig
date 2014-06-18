@@ -9,7 +9,7 @@
 }|merge(options) %}
 
 <img src="{{ path('thrace_media_image_render', {'filepath': image.imagePath, 'hash': image.hash, 'filter': filter}) }}"
-    {% for attrname, attrvalue in attr %}{{ attrname }}="{{ attrvalue }}" {% endfor %}
+    {% for attrname, attrvalue in attr if attrvalue %}{{ attrname }}="{{ attrvalue }}" {% endfor %}
 />
 
 
