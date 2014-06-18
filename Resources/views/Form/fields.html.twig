@@ -380,7 +380,9 @@
             class="thrace-multi-file-upload" style="display:none"></span>
         <div style="clear:both;"></div> 
         
+        <div>{{ 'double_click_text'|trans({}, translation_domain) }}</div>
         {{ block('thrace_file_upload_controls') }}
+        
         {{ block('thrace_media_upload_meta') }} 
     </div>
 </div>
@@ -451,7 +453,7 @@
             class="thrace-multi-image-upload" style="display:none"></span>
         
         <div style="clear:both;"></div> 
-
+        <div>{{ 'double_click_text'|trans({}, 'ThraceMediaBundle') }}</div>
         {{ block('thrace_image_controls') }}
         {{ block('thrace_image_upload_crop') }}
         {{ block('thrace_media_upload_meta') }}

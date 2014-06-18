@@ -139,7 +139,7 @@
             
             <trans-unit id="double_click_text">
                 <source>double_click_text</source>
-                <target>Double click to activate buttons</target>
+                <target>Double click to select file</target>
             </trans-unit>  
               
         </body>
