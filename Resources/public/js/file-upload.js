@@ -148,28 +148,17 @@ jQuery(document).ready(function(){
             uploader.refresh();
         });
 
-        //  Uploader Event: FilesAdded We make sure one file is uploaded
+        //  Uploader Event: FilesAdded 
         uploader.bind('FilesAdded', function(up, files) {
-
-            var fileCount = up.files.length,
-            i = 0,
-            ids = jQuery.map(up.files, function (item) {
-                return item.id;
-            });
-
-            for (i = 0; i < fileCount; i++) {
-                uploader.removeFile(uploader.getFile(ids[i]));
-            }
-
-            setTimeout(function () {
+            setTimeout(function () { 
                 up.start();
             }, 100);
-
+            
             jQuery('#thrace-upload-remove-file-' + options.id).find('a').attr('id', files[0].id);
                         
             var html = files[0].name.substring(0, 50) + ' (' + plupload.formatSize(files[0].size) + ')';
-                            
-            jQuery('#thrace-file-info-'+ options.id).html(html);
+                      
+            jQuery('#thrace-file-info-'+ options.id).html(html);  
         });
 
 
@@ -192,7 +181,7 @@ jQuery(document).ready(function(){
         });
 
         // Uploader Event: FileUploaded
-        uploader.bind("FileUploaded", function(up, file, response) {
+        uploader.bind("FileUploaded", function(up, file, response) { 
             progressbar.fadeOut();
 
             // response from server

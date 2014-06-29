@@ -193,17 +193,6 @@ ThraceMedia.imageUpload = function(collection){
 
         // Uploader Event: FilesAdded We make sure one file is uploaded
         uploader.bind('FilesAdded', function(up, files) {
-
-            var fileCount = up.files.length,
-            i = 0,
-            ids = jQuery.map(up.files, function (item) {
-                return item.id;
-            });
-
-            for (i = 0; i < fileCount; i++) {
-                uploader.removeFile(uploader.getFile(ids[i]));
-            }
-
             setTimeout(function () {
                 up.start();
             }, 100);
