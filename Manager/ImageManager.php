@@ -177,6 +177,10 @@ class ImageManager extends AbstractManager implements ImageManagerInterface
     public function removeImagesFromTemporaryDirectory(ImageInterface $object)
     {
         try {
+            $name = $object->getName();
+            if(empty($name))
+                return;
+
             $this->temporaryFilesystem->delete($object->getName());
             $this->temporaryFilesystem->delete($this->getTemporaryOriginalImagePath($object->getName()));
         } catch (FileNotFound $e){}        
@@ -188,6 +192,11 @@ class ImageManager extends AbstractManager implements ImageManagerInterface
     public function removeImagesFromPermanentDirectory(ImageInterface $object)
     {   
         try {
+            $name = $object->getName();
+
+            if(empty($name))
+                return;
+
             $this->mediaFilesystem->delete($object->getImagePath());
             $this->mediaFilesystem->delete($this->getPermanentOriginalImagePath($object));
         } catch (FileNotFound $e){}        
