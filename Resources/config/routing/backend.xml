@@ -18,6 +18,10 @@
          <default key="_controller">ThraceMediaBundle:Image:renderTemporary</default>
     </route>
     
+     <route id="thrace_media_image_render_thumbnail_temporary" pattern="/_thrace-media/image-render-thumbnail-temporary/{filter}" methods="GET">
+         <default key="_controller">ThraceMediaBundle:Image:renderThumbnailTemporary</default>
+    </route>
+    
      <route id="thrace_media_render_temporary" pattern="/_thrace-media/render-temporary" methods="GET">
          <default key="_controller">ThraceMediaBundle:File:renderTemporary</default>
     </route>

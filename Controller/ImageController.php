@@ -34,7 +34,7 @@ class ImageController extends ContainerAware
      * @return JsonResponse
      */
     public function uploadAction ()
-    {        
+    {   
         $handle = $this->getRequest()->files->get('file');
         
         if ($handle && $handle->getError()){
@@ -92,7 +92,34 @@ class ImageController extends ContainerAware
     {   
         $name = $this->getRequest()->get('name');
         $imageManager = $this->container->get('thrace_media.imagemanager');
-        $content = $imageManager->getTemporaryImageBlobByName($name);
+        
+        $content = $imageManager->getTemporaryImageBlobByName($name);  
+        
+        $response = new Response($content);
+        $response->headers->set('Accept-Ranges', 'bytes');
+        $response->headers->set('Content-Length', mb_strlen($content));
+        $response->headers->set('Content-Type', $this->getMimeType($content));
+        $response->expire();
+        
+        return $response;
+    }
+    
+    /**
+     * Renders temporary image
+     * 
+     * @param string $name
+     * @return Response
+     */
+    public function renderThumbnailTemporaryAction()
+    {   
+        $name = $this->getRequest()->get('name');
+        $filter = $this->getRequest()->get('filter');
+        
+        $imageManager = $this->container->get('thrace_media.imagemanager');
+        
+        $filterManager = $this->container->get('liip_imagine.filter.manager');
+        $content = $filterManager->applyFilter($imageManager->loadTemporaryImageByName($name), $filter);
+        
         $response = new Response($content);
         $response->headers->set('Accept-Ranges', 'bytes');
         $response->headers->set('Content-Length', mb_strlen($content));
@@ -298,6 +325,21 @@ class ImageController extends ContainerAware
         }
     }
 
+//    /**
+//     * Gets Image configs
+//     *
+//     * @return array
+//     */
+//    protected function getConfigs()
+//    {
+//    	$session = $this->container->get('session');
+//    	if (!$configs = $session->get($this->getRequest()->get('thrace_media_id', false))){
+//            throw new \InvalidArgumentException('Request parameter "thrace_media_id" is missing!');
+//    	}
+//    	
+//    	return $configs;
+//    }
+
     /**
      * Gets Image configs
      *
@@ -305,9 +347,8 @@ class ImageController extends ContainerAware
      */
     protected function getConfigs()
     {
-    	$session = $this->container->get('session');
-    	if (!$configs = $session->get($this->getRequest()->get('thrace_media_id', false))){
-            throw new \InvalidArgumentException('Request parameter "thrace_media_id" is missing!');
+    	if (!$configs = $this->container->getParameter($this->getRequest()->get('config_identifier', 'none'))){
+            throw new \InvalidArgumentException('Configs does no exist!');
     	}
     	
     	return $configs;

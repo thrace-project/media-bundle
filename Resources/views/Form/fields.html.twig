@@ -179,7 +179,7 @@
     <div class="thrace-image">
         <img id="thrace-image-{{ id }}" src="{{ asset('bundles/thracemedia/images/noImage.png') }}" />
     </div>
-    
+
     {{ block('thrace_image_controls') }}
 </div>
 
@@ -217,7 +217,7 @@
             title="{% trans from translation_domain %}button_reset_title{% endtrans %}"></a>  &nbsp;
     {% endif %} 
     <a id="thrace-image-btn-remove-{{ id }}" class="ui-icon ui-icon-trash thrace-image-upload-button" 
-        title="{% trans from translation_domain %}button_remove_title{% endtrans %}"></a>  &nbsp;
+        title="{% trans from translation_domain %}button_remove_title{% endtrans %}" data-delete-text="{{ 'confirmation_delete_text'|trans({}, translation_domain) }}"></a>  &nbsp;
 </div>
 {% endspaceless %}
 {% endblock thrace_image_controls %}
@@ -424,8 +424,7 @@
             {% for key, child in form %}
                 <li data-index="{{ key }}">
                     {{ form_widget(child) }}
-                    <img src="{{ path('thrace_media_image_render_temporary', {'name': child.vars.value.name}) }}" 
-                       style="width:{{ configs.minWidth }}px; height:{{ configs.minHeight }}px" />
+                    <img src="{{ path('thrace_media_image_render_thumbnail_temporary', {'name': child.vars.value.name, 'filter': configs.filter}) }}" />
                 </li>
             {% endfor %}
         </ul>

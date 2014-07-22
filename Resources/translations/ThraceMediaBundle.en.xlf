@@ -141,6 +141,11 @@
                 <source>double_click_text</source>
                 <target>Double click to select file</target>
             </trans-unit>  
+            
+            <trans-unit id="confirmation_delete_text">
+                <source>v</source>
+                <target>Are you sure you want to delete all files?</target>
+            </trans-unit>  
               
         </body>
     </file>

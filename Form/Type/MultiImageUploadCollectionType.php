@@ -147,8 +147,14 @@ class MultiImageUploadCollectionType extends AbstractType
                     throw new \InvalidArgumentException(sprintf('Some of the configs "%s" are missing', json_encode($requiredConfigs)));
                 }
 
-                $configs['upload_url'] = $router->generate('thrace_media_image_upload', array(), true);
+                $configs['upload_url'] = $router->generate('thrace_media_image_upload', array(
+                    'config_identifier' => $configs['identifier']
+                ), true);
+                
                 $configs['render_url'] = $router->generate('thrace_media_image_render_temporary', array(), true);
+                $configs['render_thumbnail_url'] = $router->generate('thrace_media_image_render_thumbnail_temporary', array(
+                    'filter' => $configs['filter']
+                ), true);
                 $configs['crop_url'] = $router->generate('thrace_media_image_crop', array(), true);
                 $configs['rotate_url'] = $router->generate('thrace_media_image_rotate', array(), true);
                 $configs['reset_url'] = $router->generate('thrace_media_image_reset', array(), true);

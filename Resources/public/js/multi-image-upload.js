@@ -235,8 +235,7 @@ jQuery(document).ready(function(){
                 var elm = jQuery(prototypeHtml);
                 
 
-                collectionHolder.append(jQuery('<li data-index="'+ elementIdx +'"><img src="'+ 
-                		options.render_url + '?name=' + data.name +'" style="width: '+ options.minWidth +'px; height: '+ options.minHeight +'px" /></li>').append(elm));
+                collectionHolder.append(jQuery('<li data-index="'+ elementIdx +'"><img src="'+ options.render_thumbnail_url + '?name=' + data.name +'" /></li>').append(elm));
 
                 var formElm = collectionHolder.find('[data-index="'+ elementIdx +'"]').find(':hidden');
  
@@ -245,7 +244,7 @@ jQuery(document).ready(function(){
                 formElm.filter('.thrace_multi_image_upload_hash').val(data.hash);
                 formElm.filter('.thrace_multi_image_upload_position').val(parseInt(collectionHolder.children().length) - 1);
                 formElm.filter('.thrace_multi_image_upload_enabled').val(0);
-
+       
                 collectionHolder.find('.form-group').remove();
             }
 
@@ -541,20 +540,38 @@ jQuery(document).ready(function(){
             });        
         });
 
-        // Remove button handler
-        jQuery('#thrace-image-btn-remove-' + options.id).click(function(event){
-
-            jQuery(this).data().elm.fadeOut(function(){
-                jQuery(this).remove();
-                toggleContainer();
-                var elms = jQuery('#thrace-multi-image-upload-container-' + options.id).children();
-                elms.each(function(key, value){
-                    jQuery(this).find(':hidden').filter('.thrace_multi_image_upload_position').val(key);
+        // Remove button handler;
+        jQuery('#thrace-image-btn-remove-' + options.id).click(function(event){ 
+            event.preventDefault();
+            //hack
+            if(jQuery(this).data().elm == undefined || false == jQuery(this).data().elm.is(':visible')){
+                if(confirm(jQuery(this).data('delete-text'))){
+                    jQuery('#thrace-multi-image-upload-container-' + options.id).each(function(){
+                        jQuery(this).fadeOut(function(){
+                            jQuery(this).remove();
+                            toggleContainer();
+                        });
+                    });
+                }
+            } else {
+                var elm = jQuery(this).data().elm;
+                
+                elm.fadeOut(function(){
+                    jQuery(this).remove();
+                    
+                    toggleContainer();
+                    var elms = jQuery('#thrace-multi-image-upload-container-' + options.id).children();
+                    elms.each(function(key, value){
+                        jQuery(this).find(':hidden').filter('.thrace_multi_image_upload_position').val(key);
+                    });     
+              
                 });
-            });
-
+                
+            }
+            
+            
             disableButtons();
-
+        
         });
 
     });

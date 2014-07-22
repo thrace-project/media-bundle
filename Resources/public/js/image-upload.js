@@ -158,8 +158,7 @@ ThraceMedia.imageUpload = function(collection){
         } else { 
             jQuery('#thrace-image-' + options.id)
             .attr({
-                'src': options.render_url + '?name=' + jQuery('#' + options.name_id).val(), 
-                'style': 'width:'+ options.minWidth +'px;height:'+ options.minHeight +'px'
+                'src': options.render_thumbnail_url + '?name=' + jQuery('#' + options.name_id).val(), 
             });
             populateMeta();
         }
@@ -243,9 +242,7 @@ ThraceMedia.imageUpload = function(collection){
                 jQuery('#' + options.scheduled_for_deletion_id).val(0);
                 jQuery('#thrace-image-' + options.id).fadeOut(function(){
                     jQuery(this).attr({
-                        'src': options.render_url + '?name=' + data.name, 
-                        //'style': 'width:'+ options.minWidth +'px;height:'+ options.minHeight +'px'
-                        'style': 'width:'+ options.minWidth +'px;'
+                        'src': options.render_thumbnail_url + '?name=' + data.name
                     });
                 }).fadeIn(function(){
                     jQuery('body').trigger('refreshPlUpload');
