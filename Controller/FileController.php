@@ -193,7 +193,10 @@ class FileController extends ContainerAware
     {
     	$session = $this->container->get('session');
     	if (!$configs = $session->get($this->getRequest()->get('thrace_media_id', false))){
-    		throw new \InvalidArgumentException('Request parameter "thrace_media_id" is missing!');
+            $configs = [
+                'max_upload_size' => '100M',
+                'extensions' => 'application/*'
+            ];
     	}
     	
     	return $configs;
