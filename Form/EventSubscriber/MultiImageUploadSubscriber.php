@@ -76,12 +76,19 @@ class MultiImageUploadSubscriber implements EventSubscriberInterface
     public function postSetData(FormEvent $event)
     {
         $collection = $event->getData();
+        $form = $event->getForm();
         
         if ($collection instanceof PersistentCollection){
-        
-            foreach ($collection as $image){
+            
+            foreach ($collection as $key => $image){
                 if ($image instanceof MultiImageInterface && null !== $image->getId()){
-                    $this->imageManager->copyImagesToTemporaryDirectory($image);
+                    try{
+                        $this->imageManager->copyImagesToTemporaryDirectory($image);
+                    } catch(\Gaufrette\Exception\FileNotFound $e){
+                        $form->remove($key);
+                        $collection->removeElement($image);
+                    }
+                    
                 }
             }
         }

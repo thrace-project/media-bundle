@@ -98,4 +98,9 @@ class FileManager extends AbstractManager implements FileManagerInterface
         $this->removeFileFromTemporaryDirectory($object);
         $this->removeFileFromPermanentDirectory($object);
     }
+    
+    public function fileExists($object)
+    {
+        return $this->mediaFilesystem->has($object->getFilePath());
+    }
 }

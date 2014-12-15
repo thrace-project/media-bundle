@@ -155,6 +155,11 @@ class ImageManager extends AbstractManager implements ImageManagerInterface
               
     }
     
+    public function fileExists($object)
+    {
+        return  $this->mediaFilesystem->has($object->getImagePath()) &&  $this->mediaFilesystem->has($this->getPermanentOriginalImagePath($object));
+    }
+    
     /**
      * {@inheritDoc}
      */

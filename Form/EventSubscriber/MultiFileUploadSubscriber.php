@@ -112,11 +112,17 @@ class MultiFileUploadSubscriber implements EventSubscriberInterface
     public function postSetData(FormEvent $event)
     {
         $collection = $event->getData();
+        $form = $event->getForm();
 
         if ($collection instanceof PersistentCollection){
-            foreach ($collection as $file){
+            foreach ($collection as $key => $file){
                 if ($file instanceof MultiFileInterface){
-                    $this->fileManager->copyFileToTemporaryDirectory($file);
+                    try {
+                        $this->fileManager->copyFileToTemporaryDirectory($file);
+                    } catch (\Gaufrette\Exception\FileNotFound $e) {
+                        $form->remove($key);
+                        $collection->removeElement($file);
+                    }
                 }
             }
         }

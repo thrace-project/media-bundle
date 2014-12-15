@@ -41,12 +41,16 @@ class FileUploadSubscriber implements EventSubscriberInterface
      * @param FormEvent $event
      * @return void
      */
-    public function postSetData(FormEvent $event)
+    public function preSetData(FormEvent $event)
     {
         $entity = $event->getData();
     
         if ($entity instanceof FileInterface && null !== $entity->getId()){
-            $this->fileManager->copyFileToTemporaryDirectory($entity);
+            try {
+                $this->fileManager->copyFileToTemporaryDirectory($entity);
+            } catch (\Gaufrette\Exception\FileNotFound $e) {
+                $event->setData(null);
+            }
         }
     }
     
@@ -70,7 +74,7 @@ class FileUploadSubscriber implements EventSubscriberInterface
     static function getSubscribedEvents()
     {
         return array(
-            FormEvents::POST_SET_DATA => 'postSetData',
+            FormEvents::PRE_SET_DATA => 'preSetData',
             FormEvents::SUBMIT => 'submit',
         );
     }

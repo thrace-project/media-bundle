@@ -68,6 +68,7 @@ class AbstractManager implements BaseManagerInterface
         return $hash;
     }
     
+    
     /**
      * {@inheritDoc}
      */
