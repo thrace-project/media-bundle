@@ -194,7 +194,7 @@ class FileController extends ContainerAware
     	$session = $this->container->get('session');
     	if (!$configs = $session->get($this->getRequest()->get('thrace_media_id', false))){
             $configs = [
-                'max_upload_size' => '100M',
+                'max_upload_size' => '200000000',
                 'extensions' => 'application/*'
             ];
     	}
