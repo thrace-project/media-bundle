@@ -109,7 +109,9 @@ ThraceMedia.imageUpload = function(collection){
             event.preventDefault();
             jQuery.colorbox({
                 href: options.render_url + '?name=' + jQuery('#' + options.name_id).val(), 
-                title: jQuery('#' + options.title_id).val()
+                title: jQuery('#' + options.title_id).val(),
+                'maxWidth': jQuery(window).width() + 'px',
+                'maxHeight': jQuery(window).height() + 'px',
             });
         });
         

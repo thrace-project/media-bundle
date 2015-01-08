@@ -314,7 +314,9 @@ jQuery(document).ready(function(){
             var title = elm.find(':hidden').filter('.thrace_multi_image_upload_title').val();
             jQuery.colorbox({
                 href: options.render_url + '?name=' + name, 
-                title: title
+                title: title,
+                'maxWidth': jQuery(window).width() + 'px',
+                'maxHeight': jQuery(window).height() + 'px',
             });
             
             return false;
