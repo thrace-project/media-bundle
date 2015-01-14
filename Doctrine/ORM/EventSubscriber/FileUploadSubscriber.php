@@ -82,7 +82,7 @@ class FileUploadSubscriber implements EventSubscriber
         foreach ($uow->getScheduledEntityInsertions() as $entity) {
             if ($entity instanceof FileInterface){
                 $this->populateMeta($em, $uow, $entity);
-                $this->scheduledForCopyFiles[] = $entity;
+                $this->scheduledForCopyFiles[spl_object_hash($entity)] = $entity;
             }
         }
 
@@ -105,8 +105,8 @@ class FileUploadSubscriber implements EventSubscriber
                     // remove old file
                     $clonedEntity = clone $entity;
                     $clonedEntity->setName($changeSet['name'][0]);
-                    $this->scheduledForDeleteFiles[] = $clonedEntity;                     
-                    $this->scheduledForCopyFiles[] = $entity;
+                    $this->scheduledForDeleteFiles[spl_object_hash($clonedEntity)] = $clonedEntity;
+                    $this->scheduledForCopyFiles[spl_object_hash($entity)] = $entity;
                     $this->checksum($entity);
                 } 
 
@@ -118,7 +118,7 @@ class FileUploadSubscriber implements EventSubscriber
 
         foreach ($uow->getScheduledEntityDeletions() as $entity) {
             if ($entity instanceof FileInterface){
-                $this->scheduledForDeleteFiles[] = $entity;
+                $this->scheduledForDeleteFiles[spl_object_hash($entity)] = $entity;
             }
         }
     }
