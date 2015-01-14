@@ -386,8 +386,9 @@ ThraceMedia.imageUpload = function(collection){
                         showError(response.err_msg);
                     } else if(response.success === true) {
                         jQuery('#thrace-image-' + options.id).fadeOut(function(){
+                            var date = new Date().getTime();
                             jQuery(this).attr({
-                                'src': options.render_url + '?name=' + response.name, 
+                                'src': options.render_url + '?name=' + response.name + '&ts=' + date,
                                 'style': 'width:'+ options.minWidth +'px;height:'+ options.minHeight +'px'
                             });
                         }).fadeIn();

@@ -81,7 +81,7 @@ class ImageUploadSubscriber implements EventSubscriber
 
         foreach ($uow->getScheduledEntityInsertions() as $entity) {
             if ($entity instanceof ImageInterface){
-                $this->scheduledForCopyImages[] = $entity;
+                $this->scheduledForCopyImages[spl_object_hash($entity)] = $entity;
                 $this->populateMeta($em, $uow, $entity);
             }
         }
@@ -105,11 +105,11 @@ class ImageUploadSubscriber implements EventSubscriber
                     // remove old image
                     $clonedEntity = clone $entity;
                     $clonedEntity->setName($changeSet['name'][0]);
-                    $this->scheduledForDeleteImages[] = $clonedEntity;                  
+                    $this->scheduledForDeleteImages[spl_object_hash($entity)] = $clonedEntity;
                 }
 
                 if (isset($changeSet['hash'])){
-                    $this->scheduledForCopyImages[] = $entity;
+                    $this->scheduledForCopyImages[spl_object_hash($entity)] = $entity;
                 }
                 
                 if(isset($changeSet['name']) || isset($changeSet['hash'])){
@@ -121,7 +121,7 @@ class ImageUploadSubscriber implements EventSubscriber
 
         foreach ($uow->getScheduledEntityDeletions() as $entity) {
             if ($entity instanceof ImageInterface){
-                $this->scheduledForDeleteImages[] = $entity;
+                $this->scheduledForDeleteImages[spl_object_hash($entity)] = $entity;
             }
         }
     }
