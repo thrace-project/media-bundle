@@ -9,9 +9,6 @@ window.ThraceMedia = window.ThraceMedia || {};
 ThraceMedia.imageUpload = function(collection){
     var collection = (collection == undefined) ? jQuery('.thrace-image-upload') : collection;
     
-    // Set no conflict with other libraries
-    jQuery.noConflict();
-    
      // Creates buttons
      jQuery('.thrace-image-upload-button').button();
         
@@ -108,10 +105,10 @@ ThraceMedia.imageUpload = function(collection){
         jQuery('#thrace-image-btn-view-' + options.id).on('click', function(event){
             event.preventDefault();
             jQuery.colorbox({
-                href: options.render_url + '?name=' + jQuery('#' + options.name_id).val(), 
+                href: options.render_url + '?name=' + jQuery('#' + options.name_id).val(),
                 title: jQuery('#' + options.title_id).val(),
                 'maxWidth': jQuery(window).width() + 'px',
-                'maxHeight': jQuery(window).height() + 'px',
+                'maxHeight': jQuery(window).height() + 'px'
             });
         });
         
