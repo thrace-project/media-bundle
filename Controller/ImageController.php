@@ -9,12 +9,14 @@
  */
 namespace Thrace\MediaBundle\Controller;
 
+use Gaufrette\Exception\FileNotFound;
 use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Validator\Constraints\Image;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -92,8 +94,12 @@ class ImageController extends ContainerAware
     {   
         $name = $this->getRequest()->get('name');
         $imageManager = $this->container->get('thrace_media.imagemanager');
-        
-        $content = $imageManager->getTemporaryImageBlobByName($name);  
+
+        try{
+            $content = $imageManager->getTemporaryImageBlobByName($name);
+        } catch (FileNotFound $e){
+            throw new NotFoundHttpException();
+        }
         
         $response = new Response($content);
         $response->headers->set('Accept-Ranges', 'bytes');
@@ -118,8 +124,13 @@ class ImageController extends ContainerAware
         $imageManager = $this->container->get('thrace_media.imagemanager');
         
         $filterManager = $this->container->get('liip_imagine.filter.manager');
-        $content = $filterManager->applyFilter($imageManager->loadTemporaryImageByName($name), $filter);
-        
+
+        try{
+            $content = $filterManager->applyFilter($imageManager->loadTemporaryImageByName($name), $filter);
+        } catch (FileNotFound $e){
+            throw new NotFoundHttpException();
+        }
+
         $response = new Response($content);
         $response->headers->set('Accept-Ranges', 'bytes');
         $response->headers->set('Content-Length', mb_strlen($content));
@@ -151,8 +162,14 @@ class ImageController extends ContainerAware
         
         $imageManager = $this->container->get('thrace_media.imagemanager');
         $filterManager = $this->container->get('liip_imagine.filter.manager');
-        
-        $image = $imageManager->loadPermanentImageByName($filepath);        
+
+        try{
+            $image = $imageManager->loadPermanentImageByName($filepath);
+        } catch (FileNotFound $e){
+            throw new NotFoundHttpException();
+        }
+
+
         $filteredImage = $filterManager->applyFilter($image, $filter);
         
         $content = $filteredImage->get($imageManager->getExtension($filepath));
@@ -185,9 +202,13 @@ class ImageController extends ContainerAware
         }
         
         $imageManager = $this->container->get('thrace_media.imagemanager');
-        
-        $content = $imageManager->loadPermanentImageByName($filepath);        
-         
+
+        try{
+            $content = $imageManager->loadPermanentImageByName($filepath);
+        } catch (FileNotFound $e){
+            throw new NotFoundHttpException();
+        }
+
         $response->setContent($content);
         $response->headers->set('Accept-Ranges', 'bytes');
         $response->headers->set('Content-Length', mb_strlen($content));
