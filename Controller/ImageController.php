@@ -36,7 +36,7 @@ class ImageController extends ContainerAware
      * @return JsonResponse
      */
     public function uploadAction ()
-    {   
+    {
         $handle = $this->getRequest()->files->get('file');
         
         if ($handle && $handle->getError()){

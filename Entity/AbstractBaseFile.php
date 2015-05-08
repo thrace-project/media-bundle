@@ -145,7 +145,9 @@ abstract class AbstractBaseFile implements BaseFileInterface
      */
     public function setOriginalName($name)
     {
-        $this->originalName = (string) $name;
+        if(is_string($name) && strlen($name)){
+            $this->originalName = htmlentities($name);
+        }
     }
 
     /**
