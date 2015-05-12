@@ -86,10 +86,10 @@ class FileController extends ContainerAware
     {
         $fileManager = $this->container->get('thrace_media.filemanager');
         $filepath = $this->getRequest()->get('filepath');
-        $filename = $this->getRequest()->get('filename');
-        
-        $content = $fileManager->getPermanentFileBlobByName($filepath); 
-        
+        $filename = trim($this->getRequest()->get('filename'));
+
+        $content = $fileManager->getPermanentFileBlobByName($filepath);
+
         $response = new Response($content);
         $response->headers->set('Content-Length', mb_strlen($content));
         $response->headers->set('Content-Type', $this->getMimeType($content));
