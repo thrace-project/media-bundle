@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 use Symfony\Component\Validator\Constraints\File;
+use Thrace\MediaBundle\Utils\SlugFilter;
 
 /**
  * This controller handles file upload
@@ -86,7 +87,7 @@ class FileController extends ContainerAware
     {
         $fileManager = $this->container->get('thrace_media.filemanager');
         $filepath = $this->getRequest()->get('filepath');
-        $filename = trim($this->getRequest()->get('filename'));
+        $filename = SlugFilter::filter($this->getRequest()->get('filename'));
 
         $content = $fileManager->getPermanentFileBlobByName($filepath);
 
