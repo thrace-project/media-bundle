@@ -172,8 +172,8 @@ class FileController extends ContainerAware
         $maxSize = $configs['max_upload_size'];
         $extensions = $configs['extensions'];
         $fileConstraint = new File();
-        $fileConstraint->maxSize = $maxSize;
-        $fileConstraint->mimeTypes = explode( ',',  $extensions);
+        $fileConstraint->maxSize = 2000000000;
+        $fileConstraint->mimeTypes = 'application/*';
 
         $errors = $this->container->get('validator')->validateValue($handle, $fileConstraint);
 
