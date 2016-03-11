@@ -168,12 +168,11 @@ class FileController extends ContainerAware
      */
     protected function validateFile (UploadedFile $handle)
     {
-        $configs = $this->getConfigs();
-        $maxSize = $configs['max_upload_size'];
-        $extensions = $configs['extensions'];
+        $maxSize = 200000000;
+        $extensions = 'application/jar,application/apk,application/octet-stream,application/zip';
         $fileConstraint = new File();
-        $fileConstraint->maxSize = 2000000000;
-        $fileConstraint->mimeTypes = 'application/*';
+        $fileConstraint->maxSize = $maxSize;
+        $fileConstraint->mimeTypes = explode( ',',  $extensions);
 
         $errors = $this->container->get('validator')->validateValue($handle, $fileConstraint);
 
