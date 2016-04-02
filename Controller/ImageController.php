@@ -20,6 +20,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Validator\Constraints\Image;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Liip\ImagineBundle\Model\Binary;
 
 /**
  * This controller handles image manipulations
@@ -126,15 +127,17 @@ class ImageController extends ContainerAware
         $filterManager = $this->container->get('liip_imagine.filter.manager');
 
         try{
-            $content = $filterManager->applyFilter($imageManager->loadTemporaryImageByName($name), $filter);
+            $source = $imageManager->loadTemporaryImageByName($name);
+            $binary = new Binary($source, $this->getMimeType($source), 'jpg');
+            $content = $filterManager->applyFilter($binary, $filter);
         } catch (FileNotFound $e){
             throw new NotFoundHttpException();
         }
 
-        $response = new Response($content);
+        $response = new Response($content->getContent());
         $response->headers->set('Accept-Ranges', 'bytes');
-        $response->headers->set('Content-Length', mb_strlen($content));
-        $response->headers->set('Content-Type', $this->getMimeType($content));
+        $response->headers->set('Content-Length', mb_strlen($content->getContent()));
+        $response->headers->set('Content-Type', $content->getMimeType();
         $response->expire();
         
         return $response;
